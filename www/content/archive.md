@@ -4,6 +4,7 @@ series: customization
 hideFromIndex: true
 weight: 40
 ---
+
 构建的二进制文件将与之一起存档`README`和`LICENSE`文件到`tar.gz`文件.在里面`archive`您可以自定义存档名称,其他文件和格式.
 
 这是一个评论`archive`指定了所有字段的部分:

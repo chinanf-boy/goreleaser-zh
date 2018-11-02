@@ -5,15 +5,9 @@ hideFromIndex: true
 weight: 90
 ---
 
-After releasing to GitHub, GoReleaser can generate and publish a _homebrew-tap_
-recipe into a repository that you have access to.
+在发布到GitHub之后,GoReleaser可以生成并发布一个*自制抽头*将食谱放入您有权访问的存储库中.
 
-The `brew` section specifies how the formula should be created.
-You can check the
-[Homebrew documentation](https://github.com/Homebrew/brew/blob/master/docs/How-to-Create-and-Maintain-a-Tap.md)
-and the
-[formula cookbook](https://github.com/Homebrew/brew/blob/master/docs/Formula-Cookbook.md)
-for more details.
+该`brew`section指定应如何创建公式.你可以检查一下[自制文件](https://github.com/Homebrew/brew/blob/master/docs/How-to-Create-and-Maintain-a-Tap.md)和[配方食谱](https://github.com/Homebrew/brew/blob/master/docs/Formula-Cookbook.md)更多细节.
 
 ```yml
 # .goreleaser.yml
@@ -92,12 +86,9 @@ brew:
     ...
 ```
 
-> Learn more about the [name template engine](/templates).
+> 了解有关的更多信息[名称模板引擎](/templates).
 
-By defining the `brew` section, GoReleaser will take care of publishing the
-Homebrew tap.
-Assuming that the current tag is `v1.2.3`, the above configuration will generate a
-`program.rb` formula in the `Formula` folder of `user/homebrew-tap` repository:
+通过定义`brew`部分,GoReleaser将负责发布Homebrew水龙头.假设当前标签是`v1.2.3`,上面的配置会生成一个`program.rb`公式中`Formula`的文件夹`user/homebrew-tap`库:
 
 ```rb
 class Program < Formula
@@ -116,7 +107,4 @@ class Program < Formula
 end
 ```
 
-**Important**: Note that GoReleaser does not yet generate a valid
-homebrew-core formula. The generated formulas are meant to be published as
-[homebrew taps](https://docs.brew.sh/Taps.html), and in their current
-form will not be accepted in any of the official homebrew repositories.
+**重要**:请注意,GoReleaser尚未生成有效的自制核心公式.生成的公式旨在发布为[自制水龙头](https://docs.brew.sh/Taps.html),并且目前的形式不会被任何官方自制软件库接受.

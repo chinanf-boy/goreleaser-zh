@@ -1,9 +1,10 @@
 ---
-title: Sponsors
+title: 赞助商
 menu: true
 weight: 600
 ---
-贵公司是否使用goreleaser?帮助保持项目无错误和功能丰富[赞助该项目](https://opencollective.com/goreleaser#sponsor).
+
+贵公司是否使用goreleaser?帮助保持项目无错误，和功能丰富 ！[赞助该项目吧](https://opencollective.com/goreleaser#sponsor).
 
 <a href="https://opencollective.com/goreleaser/sponsors/0/website" target="_blank"><img src="https://opencollective.com/goreleaser/sponsors/0/avatar"></a>
 <a href="https://opencollective.com/goreleaser/sponsors/1/website" target="_blank"><img src="https://opencollective.com/goreleaser/sponsors/1/avatar"></a>

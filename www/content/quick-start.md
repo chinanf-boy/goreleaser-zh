@@ -1,11 +1,12 @@
 ---
-title: Quick Start
+title: 快速开始
 weight: 10
 menu: true
 ---
+
 在这个例子中,我们将构建,存档和发布Go项目.
 
-创建一个GitHub存储库并添加一个主包:
+创建一个GitHub存储库，并添加一个主包:
 
 ```go
 // main.go
@@ -16,7 +17,7 @@ func main() {
 }
 ```
 
-跑`goreleaser init`创建一个例子`.goreleaser.yaml`文件:
+运行`goreleaser init`创建一个例子，`.goreleaser.yaml`文件:
 
 ```console
 $ goreleaser init
@@ -52,49 +53,49 @@ changelog:
     - '^test:'
 ```
 
-GoReleaser将为您的应用程序构建Windows,Linux和macOS的二进制文件,包括amd64和i386体系结构.您可以通过更改来自定义`builds`部分.检查[文件](/build)欲获得更多信息.
+GoReleaser将为您的应用程序构建`Windows,Linux和macOS`的二进制文件,包括`amd64和i386`系结构.您可以通过更改定义的`builds`部分。查看[其文档](/build)获得更多信息.
 
-构建二进制文件后,GoReleaser将为每个OS / Arch对创建一个存档到一个单独的文件中.您可以通过更改来自定义多项内容`archive`部分.检查[文件](/archive)欲获得更多信息.
+构建二进制文件后,GoReleaser将为每个`OS/Arch组合`创建一个单独存档文件。您可以自定义`archive`部分的多项内容。查看[其文档](/archive)获得更多信息.
 
-你需要导出一个`GITHUB_TOKEN`环境变量,它应该包含一个有效的GitHub标记`repo`范围.它将用于将版本部署到您的GitHub存储库.您可以创建令牌[这里](https://github.com/settings/tokens/new).
+你需要导出一个`GITHUB_TOKEN`环境变量,它应该包含一个有效的GitHub`repo`的tag范围。它用于将版本部署到您的GitHub存储库.您可以在[这里](https://github.com/settings/tokens/new)创建令牌.
 
 ```console
 $ export GITHUB_TOKEN=`YOUR_TOKEN`
 ```
 
-GoReleaser将使用最新的[Git标签](https://git-scm.com/book/en/v2/Git-Basics-Tagging)您的存储库.创建一个标签并将其推送到GitHub:
+GoReleaser会使用您的存储库最新的[Git tag](https://git-scm.com/book/en/v2/Git-Basics-Tagging)。下面创建一个tag，并将其推送到GitHub:
 
 ```console
 $ git tag -a v0.1.0 -m "First release"
 $ git push origin v0.1.0
 ```
 
-> **注意**:检查您的标签是否符合[语义版本控制](/semver).
+> **注意**:检查您的tag是否符合[语义版本控制](/semver).
 
-如果您还不想创建标记,还可以使用.创建基于最新提交的版本`--snapshot`旗.
+如果您还不想创建tag,还可以使用，基于最新提交的版本的`--snapshot`参数.
 
-现在您可以在存储库的根目录下运行GoReleaser:
+现在您可以在存储库的根目录下，运行GoReleaser:
 
 ```console
 $ goreleaser
 ```
 
-就这样!检查您的GitHub项目的发布页面.该版本应如下所示:
+就这样! 检查您的GitHub项目的发布页面。该版本应如下所示:
 
 <a href="https://github.com/goreleaser/goreleaser/releases">
   <img width="100%"
     src="https://cloud.githubusercontent.com/assets/245435/23342061/fbcbd506-fc31-11e6-9d2b-4c1b776dee9c.png">
 </a>
 
-## 干运行
+## 浅运行
 
-如果你想在发布"真实"版本之前测试所有内容,你可以使用`--skip-publish`flag,只会构建和打包东西:
+如果你想在发布"真实"版本之前，测试所有内容,你可以使用`--skip-publish`参数，只会构建和打包东西:
 
 ```console
 $ goreleaser release --skip-publish
 ```
 
-您可以通过运行检查其他选项:
+您可以查看其他选项:
 
 ```console
 $ goreleaser --help
