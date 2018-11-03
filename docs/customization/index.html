@@ -3,28 +3,28 @@
 
 <html>
 	<head>
-		<title>自定义 &middot; GoReleaser</title>
+		<title>自定义 &middot; GoReleaser &amp; yobrave</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		
 		
-		<meta http-equiv="content-language" content="en-us" />
+		<meta http-equiv="content-language" content="zh-CN" />
 		<meta name="generator" content="Hugo 0.49.2" />
-		<link rel="stylesheet" href="https://goreleaser.com/css/index.css">
-		<link rel="apple-touch-icon" href="https://goreleaser.com/apple-touch-icon.png">
-		<link rel="shortcut icon" href="https://goreleaser.com/favicon.ico" type="image/x-icon">
+		<link rel="stylesheet" href="http://chinanf-boy.github.io/goreleaser-zh/css/index.css">
+		<link rel="apple-touch-icon" href="http://chinanf-boy.github.io/goreleaser-zh/apple-touch-icon.png">
+		<link rel="shortcut icon" href="http://chinanf-boy.github.io/goreleaser-zh/favicon.ico" type="image/x-icon">
 	</head>
 
 	<body>
 		<div class="Wrapper">
 			<div class="Container">
 				<div class="Header">
-  <a href="https://goreleaser.com/">
+  <a href="http://chinanf-boy.github.io/goreleaser-zh/">
 	<div class="Title center">
 		
-			<img alt="GoReleaser Logo" src="https://avatars2.githubusercontent.com/u/24697112?v=3&amp;s=140" height="140" />
+			<img alt="GoReleaser &amp; yobrave Logo" src="https://avatars2.githubusercontent.com/u/24697112?v=3&amp;s=140" height="140" />
 		
-		<span class="text">GoReleaser</span>
+		<span class="text">GoReleaser &amp; yobrave</span>
 		<span class="subtext"></span>
 	</div>
   </a>
@@ -34,7 +34,7 @@
 					<div class="Sidebar">
 	<div class="Menu">
 		<div class="item">
-			<a href="https://goreleaser.com/">Home</a>
+			<a href="http://chinanf-boy.github.io/goreleaser-zh/">Home</a>
 		</div>
 		
 
@@ -130,14 +130,14 @@
 
 	
 		<div class="Page" id="项目 名称">
-			<h1><a href="https://goreleaser.com/project/">项目 名称</a></h1>
+			<h1><a href="http://chinanf-boy.github.io/goreleaser-zh/project/">项目 名称</a></h1>
 			<p>项目名称用于Brew公式,存档等的名称。如果没有给出,则将从Git项目的名称推断出.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#6272a4"># .goreleaser.yml</span>
 project_name: myproject</code></pre></div>
 		</div>
 	
 		<div class="Page" id="全局 钩子">
-			<h1><a href="https://goreleaser.com/hooks/">全局 钩子</a></h1>
+			<h1><a href="http://chinanf-boy.github.io/goreleaser-zh/hooks/">全局 钩子</a></h1>
 			<p>某些构建可能需要在构建之前，进行预构建步骤，例如,<code>go generate</code>。其<code>before</code>部分允许在构建开始之前，执行的全局钩子.</p>
 
 <p>配置很简单,这是一个完整的例子:</p>
@@ -154,7 +154,7 @@ before:
 		</div>
 	
 		<div class="Page" id="命名 模版">
-			<h1><a href="https://goreleaser.com/templates/">命名 模版</a></h1>
+			<h1><a href="http://chinanf-boy.github.io/goreleaser-zh/templates/">命名 模版</a></h1>
 			<p>GoReleaser的配置文件中的几个字段支持模板.</p>
 
 <p>这些字段通常以<code>_template</code>为后缀，但有时不是。每个部分的文档应明确指出模板可用的字段.</p>
@@ -306,7 +306,7 @@ before:
 		</div>
 	
 		<div class="Page" id="构建">
-			<h1><a href="https://goreleaser.com/build/">构建</a></h1>
+			<h1><a href="http://chinanf-boy.github.io/goreleaser-zh/build/">构建</a></h1>
 			
 
 <p>可以通过多种方式自定义构建.您可以指定哪个<code>GOOS</code>,<code>GOARCH</code>和<code>GOARM</code>构建二进制文件(goreleaser将生成所有组合的矩阵)，您可以更改二进制文件的名称,命令参数,环境变量,钩子等.</p>
@@ -413,7 +413,7 @@ builds:
 		</div>
 	
 		<div class="Page" id="存档文件">
-			<h1><a href="https://goreleaser.com/archive/">存档文件</a></h1>
+			<h1><a href="http://chinanf-boy.github.io/goreleaser-zh/archive/">存档文件</a></h1>
 			
 
 <p>构建的二进制文件将与<code>README</code>和<code>LICENSE</code>文件一起存档到<code>tar.gz</code>文件。在<code>archive</code>里面您可以自定义存档名称,其他文件和格式.</p>
@@ -491,7 +491,7 @@ archive:
 		</div>
 	
 		<div class="Page" id="Checksum-校验">
-			<h1><a href="https://goreleaser.com/checksum/">Checksum-校验</a></h1>
+			<h1><a href="http://chinanf-boy.github.io/goreleaser-zh/checksum/">Checksum-校验</a></h1>
 			<p>GoReleaser生成一个<code>project_1.0.0_checksums.txt</code>文件，并在发布时上传,以便您的用户可以验证下载的文件是否正确.</p>
 
 <p>该<code>checksum</code>部分允许自定义文件名:</p>
@@ -507,7 +507,7 @@ checksum:
 		</div>
 	
 		<div class="Page" id="Signing-签名">
-			<h1><a href="https://goreleaser.com/sign/">Signing-签名</a></h1>
+			<h1><a href="http://chinanf-boy.github.io/goreleaser-zh/sign/">Signing-签名</a></h1>
 			<p>GoReleaser可以对部分或全部生成的存档进行签名。签名可确保您自己生成的存档与您的公共签名密钥，您的用户可以验证他们生成的签名.</p>
 
 <p>签名与校验文件结合使用,通常只对签校验文件就足够了.</p>
@@ -546,7 +546,7 @@ sign:
 		</div>
 	
 		<div class="Page" id="Snapshots-快照">
-			<h1><a href="https://goreleaser.com/snapshots/">Snapshots-快照</a></h1>
+			<h1><a href="http://chinanf-boy.github.io/goreleaser-zh/snapshots/">Snapshots-快照</a></h1>
 			<p>有时我们希望生成项目的完整版本,但既不想验证任何内容,也不想将其上传到任何地方。GoReleaser支持这个<code>--snapshot</code>参数和<code>snapshot</code>的定制部分:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#6272a4"># .goreleaser.yml</span>
 snapshot:
@@ -560,7 +560,7 @@ snapshot:
 		</div>
 	
 		<div class="Page" id="NFPM">
-			<h1><a href="https://goreleaser.com/nfpm/">NFPM</a></h1>
+			<h1><a href="http://chinanf-boy.github.io/goreleaser-zh/nfpm/">NFPM</a></h1>
 			<p>GoReleaser可以连到<a href="https://github.com/goreleaser/nfpm">nfpm</a>，生成和发布<code>.deb</code>和<code>.rpm</code>包.</p>
 
 <p>可用选项:</p>
@@ -691,7 +691,7 @@ nfpm:
 		</div>
 	
 		<div class="Page" id="Snapcraft">
-			<h1><a href="https://goreleaser.com/snapcraft/">Snapcraft</a></h1>
+			<h1><a href="http://chinanf-boy.github.io/goreleaser-zh/snapcraft/">Snapcraft</a></h1>
 			<p>GoReleaser也可以生成<code>snap</code>包.<a href="http://snapcraft.io/">snapcraft</a>是一种新的打包格式,可以让您将项目直接发布到Ubuntu商店。从那里它将安装在所有的<a href="https://snapcraft.io/docs/core/install">支持的Linux发行版</a>，具有自动和更新事件。</p>
 
 <p>你可以在<a href="https://snapcraft.io/docs/">snapcraft 文档</a>中阅读更多相关信息.</p>
@@ -779,7 +779,7 @@ snapcraft:
 		</div>
 	
 		<div class="Page" id="Homebrew">
-			<h1><a href="https://goreleaser.com/homebrew/">Homebrew</a></h1>
+			<h1><a href="http://chinanf-boy.github.io/goreleaser-zh/homebrew/">Homebrew</a></h1>
 			<p>在发布到GitHub之后,GoReleaser可以生成，并发布一个*homebrew-tap*食谱放入您有权访问的存储库中.</p>
 
 <p>该<code>brew</code>部分指定应如何创建配方。你可以查看一下<a href="https://github.com/Homebrew/brew/blob/master/docs/How-to-Create-and-Maintain-a-Tap.md">Homebrew文档</a>和<a href="https://github.com/Homebrew/brew/blob/master/docs/Formula-Cookbook.md">配方-formula，食谱-cookbook</a>更多细节.</p>
@@ -881,7 +881,7 @@ brew:
 		</div>
 	
 		<div class="Page" id="Scoop">
-			<h1><a href="https://goreleaser.com/scoop/">Scoop</a></h1>
+			<h1><a href="http://chinanf-boy.github.io/goreleaser-zh/scoop/">Scoop</a></h1>
 			<p>在发布到GitHub之后,GoReleaser可以生成,并发布一个 <em>Scoop App Manifest</em> 到您有权访问的存储库.</p>
 
 <p>该<code>scoop</code>部分指定应如何创建清单。请参阅下面的注释示例:</p>
@@ -945,7 +945,7 @@ scoop install app</code></pre></div>
 		</div>
 	
 		<div class="Page" id="Release-版告">
-			<h1><a href="https://goreleaser.com/release/">Release-版告</a></h1>
+			<h1><a href="http://chinanf-boy.github.io/goreleaser-zh/release/">Release-版告</a></h1>
 			
 
 <p>GoReleaser 根据当前标记,创建 GitHub 版本,上传所有存档，并根据自上一个标记以来的新提交生成更改日志-changelog.</p>
@@ -1008,7 +1008,7 @@ changelog:
 		</div>
 	
 		<div class="Page" id="S3">
-			<h1><a href="https://goreleaser.com/s3/">S3</a></h1>
+			<h1><a href="http://chinanf-boy.github.io/goreleaser-zh/s3/">S3</a></h1>
 			
 
 <p>至<a href="https://github.com/goreleaser/goreleaser/releases/tag/v0.74.0">v0.74.0</a>起，GoReleaser 支持将存档推送到 Amazon S3 和其他 API 兼容的云存储(例如<a href="https://www.minio.io">minio</a>).</p>
@@ -1073,7 +1073,7 @@ s3:
 		</div>
 	
 		<div class="Page" id="Artifactory-存档工厂">
-			<h1><a href="https://goreleaser.com/artifactory/">Artifactory-存档工厂</a></h1>
+			<h1><a href="http://chinanf-boy.github.io/goreleaser-zh/artifactory/">Artifactory-存档工厂</a></h1>
 			
 
 <p>至<a href="https://github.com/goreleaser/goreleaser/releases/tag/v0.38.0">v0.38.0</a>以来,GoReleaser支持构建和推送存档到Artifactory.</p>
@@ -1187,7 +1187,7 @@ artifactories:
 		</div>
 	
 		<div class="Page" id="Bintray">
-			<h1><a href="https://goreleaser.com/bintray/">Bintray</a></h1>
+			<h1><a href="http://chinanf-boy.github.io/goreleaser-zh/bintray/">Bintray</a></h1>
 			
 
 <h2 id="这个怎么运作">这个怎么运作</h2>
@@ -1211,7 +1211,7 @@ artifactories:
 		</div>
 	
 		<div class="Page" id="HTTP Put">
-			<h1><a href="https://goreleaser.com/put/">HTTP Put</a></h1>
+			<h1><a href="http://chinanf-boy.github.io/goreleaser-zh/put/">HTTP Put</a></h1>
 			
 
 <p>GoReleaser支持构建和，只使用简单的HTTP PUT请求推送存档到HTTP服务器.</p>
@@ -1331,7 +1331,7 @@ puts:
 		</div>
 	
 		<div class="Page" id="Docker">
-			<h1><a href="https://goreleaser.com/docker/">Docker</a></h1>
+			<h1><a href="http://chinanf-boy.github.io/goreleaser-zh/docker/">Docker</a></h1>
 			
 
 <p>至<a href="https://github.com/goreleaser/goreleaser/releases/tag/v0.31.0">v0.31.0</a>以来,GoReleaser支持构建和推送Docker镜像.</p>
@@ -1493,7 +1493,7 @@ dockers:
 						<div class="Footer">
 	<p>Made with ❤️ by GoReleaser contributors.</p>
 </div>
-<script src="https://goreleaser.com/js/index.js"></script>
+<script src="http://chinanf-boy.github.io/goreleaser-zh/js/index.js"></script>
 
 					</div>
 				</div>

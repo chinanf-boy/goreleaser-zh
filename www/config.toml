@@ -1,8 +1,8 @@
-baseURL = "https://goreleaser.com/"
-languageCode = "en-us"
-title = "GoReleaser"
+baseURL = "http://chinanf-boy.github.io/goreleaser-zh/"
+languageCode = "zh-CN"
+title = "GoReleaser & yobrave"
 copyright = "Made with ❤️ by GoReleaser contributors."
-googleAnalytics = "UA-106198408-1"
+googleAnalytics = "UA-128555056-1"
 theme = "hugo-apex-theme"
 pygmentsCodeFences = true
 pygmentsStyle = "dracula"

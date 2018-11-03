@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>GoReleaser</title>
-    <link>https://goreleaser.com/</link>
-    <description>Recent content on GoReleaser</description>
+    <title>GoReleaser &amp; yobrave</title>
+    <link>http://chinanf-boy.github.io/goreleaser-zh/</link>
+    <description>Recent content on GoReleaser &amp; yobrave</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
+    <language>zh-CN</language>
     <copyright>Made with ❤️ by GoReleaser contributors.</copyright>
     
-	<atom:link href="https://goreleaser.com/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://chinanf-boy.github.io/goreleaser-zh/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>介绍</title>
-      <link>https://goreleaser.com/introduction/</link>
+      <link>http://chinanf-boy.github.io/goreleaser-zh/introduction/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://goreleaser.com/introduction/</guid>
+      <guid>http://chinanf-boy.github.io/goreleaser-zh/introduction/</guid>
       <description>GoReleaser是Go项目的发布自动化工具,目标是简化构建,release和发布步骤,同时为所有步骤提供适当的自定义选项.
 GoReleaser是为CI工具而构建的;你只需要在您的构建脚本中下载并执行它。您可以通过定制一个关于你的发布过程的.goreleaser.yml文件.
 这个想法始于一个简单的shell脚本，但它很快变得更加复杂，我也希望通过Homebrew taps发布二进制文件，这会使脚本变得更加hacky，所以我放弃了它，并在Go中重写了整个内容.
@@ -32,10 +32,10 @@ $ go get -d github.com/goreleaser/goreleaser $ cd $GOPATH/src/github.</descripti
     
     <item>
       <title>快速开始</title>
-      <link>https://goreleaser.com/quick-start/</link>
+      <link>http://chinanf-boy.github.io/goreleaser-zh/quick-start/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://goreleaser.com/quick-start/</guid>
+      <guid>http://chinanf-boy.github.io/goreleaser-zh/quick-start/</guid>
       <description>在这个例子中,我们将构建,存档和发布Go项目.
 创建一个GitHub存储库，并添加一个主包:
 // main.go package main func main() { println(&amp;#34;Ba dum, tss!&amp;#34;) } 运行goreleaser init创建一个例子，.goreleaser.yaml文件:
@@ -45,20 +45,20 @@ $ goreleaser init • Generating .goreleaser.yml file • config created; please
     
     <item>
       <title>项目 名称</title>
-      <link>https://goreleaser.com/project/</link>
+      <link>http://chinanf-boy.github.io/goreleaser-zh/project/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://goreleaser.com/project/</guid>
+      <guid>http://chinanf-boy.github.io/goreleaser-zh/project/</guid>
       <description>项目名称用于Brew公式,存档等的名称。如果没有给出,则将从Git项目的名称推断出.
 # .goreleaser.yml project_name: myproject</description>
     </item>
     
     <item>
       <title>Semantic 版本化</title>
-      <link>https://goreleaser.com/semver/</link>
+      <link>http://chinanf-boy.github.io/goreleaser-zh/semver/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://goreleaser.com/semver/</guid>
+      <guid>http://chinanf-boy.github.io/goreleaser-zh/semver/</guid>
       <description>GoReleaser强制为，执行Semantic版本控制,并在非兼容标签上出错.
 你的标签应该是有效的语义版本。如果不是,GoReleaser将会出错.
 该v前缀不是强制性的.你可以查看一下模板文档，以了解如何在名称模板中，使用tag或Semantic版本的方方面面.</description>
@@ -66,10 +66,10 @@ $ goreleaser init • Generating .goreleaser.yml file • config created; please
     
     <item>
       <title>CGO</title>
-      <link>https://goreleaser.com/cgo/</link>
+      <link>http://chinanf-boy.github.io/goreleaser-zh/cgo/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://goreleaser.com/cgo/</guid>
+      <guid>http://chinanf-boy.github.io/goreleaser-zh/cgo/</guid>
       <description>不幸的是,GoReleaser不支持CGO.
 您可以在这个Issue中查看有关此内容的讨论.
 您可以在上面，找到有关解决方法的问题注释.</description>
@@ -77,10 +77,10 @@ $ goreleaser init • Generating .goreleaser.yml file • config created; please
     
     <item>
       <title>全局 钩子</title>
-      <link>https://goreleaser.com/hooks/</link>
+      <link>http://chinanf-boy.github.io/goreleaser-zh/hooks/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://goreleaser.com/hooks/</guid>
+      <guid>http://chinanf-boy.github.io/goreleaser-zh/hooks/</guid>
       <description>某些构建可能需要在构建之前，进行预构建步骤，例如,go generate。其before部分允许在构建开始之前，执行的全局钩子.
 配置很简单,这是一个完整的例子:
 # .goreleaser.yml before: hooks: - make clean - go generate ./... - go mod download 如果任何钩子失败，则中止构建过程.
@@ -89,10 +89,10 @@ $ goreleaser init • Generating .goreleaser.yml file • config created; please
     
     <item>
       <title>变量</title>
-      <link>https://goreleaser.com/environment/</link>
+      <link>http://chinanf-boy.github.io/goreleaser-zh/environment/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://goreleaser.com/environment/</guid>
+      <guid>http://chinanf-boy.github.io/goreleaser-zh/environment/</guid>
       <description>GitHub令牌 GoReleaser需要一个GitHub API token ，其具有选择repo范围，具有部署到GitHub的权限。你可以创建一个点-这里.
 此token应添加到环境变量中GITHUB_TOKEN.以下是Travis CI的使用方法:在存储库设置中,定义环境变量.
 或者,您可以在文件中提供GitHub令牌。默认情况下，GoReleaser会查看~/.config/goreleaser/github_token,您可以在.goreleaser.yml文件中更改它:
@@ -107,10 +107,10 @@ package main import &amp;#34;fmt&amp;#34; var ( version = &amp;#34;dev&amp;#34; 
     
     <item>
       <title>命名 模版</title>
-      <link>https://goreleaser.com/templates/</link>
+      <link>http://chinanf-boy.github.io/goreleaser-zh/templates/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://goreleaser.com/templates/</guid>
+      <guid>http://chinanf-boy.github.io/goreleaser-zh/templates/</guid>
       <description>GoReleaser的配置文件中的几个字段支持模板.
 这些字段通常以_template为后缀，但有时不是。每个部分的文档应明确指出模板可用的字段.
 在支持模板的字段上,此字段始终可用:
@@ -120,10 +120,10 @@ package main import &amp;#34;fmt&amp;#34; var ( version = &amp;#34;dev&amp;#34; 
     
     <item>
       <title>构建</title>
-      <link>https://goreleaser.com/build/</link>
+      <link>http://chinanf-boy.github.io/goreleaser-zh/build/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://goreleaser.com/build/</guid>
+      <guid>http://chinanf-boy.github.io/goreleaser-zh/build/</guid>
       <description>可以通过多种方式自定义构建.您可以指定哪个GOOS,GOARCH和GOARM构建二进制文件(goreleaser将生成所有组合的矩阵)，您可以更改二进制文件的名称,命令参数,环境变量,钩子等.
 这是一个builds注释，指定了所有字段部分:
 # .goreleaser.yml builds: # 你能用 多个 构建 定义，yaml格式 - # main.go 文件或者主包的路径 . # 默认 `.`. main: ./cmd/main.go # 命名 最终二进制文件的模版. # 默认是 项目目录的名称. binary: program # 设置 命令参数到自定义的 build tags. # 默认是 空. flags: - -tags=dev # Custom asmflags templates. # 默认是 空. asmflags: - -D mysymbol - all=-trimpath={{.Env.GOPATH}} # Custom gcflags templates. # 默认是 空. gcflags: - all=-trimpath={{.Env.GOPATH}} - ./dontoptimizeme=-N # Custom ldflags templates. # 默认是 `-s -w -X main.</description>
@@ -131,20 +131,20 @@ package main import &amp;#34;fmt&amp;#34; var ( version = &amp;#34;dev&amp;#34; 
     
     <item>
       <title>自定义</title>
-      <link>https://goreleaser.com/customization/</link>
+      <link>http://chinanf-boy.github.io/goreleaser-zh/customization/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://goreleaser.com/customization/</guid>
+      <guid>http://chinanf-boy.github.io/goreleaser-zh/customization/</guid>
       <description>GoReleaser通过提供多种自定义的.goreleaser.yml文件.
 您可以通过运行goreleaser init生成它，或者从头开始。默认值都是合理的,适合大多数项目.</description>
     </item>
     
     <item>
       <title>存档文件</title>
-      <link>https://goreleaser.com/archive/</link>
+      <link>http://chinanf-boy.github.io/goreleaser-zh/archive/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://goreleaser.com/archive/</guid>
+      <guid>http://chinanf-boy.github.io/goreleaser-zh/archive/</guid>
       <description>构建的二进制文件将与README和LICENSE文件一起存档到tar.gz文件。在archive里面您可以自定义存档名称,其他文件和格式.
 这是一个archive，指定了所有字段部分的注释:
 # .goreleaser.yml archive: # 存档 命名 模版. # 默认: # - if 格式为 `tar.gz` 或者 `zip`: # - `{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}` # - if 格式为 是 `binary`: # - `{{ .Binary }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}` name_template: &amp;#34;{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}&amp;#34; # 替换 存档名称中的 GOOS 和 GOARCH.</description>
@@ -152,10 +152,10 @@ package main import &amp;#34;fmt&amp;#34; var ( version = &amp;#34;dev&amp;#34; 
     
     <item>
       <title>Checksum-校验</title>
-      <link>https://goreleaser.com/checksum/</link>
+      <link>http://chinanf-boy.github.io/goreleaser-zh/checksum/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://goreleaser.com/checksum/</guid>
+      <guid>http://chinanf-boy.github.io/goreleaser-zh/checksum/</guid>
       <description>GoReleaser生成一个project_1.0.0_checksums.txt文件，并在发布时上传,以便您的用户可以验证下载的文件是否正确.
 该checksum部分允许自定义文件名:
 # .goreleaser.yml checksum: # 选择 checksums 的名称. # 默认为 `{{ .ProjectName }}_{{ .Version }}_checksums.txt`. name_template: &amp;#34;{{ .ProjectName }}_checksums.txt&amp;#34;  了解有关命名模板引擎的更多信息.
@@ -164,10 +164,10 @@ package main import &amp;#34;fmt&amp;#34; var ( version = &amp;#34;dev&amp;#34; 
     
     <item>
       <title>Signing-签名</title>
-      <link>https://goreleaser.com/sign/</link>
+      <link>http://chinanf-boy.github.io/goreleaser-zh/sign/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://goreleaser.com/sign/</guid>
+      <guid>http://chinanf-boy.github.io/goreleaser-zh/sign/</guid>
       <description>GoReleaser可以对部分或全部生成的存档进行签名。签名可确保您自己生成的存档与您的公共签名密钥，您的用户可以验证他们生成的签名.
 签名与校验文件结合使用,通常只对签校验文件就足够了.
 默认配置是，使用GnuPG的校验文件，创建签名和你的默认密钥。要启用签名,只需添加
@@ -177,10 +177,10 @@ package main import &amp;#34;fmt&amp;#34; var ( version = &amp;#34;dev&amp;#34; 
     
     <item>
       <title>Snapshots-快照</title>
-      <link>https://goreleaser.com/snapshots/</link>
+      <link>http://chinanf-boy.github.io/goreleaser-zh/snapshots/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://goreleaser.com/snapshots/</guid>
+      <guid>http://chinanf-boy.github.io/goreleaser-zh/snapshots/</guid>
       <description>有时我们希望生成项目的完整版本,但既不想验证任何内容,也不想将其上传到任何地方。GoReleaser支持这个--snapshot参数和snapshot的定制部分:
 # .goreleaser.yml snapshot: # 允许你更改生成的快照名称 # 默认为 `SNAPSHOT-{{.Commit}}`. name_template: SNAPSHOT-{{.Commit}}  了解有关命名模板引擎的更多信息.
  </description>
@@ -188,10 +188,10 @@ package main import &amp;#34;fmt&amp;#34; var ( version = &amp;#34;dev&amp;#34; 
     
     <item>
       <title>NFPM</title>
-      <link>https://goreleaser.com/nfpm/</link>
+      <link>http://chinanf-boy.github.io/goreleaser-zh/nfpm/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://goreleaser.com/nfpm/</guid>
+      <guid>http://chinanf-boy.github.io/goreleaser-zh/nfpm/</guid>
       <description>GoReleaser可以连到nfpm，生成和发布.deb和.rpm包.
 可用选项:
 #.goreleaser.yml nfpm: # 包名 # Default: `{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}` name_template: &amp;#34;{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}&amp;#34; # 替换 存档名称中的 GOOS 和 GOARCH. # Keys 应为合法 GOOSs 或 GOARCHs. # Values 应为 恰当的替代名称. # 默认是 空. replacements: amd64: 64-bit 386: 32-bit darwin: macOS linux: Tux # 你应用的 vendor. # 默认为 空 vendor: Drum Roll Inc.</description>
@@ -199,10 +199,10 @@ package main import &amp;#34;fmt&amp;#34; var ( version = &amp;#34;dev&amp;#34; 
     
     <item>
       <title>Snapcraft</title>
-      <link>https://goreleaser.com/snapcraft/</link>
+      <link>http://chinanf-boy.github.io/goreleaser-zh/snapcraft/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://goreleaser.com/snapcraft/</guid>
+      <guid>http://chinanf-boy.github.io/goreleaser-zh/snapcraft/</guid>
       <description>GoReleaser也可以生成snap包.snapcraft是一种新的打包格式,可以让您将项目直接发布到Ubuntu商店。从那里它将安装在所有的支持的Linux发行版，具有自动和更新事件。
 你可以在snapcraft 文档中阅读更多相关信息.
 可用选项:
@@ -211,10 +211,10 @@ package main import &amp;#34;fmt&amp;#34; var ( version = &amp;#34;dev&amp;#34; 
     
     <item>
       <title>Homebrew</title>
-      <link>https://goreleaser.com/homebrew/</link>
+      <link>http://chinanf-boy.github.io/goreleaser-zh/homebrew/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://goreleaser.com/homebrew/</guid>
+      <guid>http://chinanf-boy.github.io/goreleaser-zh/homebrew/</guid>
       <description>在发布到GitHub之后,GoReleaser可以生成，并发布一个*homebrew-tap*食谱放入您有权访问的存储库中.
 该brew部分指定应如何创建配方。你可以查看一下Homebrew文档和配方-formula，食谱-cookbook更多细节.
 # .goreleaser.yml brew: # 食谱的名称模板 # 默认为项目名称 name: myproject # 用于push 的 tap存储库。 github: owner: user name: homebrew-tap # 网址模板。 # 默认为 &amp;#34;https://github.com/&amp;lt;repo_owner&amp;gt;/&amp;lt;repo_name&amp;gt;/releases/download/{{ .Tag }}/{{ .ArtifactName }}&amp;#34; url_template: &amp;#34;http://github.mycompany.com/foo/bar/releases/{{ .Tag }}/{{ .ArtifactName }}&amp;#34; # 允许您设置自定义下载策略。 # 默认为空。 download_strategy: GitHubPrivateRepositoryReleaseDownloadStrategy # 提交存储库的 Git作者。 # 显示默认值。 commit_author: name: goreleaserbot email: goreleaser@carlosbecker.com # 存储库中，放置配方的文件夹。 # 默认为根文件夹。 folder: Formula # 为二进制文件的用户提供警告。 # 默认为空。 caveats: &amp;#34;How to use this binary&amp;#34; # 您应用的主页。 # 默认为空。 homepage: &amp;#34;https://example.</description>
@@ -222,10 +222,10 @@ package main import &amp;#34;fmt&amp;#34; var ( version = &amp;#34;dev&amp;#34; 
     
     <item>
       <title>Scoop</title>
-      <link>https://goreleaser.com/scoop/</link>
+      <link>http://chinanf-boy.github.io/goreleaser-zh/scoop/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://goreleaser.com/scoop/</guid>
+      <guid>http://chinanf-boy.github.io/goreleaser-zh/scoop/</guid>
       <description>在发布到GitHub之后,GoReleaser可以生成,并发布一个 Scoop App Manifest 到您有权访问的存储库.
 该scoop部分指定应如何创建清单。请参阅下面的注释示例:
 # .goreleaser.yml scoop: # 网址模板。 # 默认为&amp;#34;https://github.com/&amp;lt;repo_owner&amp;gt;/&amp;lt;repo_name&amp;gt;/releases/download/{{ .Tag }}/{{ .ArtifactName }}&amp;#34; url_template: &amp;#34;http://github.mycompany.com/foo/bar/releases/{{ .Tag }}/{{ .ArtifactName }}&amp;#34; # 将应用清单推送到的存储库。 bucket: owner: user name: scoop-bucket # 提交存储库的Git作者。 # 显示默认值。 commit_author: name: goreleaserbot email: goreleaser@carlosbecker.com # 您应用的主页。 # 默认为空。 homepage: &amp;#34;https://example.com/&amp;#34; # 你的应用程序的描述。 # 默认为空。 description: &amp;#34;Software to create fast and easy drum rolls.&amp;#34; # 你的应用许可证 # 默认为空。 license: MIT # 在应用程序更新之间，保留的数据 persist: - &amp;#34;data&amp;#34; - &amp;#34;config.</description>
@@ -233,10 +233,10 @@ package main import &amp;#34;fmt&amp;#34; var ( version = &amp;#34;dev&amp;#34; 
     
     <item>
       <title>Release-版告</title>
-      <link>https://goreleaser.com/release/</link>
+      <link>http://chinanf-boy.github.io/goreleaser-zh/release/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://goreleaser.com/release/</guid>
+      <guid>http://chinanf-boy.github.io/goreleaser-zh/release/</guid>
       <description>GoReleaser 根据当前标记,创建 GitHub 版本,上传所有存档，并根据自上一个标记以来的新提交生成更改日志-changelog.
 让我们来看看可以定制的release部分内容:
 # .goreleaser.yml release: # 要release的存储库。 # 默认值从原始远程URL中提取。 github: owner: user name: repo # 如果设置为true，则不会自动发布该版本。 # 默认值为false。 draft: true # 如果设置为true，则将发布tag为 预发布版本。 # 默认值为false。 prerelease: true # 您可以更改GitHub版本的名称。 # 默认是`` name_template: &amp;#39;{{.ProjectName}}-v{{.Version}} {{.Env.USER}}&amp;#39; # 您可以禁用此管道，将不上传到GitHub # 默认为false。 disable: true  了解有关命名模板引擎的更多信息.
@@ -246,10 +246,10 @@ package main import &amp;#34;fmt&amp;#34; var ( version = &amp;#34;dev&amp;#34; 
     
     <item>
       <title>S3</title>
-      <link>https://goreleaser.com/s3/</link>
+      <link>http://chinanf-boy.github.io/goreleaser-zh/s3/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://goreleaser.com/s3/</guid>
+      <guid>http://chinanf-boy.github.io/goreleaser-zh/s3/</guid>
       <description>至v0.74.0起，GoReleaser 支持将存档推送到 Amazon S3 和其他 API 兼容的云存储(例如minio).
 现在,实现非常简单,也可能不会涵盖所有用例。如果您需要其中一个用例,请打开问题/请求.
 定制 # .goreleaser.yml s3: # 你可以有多个s3配置 - # Bucket名称（不带 s3:// 前缀） # 默认为空。 bucket: my-bucket # AWS区域使用。 # 默认值为 us-east-1 region: us-east-1 # Bucket内 路径/名称 的模板。 # 默认为`{{ .ProjectName }}/{{ .Tag }}` folder: &amp;#39;foo/bar/{{.Version}}&amp;#39; # 如果你有多个profiles在〜/.aws配置中,  # 设置用于此s3配置的自定义配置文件。这将有助于定义哪个 # s3桶使用哪个配置文件。 # 默认为空。 profile: my-profile # Endpoint允许您设置自定义端点，这对 # 例如，想要将您的存档推送到minio服务器很有用。 # 默认为AWS S3 URL。 endpoint: &amp;#39;http://minio.foo.com&amp;#39; # 使用指定的固定ACL，设置对象的ACL。 # 默认为私有。 acl: public-read  了解有关命名模板引擎的更多信息.</description>
@@ -257,10 +257,10 @@ package main import &amp;#34;fmt&amp;#34; var ( version = &amp;#34;dev&amp;#34; 
     
     <item>
       <title>Artifactory-存档工厂</title>
-      <link>https://goreleaser.com/artifactory/</link>
+      <link>http://chinanf-boy.github.io/goreleaser-zh/artifactory/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://goreleaser.com/artifactory/</guid>
+      <guid>http://chinanf-boy.github.io/goreleaser-zh/artifactory/</guid>
       <description>至v0.38.0以来,GoReleaser支持构建和推送存档到Artifactory.
 这个怎么运作 您可以声明多个Artifactory实例。您builds部分生成的所有二进制文件，都将被推送到每个配置的Artifactory.
 如果您只有一个Artifactory实例，则配置就像添加上传目标和用户名一样简单.goreleaser.yml文件:
@@ -279,20 +279,20 @@ artifactories: - name: production target: http://&amp;lt;Your-Instance&amp;gt;:8
     
     <item>
       <title>Bintray</title>
-      <link>https://goreleaser.com/bintray/</link>
+      <link>http://chinanf-boy.github.io/goreleaser-zh/bintray/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://goreleaser.com/bintray/</guid>
+      <guid>http://chinanf-boy.github.io/goreleaser-zh/bintray/</guid>
       <description>这个怎么运作 上传Bintray是一个简单使用HTTP PUT的例子.
 前后必备条件:  在Bintray中，创建用户和/或组织 在Bintray中，创建一个通用存储库 创建一个名称与您的ProjectName名称匹配的包 发布后,不要忘记发布上传的文件(通过UI或REST API)  puts: - name: bintray target: https://api.bintray.com/content/user.or.org.name/generic.repo.name/{{ .ProjectName }}/{{ .Version }}/ username: goreleaser 请参阅HTTP Put的更多细节.</description>
     </item>
     
     <item>
       <title>HTTP Put</title>
-      <link>https://goreleaser.com/put/</link>
+      <link>http://chinanf-boy.github.io/goreleaser-zh/put/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://goreleaser.com/put/</guid>
+      <guid>http://chinanf-boy.github.io/goreleaser-zh/put/</guid>
       <description>GoReleaser支持构建和，只使用简单的HTTP PUT请求推送存档到HTTP服务器.
 这个怎么运作 您可以声明多个Put实例。您builds部分生成的所有二进制文件，将被推送到每个配置的Put.
 如果您只有一个Put实例,则配置就像添加上传目标和用户名到.goreleaser.yml文件一样简单:
@@ -313,10 +313,10 @@ puts: - name: production target: http://some.server/some/path/example-repo-local
     
     <item>
       <title>Docker</title>
-      <link>https://goreleaser.com/docker/</link>
+      <link>http://chinanf-boy.github.io/goreleaser-zh/docker/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://goreleaser.com/docker/</guid>
+      <guid>http://chinanf-boy.github.io/goreleaser-zh/docker/</guid>
       <description>至v0.31.0以来,GoReleaser支持构建和推送Docker镜像.
 这个怎么运作 您可以声明多个Docker镜像。它们将与您builds部分生成的二进制文件进行匹配.
 如果你只有一个build设置，配置就像添加镜像名称到你.goreleaser.yml文件一样简单:
@@ -330,10 +330,10 @@ FROMscratch COPY mybin / ENTRYPOINT[&amp;#34;/mybin&amp;#34;] 此配置将构建
     
     <item>
       <title>持续集成</title>
-      <link>https://goreleaser.com/ci/</link>
+      <link>http://chinanf-boy.github.io/goreleaser-zh/ci/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://goreleaser.com/ci/</guid>
+      <guid>http://chinanf-boy.github.io/goreleaser-zh/ci/</guid>
       <description>GoReleaser的第一次commit的构建思想，是作为CI集成的一部分运行.
 让我们看看如何让它在流行的CI软件上运行.
 Travis CI 您可能希望将项目设置为新tag，就自动Travis部署, 例如:
@@ -342,10 +342,10 @@ Travis CI 您可能希望将项目设置为新tag，就自动Travis部署, 例�
     
     <item>
       <title>弃用通知</title>
-      <link>https://goreleaser.com/deprecations/</link>
+      <link>http://chinanf-boy.github.io/goreleaser-zh/deprecations/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://goreleaser.com/deprecations/</guid>
+      <guid>http://chinanf-boy.github.io/goreleaser-zh/deprecations/</guid>
       <description>此页面将用于列出GoReleaser的弃用通知.
 弃用代码将在弃用之后，约6个月后删除.
 主动弃用通知 docker.image  自2018-10-20
@@ -364,10 +364,10 @@ git: short_hash: true fake: foo_template: &amp;#39;blah {{ .</description>
     
     <item>
       <title>赞助商</title>
-      <link>https://goreleaser.com/sponsors/</link>
+      <link>http://chinanf-boy.github.io/goreleaser-zh/sponsors/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://goreleaser.com/sponsors/</guid>
+      <guid>http://chinanf-boy.github.io/goreleaser-zh/sponsors/</guid>
       <description>贵公司是否使用goreleaser?帮助保持项目无错误，和功能丰富 ！赞助该项目吧.
     
 支持者 热爱我们的工作和社区?成为支持者.</description>
@@ -375,30 +375,30 @@ git: short_hash: true fake: foo_template: &amp;#39;blah {{ .</description>
     
     <item>
       <title>教程</title>
-      <link>https://goreleaser.com/tutorials/</link>
+      <link>http://chinanf-boy.github.io/goreleaser-zh/tutorials/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://goreleaser.com/tutorials/</guid>
+      <guid>http://chinanf-boy.github.io/goreleaser-zh/tutorials/</guid>
       <description>社区制作的教程.
  GoReleaser:从TravisCI构建，并推送Snapcraft软件包  想在这里添加你的教程吗? 去做吧! 编辑这个文件并打开拉动请求! 谢谢 !</description>
     </item>
     
     <item>
       <title>贡献</title>
-      <link>https://goreleaser.com/contrib/</link>
+      <link>http://chinanf-boy.github.io/goreleaser-zh/contrib/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://goreleaser.com/contrib/</guid>
+      <guid>http://chinanf-boy.github.io/goreleaser-zh/contrib/</guid>
       <description>此页面最终，将为那些想要为项目做出贡献的人提供信息.
 还请看看我们的存储库根目录下的CONTRIBUTING.md文件.</description>
     </item>
     
     <item>
       <title>关联</title>
-      <link>https://goreleaser.com/links/</link>
+      <link>http://chinanf-boy.github.io/goreleaser-zh/links/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://goreleaser.com/links/</guid>
+      <guid>http://chinanf-boy.github.io/goreleaser-zh/links/</guid>
       <description>跟上GitHub存储库的进度 跟随@goreleaser在Twitter上进行更新 Slack上聊聊GoReleaser,问题等。加入请使用这个链接 贡献指南  该项目遵守贡献者公约行为守则。通过参与,您应该支持此代码.</description>
     </item>
     

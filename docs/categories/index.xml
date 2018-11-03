@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Categories on GoReleaser</title>
-    <link>https://goreleaser.com/categories/</link>
-    <description>Recent content in Categories on GoReleaser</description>
+    <title>Categories on GoReleaser &amp; yobrave</title>
+    <link>http://chinanf-boy.github.io/goreleaser-zh/categories/</link>
+    <description>Recent content in Categories on GoReleaser &amp; yobrave</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
+    <language>zh-CN</language>
     <copyright>Made with ❤️ by GoReleaser contributors.</copyright>
     
-	<atom:link href="https://goreleaser.com/categories/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://chinanf-boy.github.io/goreleaser-zh/categories/index.xml" rel="self" type="application/rss+xml" />
     
     
   </channel>
