@@ -1,0 +1,157 @@
+
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>Homebrew &middot; GoReleaser</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		
+		
+		<meta http-equiv="content-language" content="en-us" />
+		<meta name="generator" content="Hugo 0.49.2" />
+		<link rel="stylesheet" href="https://goreleaser.com/css/index.css">
+		<link rel="apple-touch-icon" href="https://goreleaser.com/apple-touch-icon.png">
+		<link rel="shortcut icon" href="https://goreleaser.com/favicon.ico" type="image/x-icon">
+	</head>
+
+	<body>
+		<div class="Wrapper">
+			<div class="Container">
+				<div class="Header">
+  <a href="https://goreleaser.com/">
+	<div class="Title center">
+		
+			<img alt="GoReleaser Logo" src="https://avatars2.githubusercontent.com/u/24697112?v=3&amp;s=140" height="140" />
+		
+		<span class="text">GoReleaser</span>
+		<span class="subtext"></span>
+	</div>
+  </a>
+</div>
+
+				<div class="Content-wrapper">
+					<div class="Sidebar">
+	<div class="Menu">
+		<div class="item">
+			<a href="https://goreleaser.com/">Home</a>
+		</div>
+		
+
+		
+	</div>
+</div>
+
+					<div class="Content">
+						
+	<div class="Page" id="">
+		<h1>Homebrew</h1>
+		<p>在发布到GitHub之后,GoReleaser可以生成，并发布一个*homebrew-tap*食谱放入您有权访问的存储库中.</p>
+
+<p>该<code>brew</code>部分指定应如何创建配方。你可以查看一下<a href="https://github.com/Homebrew/brew/blob/master/docs/How-to-Create-and-Maintain-a-Tap.md">Homebrew文档</a>和<a href="https://github.com/Homebrew/brew/blob/master/docs/Formula-Cookbook.md">配方-formula，食谱-cookbook</a>更多细节.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#6272a4"># .goreleaser.yml</span>
+brew:
+  <span style="color:#6272a4"># 食谱的名称模板</span>
+  <span style="color:#6272a4"># 默认为项目名称</span>
+  name: myproject
+
+  <span style="color:#6272a4"># 用于push 的 tap存储库。</span>
+  github:
+    owner: user
+    name: homebrew-tap
+
+  <span style="color:#6272a4"># 网址模板。</span>
+  <span style="color:#6272a4"># 默认为 &#34;https://github.com/&lt;repo_owner&gt;/&lt;repo_name&gt;/releases/download/{{ .Tag }}/{{ .ArtifactName }}&#34;</span>
+  url_template: <span style="color:#f1fa8c">&#34;http://github.mycompany.com/foo/bar/releases/{{ .Tag }}/{{ .ArtifactName }}&#34;</span>
+
+  <span style="color:#6272a4"># 允许您设置自定义下载策略。</span>
+  <span style="color:#6272a4"># 默认为空。</span>
+  download_strategy: GitHubPrivateRepositoryReleaseDownloadStrategy
+
+  <span style="color:#6272a4"># 提交存储库的 Git作者。</span>
+  <span style="color:#6272a4"># 显示默认值。</span>
+  commit_author:
+    name: goreleaserbot
+    email: goreleaser@carlosbecker.com
+
+  <span style="color:#6272a4"># 存储库中，放置配方的文件夹。</span>
+  <span style="color:#6272a4"># 默认为根文件夹。</span>
+  folder: Formula
+
+  <span style="color:#6272a4"># 为二进制文件的用户提供警告。</span>
+  <span style="color:#6272a4"># 默认为空。</span>
+  caveats: <span style="color:#f1fa8c">&#34;How to use this binary&#34;</span>
+
+  <span style="color:#6272a4"># 您应用的主页。</span>
+  <span style="color:#6272a4"># 默认为空。</span>
+  homepage: <span style="color:#f1fa8c">&#34;https://example.com/&#34;</span>
+
+  <span style="color:#6272a4"># 你的应用程序的描述。</span>
+  <span style="color:#6272a4"># 默认为空。</span>
+  description: <span style="color:#f1fa8c">&#34;Software to create fast and easy drum rolls.&#34;</span>
+
+  <span style="color:#6272a4"># 设置此项，将阻止goreleaser实际提交更新配方</span>
+  <span style="color:#6272a4"># 替代为，配方文件仅存储在dist文件夹中，</span>
+  <span style="color:#6272a4"># 将push的责任给用户。</span>
+  <span style="color:#6272a4"># 默认值为false。</span>
+  skip_upload: <span style="color:#ff79c6">true</span>
+
+  <span style="color:#6272a4"># 你的包所依赖的包。</span>
+  dependencies:
+    - git
+    - zsh
+
+  <span style="color:#6272a4"># 与您的包冲突的包。</span>
+  conflicts:
+    - svn
+    - bash
+
+  <span style="color:#6272a4"># 指定作为服务运行的包。</span>
+  <span style="color:#6272a4"># 默认为空。</span>
+  plist: <span style="color:#f1fa8c">|
+</span><span style="color:#f1fa8c">    &lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;
+</span><span style="color:#f1fa8c">    ...</span>
+
+  <span style="color:#6272a4"># 你可以&#34;brew test&#34;你的配方。</span>
+  <span style="color:#6272a4"># 默认为空。</span>
+  test: <span style="color:#f1fa8c">|
+</span><span style="color:#f1fa8c">    system &#34;#{bin}/program --version&#34;
+</span><span style="color:#f1fa8c">    ...</span>
+
+  <span style="color:#6272a4"># brew的自定义安装脚本。</span>
+  <span style="color:#6272a4"># 默认为&#39;bin.install &#34;program&#34;&#39;。</span>
+  install: <span style="color:#f1fa8c">|
+</span><span style="color:#f1fa8c">    bin.install &#34;program&#34;
+</span><span style="color:#f1fa8c">    ...</span></code></pre></div>
+<blockquote>
+<p>了解有关<a href="/templates">命名模板引擎</a>的更多信息.</p>
+</blockquote>
+
+<p>通过定义<code>brew</code>部分,GoReleaser将负责发布Homebrew tap.假设当前标签是<code>v1.2.3</code>,上面的配置会生成一个<code>program.rb</code>配方, 其在<code>user/homebrew-tap</code>库的<code>Formula</code>文件夹中:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rb" data-lang="rb"><span style="color:#ff79c6">class</span> <span style="color:#50fa7b">Program</span> <span style="color:#ff79c6">&lt;</span> Formula
+  desc <span style="color:#f1fa8c">&#34;How to use this binary&#34;</span>
+  homepage <span style="color:#f1fa8c">&#34;https://github.com/user/repo&#34;</span>
+  url <span style="color:#f1fa8c">&#34;https://github.com/user/repo/releases/download/v1.2.3/program_v1.2.3_macOs_64bit.zip&#34;</span>
+  version <span style="color:#f1fa8c">&#34;v1.2.3&#34;</span>
+  sha256 <span style="color:#f1fa8c">&#34;9ee30fc358fae8d248a2d7538957089885da321dca3f09e3296fe2058e7fff74&#34;</span>
+
+  depends_on <span style="color:#f1fa8c">&#34;git&#34;</span>
+  depends_on <span style="color:#f1fa8c">&#34;zsh&#34;</span>
+
+  <span style="color:#ff79c6">def</span> <span style="color:#50fa7b">install</span>
+    bin<span style="color:#ff79c6">.</span>install <span style="color:#f1fa8c">&#34;program&#34;</span>
+  <span style="color:#ff79c6">end</span>
+<span style="color:#ff79c6">end</span></code></pre></div>
+<p><strong>重点</strong>:请注意,GoReleaser尚未生成有效的homebrew-core配方.生成的配方旨在发布为<a href="https://docs.brew.sh/Taps.html">homebrew taps</a>，并且目前的形式不会被任何官方brew软件库接受.</p>
+</div>
+
+						<div class="Footer">
+	<p>Made with ❤️ by GoReleaser contributors.</p>
+</div>
+<script src="https://goreleaser.com/js/index.js"></script>
+
+					</div>
+				</div>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,207 @@
+
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>命名 模版 &middot; GoReleaser</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		
+		
+		<meta http-equiv="content-language" content="en-us" />
+		<meta name="generator" content="Hugo 0.49.2" />
+		<link rel="stylesheet" href="https://goreleaser.com/css/index.css">
+		<link rel="apple-touch-icon" href="https://goreleaser.com/apple-touch-icon.png">
+		<link rel="shortcut icon" href="https://goreleaser.com/favicon.ico" type="image/x-icon">
+	</head>
+
+	<body>
+		<div class="Wrapper">
+			<div class="Container">
+				<div class="Header">
+  <a href="https://goreleaser.com/">
+	<div class="Title center">
+		
+			<img alt="GoReleaser Logo" src="https://avatars2.githubusercontent.com/u/24697112?v=3&amp;s=140" height="140" />
+		
+		<span class="text">GoReleaser</span>
+		<span class="subtext"></span>
+	</div>
+  </a>
+</div>
+
+				<div class="Content-wrapper">
+					<div class="Sidebar">
+	<div class="Menu">
+		<div class="item">
+			<a href="https://goreleaser.com/">Home</a>
+		</div>
+		
+
+		
+	</div>
+</div>
+
+					<div class="Content">
+						
+	<div class="Page" id="">
+		<h1>命名 模版</h1>
+		<p>GoReleaser的配置文件中的几个字段支持模板.</p>
+
+<p>这些字段通常以<code>_template</code>为后缀，但有时不是。每个部分的文档应明确指出模板可用的字段.</p>
+
+<p>在支持模板的字段上,此字段始终可用:</p>
+
+<table>
+<thead>
+<tr>
+<th align="center">键</th>
+<th align="center">描述</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="center"><code>.ProjectName</code></td>
+<td align="center">项目名称</td>
+</tr>
+
+<tr>
+<td align="center"><code>.Version</code></td>
+<td align="center">正在发布的版本(剥离<code>v</code>前缀)</td>
+</tr>
+
+<tr>
+<td align="center"><code>.Tag</code></td>
+<td align="center">当前的git标签</td>
+</tr>
+
+<tr>
+<td align="center"><code>.ShortCommit</code></td>
+<td align="center">git提交短哈希</td>
+</tr>
+
+<tr>
+<td align="center"><code>.FullCommit</code></td>
+<td align="center">git提交完整哈希</td>
+</tr>
+
+<tr>
+<td align="center"><code>.Commit</code></td>
+<td align="center">git commit hash(不建议使用)</td>
+</tr>
+
+<tr>
+<td align="center"><code>.GitURL</code></td>
+<td align="center">git远程网址</td>
+</tr>
+
+<tr>
+<td align="center"><code>.Major</code></td>
+<td align="center">该版本的主要部分</td>
+</tr>
+
+<tr>
+<td align="center"><code>.Minor</code></td>
+<td align="center">版本的次要部分</td>
+</tr>
+
+<tr>
+<td align="center"><code>.Patch</code></td>
+<td align="center">版本的补丁部分</td>
+</tr>
+
+<tr>
+<td align="center"><code>.Env</code></td>
+<td align="center">带有系统环境变量的地图</td>
+</tr>
+
+<tr>
+<td align="center"><code>.Date</code></td>
+<td align="center">RFC3339格式的当前UTC日期</td>
+</tr>
+
+<tr>
+<td align="center"><code>.Timestamp</code></td>
+<td align="center">Unix格式的当前UTC时间</td>
+</tr>
+</tbody>
+</table>
+
+<p>在与单个存档(例如,二进制名称)相关的字段上,您能有一些额外的字段:</p>
+
+<table>
+<thead>
+<tr>
+<th align="center">键</th>
+<th align="center">描述</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="center"><code>.Os</code></td>
+<td align="center"><code>GOOS</code>(通常允许更换)</td>
+</tr>
+
+<tr>
+<td align="center"><code>.Arch</code></td>
+<td align="center"><code>GOARCH</code>(通常允许更换)</td>
+</tr>
+
+<tr>
+<td align="center"><code>.Arm</code></td>
+<td align="center"><code>GOARM</code>(通常允许更换)</td>
+</tr>
+
+<tr>
+<td align="center"><code>.Binary</code></td>
+<td align="center">二进制名称</td>
+</tr>
+
+<tr>
+<td align="center"><code>.ArtifactName</code></td>
+<td align="center">存档名称</td>
+</tr>
+</tbody>
+</table>
+
+<p>在所有字段中,您都有以下可用功能:</p>
+
+<table>
+<thead>
+<tr>
+<th align="center">用法</th>
+<th align="center">描述</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="center"><code>time &quot;01/02/2006&quot;</code></td>
+<td align="center">指定格式的当前UTC时间</td>
+</tr>
+</tbody>
+</table>
+
+<p>使用所有这些字段,您可以按照自己想要的方式组合存档的名称:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">example_template: <span style="color:#f1fa8c">&#39;{{ .ProjectName }}_{{ .Env.USER }}_{{ time &#34;2006&#34; }}&#39;</span></code></pre></div>
+<p>例如,如果要将go版本添加到某个存档:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">foo_template: <span style="color:#f1fa8c">&#39;foo_{{ .Env.GOVERSION }}&#39;</span></code></pre></div>
+<p>然后你可以运行:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-console" data-lang="console">GOVERSION_NR=$(go version | awk &#39;{print $3;}&#39;) goreleaser</code></pre></div>
+<blockquote>
+<p>请注意,这些是假设的示例和<code>foo_template</code>和<code>example_template</code>字段不是有效的GoReleaser配置.</p>
+</blockquote>
+</div>
+
+						<div class="Footer">
+	<p>Made with ❤️ by GoReleaser contributors.</p>
+</div>
+<script src="https://goreleaser.com/js/index.js"></script>
+
+					</div>
+				</div>
+		</div>
+	</body>
+</html>

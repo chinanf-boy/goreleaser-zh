@@ -1,0 +1,110 @@
+
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>介绍 &middot; GoReleaser</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		
+		
+		<meta http-equiv="content-language" content="en-us" />
+		<meta name="generator" content="Hugo 0.49.2" />
+		<link rel="stylesheet" href="https://goreleaser.com/css/index.css">
+		<link rel="apple-touch-icon" href="https://goreleaser.com/apple-touch-icon.png">
+		<link rel="shortcut icon" href="https://goreleaser.com/favicon.ico" type="image/x-icon">
+	</head>
+
+	<body>
+		<div class="Wrapper">
+			<div class="Container">
+				<div class="Header">
+  <a href="https://goreleaser.com/">
+	<div class="Title center">
+		
+			<img alt="GoReleaser Logo" src="https://avatars2.githubusercontent.com/u/24697112?v=3&amp;s=140" height="140" />
+		
+		<span class="text">GoReleaser</span>
+		<span class="subtext"></span>
+	</div>
+  </a>
+</div>
+
+				<div class="Content-wrapper">
+					<div class="Sidebar">
+	<div class="Menu">
+		<div class="item">
+			<a href="https://goreleaser.com/">Home</a>
+		</div>
+		
+
+		
+	</div>
+</div>
+
+					<div class="Content">
+						
+	<div class="Page" id="">
+		<h1>介绍</h1>
+		
+
+<p><a href="https://github.com/goreleaser/goreleaser">GoReleaser</a>是Go项目的发布自动化工具,目标是简化构建,release和发布步骤,同时为所有步骤提供适当的自定义选项.</p>
+
+<p>GoReleaser是为CI工具而构建的;你只需要在您的构建脚本中<a href="#ci_integration">下载并执行它</a>。您可以通过<a href="#Customization">定制</a>一个关于你的发布过程的<code>.goreleaser.yml</code>文件.</p>
+
+<p>这个想法始于一个<a href="https://github.com/goreleaser/old-go-releaser">简单的shell脚本</a>，但它很快变得更加复杂，我也希望通过<code>Homebrew taps</code>发布二进制文件，这会使脚本变得更加hacky，所以我放弃了它，并在Go中重写了整个内容.</p>
+
+<h2 id="安装goreleaser">安装Goreleaser</h2>
+
+<p>有三种方法可以安装GoReleaser:</p>
+
+<h3 id="使用homebrew">使用homebrew</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">brew install goreleaser/tap/goreleaser</code></pre></div>
+<h3 id="使用snapcraft">使用snapcraft</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">snap install goreleaser</code></pre></div>
+<h3 id="使用scoop">使用Scoop</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">scoop bucket add goreleaser https://github.com/goreleaser/scoop-bucket.git
+scoop install goreleaser</code></pre></div>
+<blockquote>
+<p>查看<a href="https://github.com/goreleaser/homebrew-tap">tap源</a>，了解更多细节.</p>
+</blockquote>
+
+<h3 id="使用docker">使用Docker</h3>
+
+<p>您可以使用Docker来执行简单的发布.目前,提供的docker镜像不支持snapcraft.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-console" data-lang="console">$ docker run --rm --privileged \
+  -v $PWD:/go/src/github.com/user/repo \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  -w /go/src/github.com/user/repo \
+  -e GITHUB_TOKEN \
+  -e DOCKER_USERNAME \
+  -e DOCKER_PASSWORD \
+  goreleaser/goreleaser release</code></pre></div>
+<p>请注意,镜像几乎总是最后一个稳定的Go版本.</p>
+
+<p>如果您需要更多东西,我们鼓励您拥有自己的镜像。你可以使用GoReleaser自身的<a href="https://github.com/goreleaser/goreleaser/blob/master/Dockerfile">Dockerfile</a>作为示例.</p>
+
+<h2 id="手动">手动</h2>
+
+<p>从<a href="https://github.com/goreleaser/goreleaser/releases/latest">发布页面</a>下载您喜欢的味道，并手动安装.</p>
+
+<h3 id="用go-get">用go get</h3>
+
+<p>注意:此方法需要Go 1.10+.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-console" data-lang="console">$ go get -d github.com/goreleaser/goreleaser
+$ cd $GOPATH/src/github.com/goreleaser/goreleaser
+$ dep ensure -vendor-only
+$ make setup build</code></pre></div>
+<p>建议也运行下<code>dep ensure</code>，确保依赖项的版本正确.</p>
+</div>
+
+						<div class="Footer">
+	<p>Made with ❤️ by GoReleaser contributors.</p>
+</div>
+<script src="https://goreleaser.com/js/index.js"></script>
+
+					</div>
+				</div>
+		</div>
+	</body>
+</html>

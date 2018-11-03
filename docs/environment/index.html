@@ -1,0 +1,114 @@
+
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>变量 &middot; GoReleaser</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		
+		
+		<meta http-equiv="content-language" content="en-us" />
+		<meta name="generator" content="Hugo 0.49.2" />
+		<link rel="stylesheet" href="https://goreleaser.com/css/index.css">
+		<link rel="apple-touch-icon" href="https://goreleaser.com/apple-touch-icon.png">
+		<link rel="shortcut icon" href="https://goreleaser.com/favicon.ico" type="image/x-icon">
+	</head>
+
+	<body>
+		<div class="Wrapper">
+			<div class="Container">
+				<div class="Header">
+  <a href="https://goreleaser.com/">
+	<div class="Title center">
+		
+			<img alt="GoReleaser Logo" src="https://avatars2.githubusercontent.com/u/24697112?v=3&amp;s=140" height="140" />
+		
+		<span class="text">GoReleaser</span>
+		<span class="subtext"></span>
+	</div>
+  </a>
+</div>
+
+				<div class="Content-wrapper">
+					<div class="Sidebar">
+	<div class="Menu">
+		<div class="item">
+			<a href="https://goreleaser.com/">Home</a>
+		</div>
+		
+
+		
+	</div>
+</div>
+
+					<div class="Content">
+						
+	<div class="Page" id="">
+		<h1>变量</h1>
+		
+
+<h2 id="github令牌">GitHub令牌</h2>
+
+<p>GoReleaser需要一个<strong>GitHub API token</strong> ，其具有选择<code>repo</code>范围，具有部署到GitHub的权限。你可以创建一个<a href="https://github.com/settings/tokens/new">点-这里</a>.</p>
+
+<p>此<strong>token</strong>应添加到环境变量中<code>GITHUB_TOKEN</code>.以下是Travis CI的使用方法:<a href="https://docs.travis-ci.com/user/environment-variables/#Defining-Variables-in-Repository-Settings">在存储库设置中,定义环境变量</a>.</p>
+
+<p>或者,您可以在文件中提供GitHub令牌。默认情况下，GoReleaser会查看<code>~/.config/goreleaser/github_token</code>,您可以在<code>.goreleaser.yml</code>文件中更改它:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#6272a4"># .goreleaser.yml</span>
+env_files:
+  github_token: ~/.path/to/my/token</code></pre></div>
+<h2 id="github企业版">GitHub企业版</h2>
+
+<p>要使用GitHub Enterprise，你需要提供其URL搭配<code>.goreleaser.yml</code>配置文件，给予GoReleaser使用:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#6272a4"># .goreleaser.yml</span>
+github_urls:
+  api: https://git.company.com/api/v3/
+  upload: https://git.company.com/api/uploads/
+  download: https://git.company.com/</code></pre></div>
+<p>如果没有设置,则默认为GitHub的公共URL.</p>
+
+<p><strong>重要</strong>:小心URL,它们可能会从一个安装更改为另一个安装。如果他们错了,goreleaser会在某些时候失败，所以，在开启Issue之前，确保他们是对的。例如,参见<a href="https://github.com/goreleaser/goreleaser/issues/472">#472</a>.</p>
+
+<h2 id="dist文件夹">dist文件夹</h2>
+
+<p>默认情况下,GoReleaser将在<code>./dist</code>中创建其二进制存档。如有必须,可以通过在<code>.goreleaser.yml</code>文件的设置，更改它:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#6272a4"># .goreleaser.yml</span>
+dist: another-folder-that-is-not-dist</code></pre></div>
+<h2 id="使用-main-version">使用<code>main.version</code></h2>
+
+<p>默认的GoReleaser设置三个<em>ldflags</em>:</p>
+
+<ul>
+<li><code>main.version</code>: 当前的Git标签(<code>v</code>前缀被剥离)或snapshot的名称，若正在使用<code>--snapshot</code>参数</li>
+<li><code>main.commit</code>: 当前git commit 的 SHA码</li>
+<li><code>main.date</code>: <a href="https://golang.org/pkg/time/#pkg-constants">RFC3339</a>规范日期</li>
+</ul>
+
+<p>这样，在你的<code>main.go</code>文件，就能被使用:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#ff79c6">package</span> main
+
+<span style="color:#ff79c6">import</span> <span style="color:#f1fa8c">&#34;fmt&#34;</span>
+
+<span style="color:#8be9fd;font-style:italic">var</span> (
+	version = <span style="color:#f1fa8c">&#34;dev&#34;</span>
+	commit  = <span style="color:#f1fa8c">&#34;none&#34;</span>
+	date    = <span style="color:#f1fa8c">&#34;unknown&#34;</span>
+)
+
+<span style="color:#8be9fd;font-style:italic">func</span> main() {
+  fmt.Printf(<span style="color:#f1fa8c">&#34;%v, commit %v, built at %v&#34;</span>, version, commit, date)
+}</code></pre></div>
+<p>您可以通过更改<code>build</code>部分的<code>ldflags</code>选项，来覆盖它.</p>
+</div>
+
+						<div class="Footer">
+	<p>Made with ❤️ by GoReleaser contributors.</p>
+</div>
+<script src="https://goreleaser.com/js/index.js"></script>
+
+					</div>
+				</div>
+		</div>
+	</body>
+</html>

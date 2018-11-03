@@ -1,0 +1,1502 @@
+
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>自定义 &middot; GoReleaser</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		
+		
+		<meta http-equiv="content-language" content="en-us" />
+		<meta name="generator" content="Hugo 0.49.2" />
+		<link rel="stylesheet" href="https://goreleaser.com/css/index.css">
+		<link rel="apple-touch-icon" href="https://goreleaser.com/apple-touch-icon.png">
+		<link rel="shortcut icon" href="https://goreleaser.com/favicon.ico" type="image/x-icon">
+	</head>
+
+	<body>
+		<div class="Wrapper">
+			<div class="Container">
+				<div class="Header">
+  <a href="https://goreleaser.com/">
+	<div class="Title center">
+		
+			<img alt="GoReleaser Logo" src="https://avatars2.githubusercontent.com/u/24697112?v=3&amp;s=140" height="140" />
+		
+		<span class="text">GoReleaser</span>
+		<span class="subtext"></span>
+	</div>
+  </a>
+</div>
+
+				<div class="Content-wrapper">
+					<div class="Sidebar">
+	<div class="Menu">
+		<div class="item">
+			<a href="https://goreleaser.com/">Home</a>
+		</div>
+		
+
+		
+	</div>
+</div>
+
+					<div class="Content">
+						
+	<h1>自定义</h1>
+
+	<p>GoReleaser通过提供多种自定义的<code>.goreleaser.yml</code>文件.</p>
+
+<p>您可以通过运行<code>goreleaser init</code>生成它，或者从头开始。默认值都是合理的,适合大多数项目.</p>
+
+
+	<h2>Table of Contents:</h2>
+	<ul class="Menu" style="padding: 0px; position: inherit; margin: 15px 0 0px 20px;">
+		
+			<li class="item" style="padding: 0px">
+				<a href="#%e9%a1%b9%e7%9b%ae%20%e5%90%8d%e7%a7%b0">项目 名称</a>
+			</li>
+		
+			<li class="item" style="padding: 0px">
+				<a href="#%e5%85%a8%e5%b1%80%20%e9%92%a9%e5%ad%90">全局 钩子</a>
+			</li>
+		
+			<li class="item" style="padding: 0px">
+				<a href="#%e5%91%bd%e5%90%8d%20%e6%a8%a1%e7%89%88">命名 模版</a>
+			</li>
+		
+			<li class="item" style="padding: 0px">
+				<a href="#%e6%9e%84%e5%bb%ba">构建</a>
+			</li>
+		
+			<li class="item" style="padding: 0px">
+				<a href="#%e5%ad%98%e6%a1%a3%e6%96%87%e4%bb%b6">存档文件</a>
+			</li>
+		
+			<li class="item" style="padding: 0px">
+				<a href="#Checksum-%e6%a0%a1%e9%aa%8c">Checksum-校验</a>
+			</li>
+		
+			<li class="item" style="padding: 0px">
+				<a href="#Signing-%e7%ad%be%e5%90%8d">Signing-签名</a>
+			</li>
+		
+			<li class="item" style="padding: 0px">
+				<a href="#Snapshots-%e5%bf%ab%e7%85%a7">Snapshots-快照</a>
+			</li>
+		
+			<li class="item" style="padding: 0px">
+				<a href="#NFPM">NFPM</a>
+			</li>
+		
+			<li class="item" style="padding: 0px">
+				<a href="#Snapcraft">Snapcraft</a>
+			</li>
+		
+			<li class="item" style="padding: 0px">
+				<a href="#Homebrew">Homebrew</a>
+			</li>
+		
+			<li class="item" style="padding: 0px">
+				<a href="#Scoop">Scoop</a>
+			</li>
+		
+			<li class="item" style="padding: 0px">
+				<a href="#Release-%e7%89%88%e5%91%8a">Release-版告</a>
+			</li>
+		
+			<li class="item" style="padding: 0px">
+				<a href="#S3">S3</a>
+			</li>
+		
+			<li class="item" style="padding: 0px">
+				<a href="#Artifactory-%e5%ad%98%e6%a1%a3%e5%b7%a5%e5%8e%82">Artifactory-存档工厂</a>
+			</li>
+		
+			<li class="item" style="padding: 0px">
+				<a href="#Bintray">Bintray</a>
+			</li>
+		
+			<li class="item" style="padding: 0px">
+				<a href="#HTTP%20Put">HTTP Put</a>
+			</li>
+		
+			<li class="item" style="padding: 0px">
+				<a href="#Docker">Docker</a>
+			</li>
+		
+	</ul>
+
+	
+		<div class="Page" id="项目 名称">
+			<h1><a href="https://goreleaser.com/project/">项目 名称</a></h1>
+			<p>项目名称用于Brew公式,存档等的名称。如果没有给出,则将从Git项目的名称推断出.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#6272a4"># .goreleaser.yml</span>
+project_name: myproject</code></pre></div>
+		</div>
+	
+		<div class="Page" id="全局 钩子">
+			<h1><a href="https://goreleaser.com/hooks/">全局 钩子</a></h1>
+			<p>某些构建可能需要在构建之前，进行预构建步骤，例如,<code>go generate</code>。其<code>before</code>部分允许在构建开始之前，执行的全局钩子.</p>
+
+<p>配置很简单,这是一个完整的例子:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#6272a4"># .goreleaser.yml</span>
+before:
+  hooks:
+  - make clean
+  - go generate ./...
+  - go mod download</code></pre></div>
+<p>如果任何钩子失败，则中止构建过程.</p>
+
+<p>重点注意的是,你不能拥有&rdquo;复杂&rdquo;的命令,比如<code>bash -c &quot;echo foo bar&quot;</code>或者<code>foo | bar</code>或类似的东西。如果你需要做的事情，比只调用带有某些参数的命令更复杂,可以将它包装在shell脚本中，或者包含在你的<code>Makefile</code>脚本中.</p>
+
+		</div>
+	
+		<div class="Page" id="命名 模版">
+			<h1><a href="https://goreleaser.com/templates/">命名 模版</a></h1>
+			<p>GoReleaser的配置文件中的几个字段支持模板.</p>
+
+<p>这些字段通常以<code>_template</code>为后缀，但有时不是。每个部分的文档应明确指出模板可用的字段.</p>
+
+<p>在支持模板的字段上,此字段始终可用:</p>
+
+<table>
+<thead>
+<tr>
+<th align="center">键</th>
+<th align="center">描述</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="center"><code>.ProjectName</code></td>
+<td align="center">项目名称</td>
+</tr>
+
+<tr>
+<td align="center"><code>.Version</code></td>
+<td align="center">正在发布的版本(剥离<code>v</code>前缀)</td>
+</tr>
+
+<tr>
+<td align="center"><code>.Tag</code></td>
+<td align="center">当前的git标签</td>
+</tr>
+
+<tr>
+<td align="center"><code>.ShortCommit</code></td>
+<td align="center">git提交短哈希</td>
+</tr>
+
+<tr>
+<td align="center"><code>.FullCommit</code></td>
+<td align="center">git提交完整哈希</td>
+</tr>
+
+<tr>
+<td align="center"><code>.Commit</code></td>
+<td align="center">git commit hash(不建议使用)</td>
+</tr>
+
+<tr>
+<td align="center"><code>.GitURL</code></td>
+<td align="center">git远程网址</td>
+</tr>
+
+<tr>
+<td align="center"><code>.Major</code></td>
+<td align="center">该版本的主要部分</td>
+</tr>
+
+<tr>
+<td align="center"><code>.Minor</code></td>
+<td align="center">版本的次要部分</td>
+</tr>
+
+<tr>
+<td align="center"><code>.Patch</code></td>
+<td align="center">版本的补丁部分</td>
+</tr>
+
+<tr>
+<td align="center"><code>.Env</code></td>
+<td align="center">带有系统环境变量的地图</td>
+</tr>
+
+<tr>
+<td align="center"><code>.Date</code></td>
+<td align="center">RFC3339格式的当前UTC日期</td>
+</tr>
+
+<tr>
+<td align="center"><code>.Timestamp</code></td>
+<td align="center">Unix格式的当前UTC时间</td>
+</tr>
+</tbody>
+</table>
+
+<p>在与单个存档(例如,二进制名称)相关的字段上,您能有一些额外的字段:</p>
+
+<table>
+<thead>
+<tr>
+<th align="center">键</th>
+<th align="center">描述</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="center"><code>.Os</code></td>
+<td align="center"><code>GOOS</code>(通常允许更换)</td>
+</tr>
+
+<tr>
+<td align="center"><code>.Arch</code></td>
+<td align="center"><code>GOARCH</code>(通常允许更换)</td>
+</tr>
+
+<tr>
+<td align="center"><code>.Arm</code></td>
+<td align="center"><code>GOARM</code>(通常允许更换)</td>
+</tr>
+
+<tr>
+<td align="center"><code>.Binary</code></td>
+<td align="center">二进制名称</td>
+</tr>
+
+<tr>
+<td align="center"><code>.ArtifactName</code></td>
+<td align="center">存档名称</td>
+</tr>
+</tbody>
+</table>
+
+<p>在所有字段中,您都有以下可用功能:</p>
+
+<table>
+<thead>
+<tr>
+<th align="center">用法</th>
+<th align="center">描述</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="center"><code>time &quot;01/02/2006&quot;</code></td>
+<td align="center">指定格式的当前UTC时间</td>
+</tr>
+</tbody>
+</table>
+
+<p>使用所有这些字段,您可以按照自己想要的方式组合存档的名称:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">example_template: <span style="color:#f1fa8c">&#39;{{ .ProjectName }}_{{ .Env.USER }}_{{ time &#34;2006&#34; }}&#39;</span></code></pre></div>
+<p>例如,如果要将go版本添加到某个存档:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">foo_template: <span style="color:#f1fa8c">&#39;foo_{{ .Env.GOVERSION }}&#39;</span></code></pre></div>
+<p>然后你可以运行:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-console" data-lang="console">GOVERSION_NR=$(go version | awk &#39;{print $3;}&#39;) goreleaser</code></pre></div>
+<blockquote>
+<p>请注意,这些是假设的示例和<code>foo_template</code>和<code>example_template</code>字段不是有效的GoReleaser配置.</p>
+</blockquote>
+
+		</div>
+	
+		<div class="Page" id="构建">
+			<h1><a href="https://goreleaser.com/build/">构建</a></h1>
+			
+
+<p>可以通过多种方式自定义构建.您可以指定哪个<code>GOOS</code>,<code>GOARCH</code>和<code>GOARM</code>构建二进制文件(goreleaser将生成所有组合的矩阵)，您可以更改二进制文件的名称,命令参数,环境变量,钩子等.</p>
+
+<p>这是一个<code>builds</code>注释，指定了所有字段部分:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#6272a4"># .goreleaser.yml</span>
+builds:
+  <span style="color:#6272a4"># 你能用 多个 构建 定义，yaml格式</span>
+  -
+    <span style="color:#6272a4">#  main.go 文件或者主包的路径 .</span>
+    <span style="color:#6272a4"># 默认 `.`.</span>
+    main: ./cmd/main.go
+
+    <span style="color:#6272a4"># 命名 最终二进制文件的模版.</span>
+    <span style="color:#6272a4"># 默认是 项目目录的名称.</span>
+    binary: program
+
+    <span style="color:#6272a4"># 设置 命令参数到自定义的 build tags.</span>
+    <span style="color:#6272a4"># 默认是 空.</span>
+    flags:
+      - -tags=dev
+
+    <span style="color:#6272a4"># Custom asmflags templates.</span>
+    <span style="color:#6272a4"># 默认是 空.</span>
+    asmflags:
+      - -D mysymbol
+      - all=-trimpath={{.Env.GOPATH}}
+
+    <span style="color:#6272a4"># Custom gcflags templates.</span>
+    <span style="color:#6272a4"># 默认是 空.</span>
+    gcflags:
+      - all=-trimpath={{.Env.GOPATH}}
+      - ./dontoptimizeme=-N
+
+    <span style="color:#6272a4"># Custom ldflags templates.</span>
+    <span style="color:#6272a4"># 默认是 `-s -w -X main.version={{.Version}} -X main.commit={{.Commit}} -X main.date={{.Date}}`.</span>
+    ldflags:
+     - -s -w -X main.build={{.Version}}
+     - ./usemsan=-msan
+
+    <span style="color:#6272a4"># 运行构建期间的环境变量.</span>
+    <span style="color:#6272a4"># 默认是 空.</span>
+    env:
+      - CGO_ENABLED=<span style="color:#bd93f9">0</span>
+
+    <span style="color:#6272a4"># GOOS 构建列表r.</span>
+    <span style="color:#6272a4"># 更多内容，请参考: https://golang.org/doc/install/source#environment</span>
+    <span style="color:#6272a4"># 默认为 darwin 和 linux.</span>
+    goos:
+      - freebsd
+      - windows
+
+    <span style="color:#6272a4"># GOARCH 构建系结构.</span>
+    <span style="color:#6272a4"># 更多内容，请参考: https://golang.org/doc/install/source#environment</span>
+    <span style="color:#6272a4"># 默认为 386 和 amd64.</span>
+    goarch:
+      - amd64
+      - arm
+      - arm64
+
+    <span style="color:#6272a4"># GOARM 要构建的 ， 若GOARCH 是 arm时.</span>
+    <span style="color:#6272a4"># 更多内容，请参考: https://golang.org/doc/install/source#environment</span>
+    <span style="color:#6272a4"># 默认是 只有 6.</span>
+    goarm:
+      - <span style="color:#bd93f9">6</span>
+      - <span style="color:#bd93f9">7</span>
+
+    <span style="color:#6272a4">#  GOOS + GOARCH + GOARM 组合忽略列表.</span>
+    <span style="color:#6272a4"># 默认是 空.</span>
+    ignore:
+      - goos: darwin
+        goarch: <span style="color:#bd93f9">386</span>
+      - goos: linux
+        goarch: arm
+        goarm: <span style="color:#bd93f9">7</span>
+
+    <span style="color:#6272a4"># Hooks 可用于 自定义最终二进制文件,</span>
+    <span style="color:#6272a4"># 例如, 运行 generators.</span>
+    <span style="color:#6272a4"># 默认 都为 空.</span>
+    hooks:
+      pre: rice embed-go
+      post: ./script.sh</code></pre></div>
+<blockquote>
+<p>了解有关<a href="/templates">命名模板引擎</a>的更多信息。</p>
+</blockquote>
+
+<h2 id="将环境变量传递给ldflags">将环境变量传递给ldflags</h2>
+
+<p>你可以通过在模板中使用<code>{{ .Env.VARIABLE_NAME }}</code>来做到这一点,例如:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">builds:
+  - ldflags:
+   - -s -w -X <span style="color:#f1fa8c">&#34;main.goversion={{.Env.GOVERSION}}&#34;</span></code></pre></div>
+<p>然后你可以运行:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-console" data-lang="console">GOVERSION=$(go version) goreleaser</code></pre></div>
+<h2 id="go模块">Go模块</h2>
+
+<p>如果你使用Go 1.11的<strong>go模块</strong>或<strong>vgo</strong>，当GoReleaser运行时,它可能会尝试下载依赖项。由于多个构建并行运行,因此很可能会失败.</p>
+
+<p>你可以在启动<code>goreleaser</code>之前，通过运行<code>go mod download</code>解决这个问题，或者添加一个<a href="/hooks">hook</a>，像这样<code>.goreleaser.yaml</code>文件:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">before:
+  hooks:
+  - go mod download
+<span style="color:#6272a4"># rest of the file...</span></code></pre></div>
+		</div>
+	
+		<div class="Page" id="存档文件">
+			<h1><a href="https://goreleaser.com/archive/">存档文件</a></h1>
+			
+
+<p>构建的二进制文件将与<code>README</code>和<code>LICENSE</code>文件一起存档到<code>tar.gz</code>文件。在<code>archive</code>里面您可以自定义存档名称,其他文件和格式.</p>
+
+<p>这是一个<code>archive</code>，指定了所有字段部分的注释:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#6272a4"># .goreleaser.yml</span>
+archive:
+  <span style="color:#6272a4"># 存档 命名 模版.</span>
+  <span style="color:#6272a4"># 默认:</span>
+  <span style="color:#6272a4"># - if 格式为 `tar.gz` 或者 `zip`:</span>
+  <span style="color:#6272a4">#   - `{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}`</span>
+  <span style="color:#6272a4"># - if 格式为 是 `binary`:</span>
+  <span style="color:#6272a4">#   - `{{ .Binary }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}`</span>
+  name_template: <span style="color:#f1fa8c">&#34;{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}&#34;</span>
+
+  <span style="color:#6272a4"># 替换 存档名称中的 GOOS 和 GOARCH.</span>
+  <span style="color:#6272a4"># Keys 应为合法 GOOSs 或 GOARCHs.</span>
+  <span style="color:#6272a4"># Values 应为 恰当的替代名称.</span>
+  <span style="color:#6272a4"># 默认是 空.</span>
+  replacements:
+    amd64: <span style="color:#bd93f9">64</span>-bit
+    <span style="color:#bd93f9">386</span>: <span style="color:#bd93f9">32</span>-bit
+    darwin: macOS
+    linux: Tux
+
+  <span style="color:#6272a4"># 设为 true, 如果你想 所有 文件都包裹进存档文件.</span>
+  <span style="color:#6272a4"># 若设为 true 和 你 解压&#39;goreleaser_Linux_arm64.tar.gz&#39;,</span>
+  <span style="color:#6272a4"># 你会得到 &#39;goreleaser_Linux_arm64&#39; 文件夹.</span>
+  <span style="color:#6272a4"># If 设为 false, 所有文件都分离开来.</span>
+  <span style="color:#6272a4"># 默认是 false.</span>
+  wrap_in_directory: <span style="color:#ff79c6">true</span>
+
+  <span style="color:#6272a4"># Archive 格式. 合法选项 `tar.gz`, `zip` and `binary`.</span>
+  <span style="color:#6272a4"># 若 `binary`, 压缩文件不创建，且 binaries 代之直接上传.</span>
+  <span style="color:#6272a4"># 与 name_template 合作 和 下面 files字段中会被忽略.</span>
+  <span style="color:#6272a4"># 默认是 `tar.gz`.</span>
+  format: zip
+
+  <span style="color:#6272a4"># 可根据 GOOSs，指定 格式.</span>
+  <span style="color:#6272a4"># 常见情况是，window下为zip格式.</span>
+  <span style="color:#6272a4"># 默认是 空.</span>
+  format_overrides:
+    - goos: windows
+      format: zip
+
+  <span style="color:#6272a4"># 你想加入到 archive，匹配的 files/globs，.</span>
+  <span style="color:#6272a4"># 默认为匹配 `LICENCE*`, `LICENSE*` ,</span>
+  <span style="color:#6272a4"># `README*` 和 `CHANGELOG*` (大小写略) 的文件.</span>
+  files:
+    - LICENSE.txt
+    - README.md
+    - CHANGELOG.md
+    - docs/*
+    - design/<span style="color:#ff79c6">*.png</span>
+    - templates/<span style="color:#ff79c6">**/*</span></code></pre></div>
+<blockquote>
+<p>了解有关<a href="/templates">命名模板引擎</a>的更多信息.</p>
+</blockquote>
+
+<p>您可以使用 glob表示法 添加整个文件夹,其子文件夹和文件,例如:<code>myfolder/**/*</code>.</p>
+
+<h2 id="仅包装二进制文件">仅包装二进制文件</h2>
+
+<p>由于，如果文件列表为空，GoReleaser将始终添加<code>README</code>和<code>LICENSE</code>文件到存档。所以您需要提供把 archive 下的<code>files</code>填充.</p>
+
+<p>极客工作，是使用这样的东西:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#6272a4"># goreleaser.yml</span>
+archive:
+  files:
+  - none*</code></pre></div>
+<p>这将<strong>添加</strong> <code>none*</code> <strong>glob匹配</strong>的所有文件，假设您<strong>没有</strong>与该glob匹配的任何文件,<strong>只</strong>会将二进制文件添加到存档中.</p>
+
+<p>有关更多信息,请查看<a href="https://github.com/goreleaser/goreleaser/issues/602">#602</a></p>
+
+		</div>
+	
+		<div class="Page" id="Checksum-校验">
+			<h1><a href="https://goreleaser.com/checksum/">Checksum-校验</a></h1>
+			<p>GoReleaser生成一个<code>project_1.0.0_checksums.txt</code>文件，并在发布时上传,以便您的用户可以验证下载的文件是否正确.</p>
+
+<p>该<code>checksum</code>部分允许自定义文件名:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#6272a4"># .goreleaser.yml</span>
+checksum:
+  <span style="color:#6272a4"># 选择 checksums 的名称.</span>
+  <span style="color:#6272a4"># 默认为 `{{ .ProjectName }}_{{ .Version }}_checksums.txt`.</span>
+  name_template: <span style="color:#f1fa8c">&#34;{{ .ProjectName }}_checksums.txt&#34;</span></code></pre></div>
+<blockquote>
+<p>了解有关<a href="/templates">命名模板引擎</a>的更多信息.</p>
+</blockquote>
+
+		</div>
+	
+		<div class="Page" id="Signing-签名">
+			<h1><a href="https://goreleaser.com/sign/">Signing-签名</a></h1>
+			<p>GoReleaser可以对部分或全部生成的存档进行签名。签名可确保您自己生成的存档与您的公共签名密钥，您的用户可以验证他们生成的签名.</p>
+
+<p>签名与校验文件结合使用,通常只对签校验文件就足够了.</p>
+
+<p>默认配置是，使用<a href="https://www.gnupg.org/">GnuPG</a>的校验文件，创建签名和你的默认密钥。要启用签名,只需添加</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#6272a4"># goreleaser.yml</span>
+sign:
+   artifacts: checksum</code></pre></div>
+<p>要自定义签名流程,您可以使用以下选项:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#6272a4"># .goreleaser.yml</span>
+sign:
+  <span style="color:#6272a4">#  signature 文件名称.</span>
+  <span style="color:#6272a4"># &#39;${artifact}&#39; 是应 sign 的存档路径.</span>
+  <span style="color:#6272a4">#</span>
+  <span style="color:#6272a4"># signature: &#34;${artifact}.sig&#34;</span>
+
+  <span style="color:#6272a4"># signature 命令路径</span>
+  <span style="color:#6272a4">#</span>
+  <span style="color:#6272a4"># cmd: gpg</span>
+
+  <span style="color:#6272a4"># 上面 command 的参数</span>
+  <span style="color:#6272a4">#</span>
+  <span style="color:#6272a4"># 使用特定 key，去sign </span>
+  <span style="color:#6272a4"># args: [&#34;-u&#34;, &#34;&lt;key id, fingerprint, email, ...&gt;&#34;, &#34;--output&#34;, &#34;${signature}&#34;, &#34;--detach-sign&#34;, &#34;${artifact}&#34;]</span>
+  <span style="color:#6272a4">#</span>
+  <span style="color:#6272a4"># args: [&#34;--output&#34;, &#34;${signature}&#34;, &#34;--detach-sign&#34;, &#34;${artifact}&#34;]</span>
+
+
+  <span style="color:#6272a4"># 哪些要 sign</span>
+  <span style="color:#6272a4">#</span>
+  <span style="color:#6272a4">#   checksum: 只有 checksum 文件(s)</span>
+  <span style="color:#6272a4">#   all:      所有</span>
+  <span style="color:#6272a4">#   none:     不 signing</span>
+  <span style="color:#6272a4">#</span>
+  <span style="color:#6272a4"># artifacts: none</span></code></pre></div>
+		</div>
+	
+		<div class="Page" id="Snapshots-快照">
+			<h1><a href="https://goreleaser.com/snapshots/">Snapshots-快照</a></h1>
+			<p>有时我们希望生成项目的完整版本,但既不想验证任何内容,也不想将其上传到任何地方。GoReleaser支持这个<code>--snapshot</code>参数和<code>snapshot</code>的定制部分:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#6272a4"># .goreleaser.yml</span>
+snapshot:
+  <span style="color:#6272a4"># 允许你更改生成的快照名称</span>
+  <span style="color:#6272a4"># 默认为 `SNAPSHOT-{{.Commit}}`.</span>
+  name_template: SNAPSHOT-{{.Commit}}</code></pre></div>
+<blockquote>
+<p>了解有关<a href="/templates">命名模板引擎</a>的更多信息.</p>
+</blockquote>
+
+		</div>
+	
+		<div class="Page" id="NFPM">
+			<h1><a href="https://goreleaser.com/nfpm/">NFPM</a></h1>
+			<p>GoReleaser可以连到<a href="https://github.com/goreleaser/nfpm">nfpm</a>，生成和发布<code>.deb</code>和<code>.rpm</code>包.</p>
+
+<p>可用选项:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#6272a4">#.goreleaser.yml</span>
+nfpm:
+  <span style="color:#6272a4"># 包名</span>
+  <span style="color:#6272a4"># Default: `{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}`</span>
+  name_template: <span style="color:#f1fa8c">&#34;{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}&#34;</span>
+
+  <span style="color:#6272a4"># 替换 存档名称中的 GOOS 和 GOARCH.</span>
+  <span style="color:#6272a4"># Keys 应为合法 GOOSs 或 GOARCHs.</span>
+  <span style="color:#6272a4"># Values 应为 恰当的替代名称.</span>
+  <span style="color:#6272a4"># 默认是 空.</span>
+  replacements:
+    amd64: <span style="color:#bd93f9">64</span>-bit
+    <span style="color:#bd93f9">386</span>: <span style="color:#bd93f9">32</span>-bit
+    darwin: macOS
+    linux: Tux
+
+  <span style="color:#6272a4"># 你应用的 vendor.</span>
+  <span style="color:#6272a4"># 默认为 空</span>
+  vendor: Drum Roll Inc.
+  <span style="color:#6272a4"># 你应用的 homepage.</span>
+  <span style="color:#6272a4"># 默认为 空</span>
+  homepage: https://example.com/
+
+  <span style="color:#6272a4"># 你应用的 主项目人 (可能时 you).</span>
+  <span style="color:#6272a4"># 默认为 空</span>
+  maintainer: Drummer &lt;drum-roll@example.com<span style="color:#f1fa8c">&gt;
+</span><span style="color:#f1fa8c">
+</span><span style="color:#f1fa8c">  # 你应用的 描述.</span>
+  <span style="color:#6272a4"># 默认为 空</span>
+  description: Software to create fast and easy drum rolls.
+
+  <span style="color:#6272a4"># 你应用的 license.</span>
+  <span style="color:#6272a4"># 默认为 空</span>
+  license: Apache <span style="color:#bd93f9">2.0</span>
+
+  <span style="color:#6272a4"># 生成格式.</span>
+  formats:
+    - deb
+    - rpm
+
+  <span style="color:#6272a4"># 你包所依赖的包。</span>
+  dependencies:
+    - git
+    - zsh
+
+  <span style="color:#6272a4"># 软件包建议安装的软件包。</span>
+  <span style="color:#6272a4"># 对于RPM软件包，需要rpmbuild &gt;= 4.13</span>
+  recommends:
+    - bzr
+    - gtk
+
+  <span style="color:#6272a4"># 软件包建议安装的软件包。</span>
+  <span style="color:#6272a4"># 对于RPM软件包，需要rpmbuild &gt;= 4.13</span>
+  suggests:
+    - cvs
+    - ksh
+
+  <span style="color:#6272a4"># 与您的包冲突的包。</span>
+  conflicts:
+    - svn
+    - bash
+
+  <span style="color:#6272a4"># 覆盖二进制文件的默认目的地为 /usr/local/bin</span>
+  bindir: /usr/bin
+
+  <span style="color:#6272a4"># 应该由你程序实现创建和管理的空文件夹。</span>
+  <span style="color:#6272a4"># 默认为空</span>
+  empty_folders:
+  - /var/log/foobar
+
+  <span style="color:#6272a4"># 要添加到包中的文件或目录（超出二进制文件）。</span>
+  <span style="color:#6272a4"># Key 是从 源 路径/globs 中获取文件。</span>
+  <span style="color:#6272a4"># Value 是包中文件的目标位置。</span>
+  files:
+    <span style="color:#f1fa8c">&#34;scripts/etc/init.d/&#34;</span>: <span style="color:#f1fa8c">&#34;/etc/init.d&#34;</span>
+    <span style="color:#f1fa8c">&#34;path/**/glob&#34;</span>: <span style="color:#f1fa8c">&#34;/var/foo/glob&#34;</span>
+
+  <span style="color:#6272a4"># 要添加到包中的配置文件。它们大致与上面fiels相同</span>
+  <span style="color:#6272a4"># ，但包管理器对待它们方式不同（同时</span>
+  <span style="color:#6272a4"># 卸载，主要是）。</span>
+  <span style="color:#6272a4"># Key 是从 源 路径/globs 中获取文件。</span>
+  <span style="color:#6272a4"># Value 是包中文件的目标位置。</span>
+  config_files:
+    <span style="color:#f1fa8c">&#34;tmp/app_generated.conf&#34;</span>: <span style="color:#f1fa8c">&#34;/etc/app.conf&#34;</span>
+    <span style="color:#f1fa8c">&#34;conf/*.conf&#34;</span>: <span style="color:#f1fa8c">&#34;/etc/foo/&#34;</span>
+
+  <span style="color:#6272a4"># 在安装包期间执行的脚本。</span>
+  <span style="color:#6272a4"># Key 是安装过程的阶段</span>
+  <span style="color:#6272a4"># Values 是将要执行的脚本的路径</span>
+  scripts:
+    preinstall: <span style="color:#f1fa8c">&#34;scripts/preinstall.sh&#34;</span>
+    postinstall: <span style="color:#f1fa8c">&#34;scripts/postinstall.sh&#34;</span>
+    preremove: <span style="color:#f1fa8c">&#34;scripts/preremove.sh&#34;</span>
+    postremove: <span style="color:#f1fa8c">&#34;scripts/postremove.sh&#34;</span>
+
+  <span style="color:#6272a4"># 每个包格式，可以覆盖一些属性。</span>
+  overrides:
+    deb:
+      conflicts:
+        - subversion
+      dependencies:
+        - git
+      suggests:
+        - gitk
+      recommends:
+        - tig
+      empty_folders:
+      - /var/log/bar
+    rpm:
+      replacements:
+        amd64: x86_64
+      name_template: <span style="color:#f1fa8c">&#34;{{ .ProjectName }}-{{ .Version }}-{{ .Arch }}&#34;</span>
+      files:
+        <span style="color:#f1fa8c">&#34;tmp/man.gz&#34;</span>: <span style="color:#f1fa8c">&#34;/usr/share/man/man8/app.8.gz&#34;</span>
+      config_files:
+        <span style="color:#f1fa8c">&#34;tmp/app_generated.conf&#34;</span>: <span style="color:#f1fa8c">&#34;/etc/app-rpm.conf&#34;</span>
+      scripts:
+        preinstall: <span style="color:#f1fa8c">&#34;scripts/preinstall-rpm.sh&#34;</span></code></pre></div>
+<blockquote>
+<p>了解有关<a href="/templates">命名模板引擎</a>的更多信息.</p>
+</blockquote>
+
+<p>请注意,GoReleaser不会为你安装<code>rpmbuild</code>或任何依赖.就目前而言,如果要生成rpm包，<code>rpmbuild</code>是需要的, 建议使用<code>apt-get install rpm</code>要么<code>brew install rpm</code>安装它.</p>
+
+		</div>
+	
+		<div class="Page" id="Snapcraft">
+			<h1><a href="https://goreleaser.com/snapcraft/">Snapcraft</a></h1>
+			<p>GoReleaser也可以生成<code>snap</code>包.<a href="http://snapcraft.io/">snapcraft</a>是一种新的打包格式,可以让您将项目直接发布到Ubuntu商店。从那里它将安装在所有的<a href="https://snapcraft.io/docs/core/install">支持的Linux发行版</a>，具有自动和更新事件。</p>
+
+<p>你可以在<a href="https://snapcraft.io/docs/">snapcraft 文档</a>中阅读更多相关信息.</p>
+
+<p>可用选项:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#6272a4"># .goreleaser.yml</span>
+snapcraft:
+  <span style="color:#6272a4"># 您可以更改包的名称。</span>
+  <span style="color:#6272a4"># Default: `{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}`</span>
+  name_template: <span style="color:#f1fa8c">&#34;{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}&#34;</span>
+
+  <span style="color:#6272a4"># 替换包名称中的 GOOS和GOARCH。</span>
+  <span style="color:#6272a4"># key 应该是有效的 GOOS或GOARCH。</span>
+  <span style="color:#6272a4"># value 是各自的替代品。</span>
+  <span style="color:#6272a4"># 默认值为空。</span>
+  replacements:
+    amd64: <span style="color:#bd93f9">64</span>-bit
+    <span style="color:#bd93f9">386</span>: <span style="color:#bd93f9">32</span>-bit
+    darwin: macOS
+    linux: Tux
+
+  <span style="color:#6272a4"># snap的名称。这是可选的。</span>
+  <span style="color:#6272a4"># 默认为项目名称。</span>
+  name: drumroll
+
+  <span style="color:#6272a4"># 然后将snap发布到snapcraft商店。</span>
+  <span style="color:#6272a4"># 请记住，您首先需要`snapcraft login`。</span>
+  <span style="color:#6272a4"># 默认值为false。</span>
+  publish: <span style="color:#ff79c6">true</span>
+
+  <span style="color:#6272a4"># 您提供了惊人的snap软件。</span>
+  <span style="color:#6272a4"># 最多79个字符。</span>
+  summary: Software to create fast and easy drum rolls.
+
+  <span style="color:#6272a4"># 这是您的snap的描述。你有一两段话要告诉你</span>
+  <span style="color:#6272a4"># 关于snap的最重要的故事。保持在100字以内，</span>
+  <span style="color:#6272a4"># 我们住在推文空间，你的描述希望在短时间内看起来很好</span>
+  <span style="color:#6272a4"># 商店。</span>
+  description: <span style="color:#f1fa8c">|
+</span><span style="color:#f1fa8c">    这是最好的滚筒应用。</span>
+     安装它，愉快！
+
+  <span style="color:#6272a4"># 在它准备好了，将snap发布给所有用户之前的挡板，</span>
+  <span style="color:#6272a4"># `devel`将让你只发布到&#39;edge`和&#39;beta`版本到商店</span>
+  <span style="color:#6272a4"># `stable`也会让你发布`candidate`和`stable`版本</span>
+  <span style="color:#6272a4"># 有关该频道的更多信息：</span>
+  <span style="color:#6272a4"># Https://snapcraft.io/docs/reference/channels</span>
+  grade: stable
+
+  <span style="color:#6272a4"># 您可以设置snap，以遵循三种不同的限制策略：</span>
+  <span style="color:#6272a4"># `strict`，`devmode`和`classic`。</span>
+  <span style="color:#6272a4"># 快速严格的限制建议仅在您自己的命名空间中进行读写。</span>
+  <span style="color:#6272a4"># 额外严格捕获的权限可以声明为应用程序的“插件”，这里</span>
+  <span style="color:#6272a4"># 我稍后会解释。有关限制的更多信息：</span>
+  <span style="color:#6272a4"># Https://snapcraft.io/docs/reference/confinement</span>
+  confinement: strict
+
+  <span style="color:#6272a4"># GoReleaser构建的每个二进制文件都是snap中的应用程序。在这一部分</span>
+  <span style="color:#6272a4"># 您可以声明这些二进制文件的其他详细信息。这是可选的。</span>
+  apps:
+
+    <span style="color:#6272a4"># 应用程序的名称必须，与二进制构建的名称或snap的名称相同。</span>
+    drumroll:
+
+      <span style="color:#6272a4"># 如果您的应用需要其他权限，才能在其默认值之外工作</span>
+      <span style="color:#6272a4"># 下面空间中，宣布它们。</span>
+      <span style="color:#6272a4"># 您可以阅读有关可用插头的文档</span>
+      <span style="color:#6272a4"># 允许的可用内容：</span>
+      <span style="color:#6272a4"># Https://snapcraft.io/docs/reference/interfaces。</span>
+      plugs: [<span style="color:#f1fa8c">&#34;home&#34;</span>, <span style="color:#f1fa8c">&#34;network&#34;</span>]
+
+      <span style="color:#6272a4"># 如果您希望自己的应用始终自动后台启动</span>
+      <span style="color:#6272a4"># 你可以使它成为一个简单的守护进程。</span>
+      daemon: simple
+
+      <span style="color:#6272a4"># 如果要将args传递给二进制文件，可以使用</span>
+      <span style="color:#6272a4"># Args选项。</span>
+      args: --foo</code></pre></div>
+<blockquote>
+<p>了解有关<a href="/templates">命名模板引擎</a>的更多信息.</p>
+</blockquote>
+
+<p>请注意,GoReleaser不会安装<code>snapcraft</code>，或它的任何依赖.</p>
+
+		</div>
+	
+		<div class="Page" id="Homebrew">
+			<h1><a href="https://goreleaser.com/homebrew/">Homebrew</a></h1>
+			<p>在发布到GitHub之后,GoReleaser可以生成，并发布一个*homebrew-tap*食谱放入您有权访问的存储库中.</p>
+
+<p>该<code>brew</code>部分指定应如何创建配方。你可以查看一下<a href="https://github.com/Homebrew/brew/blob/master/docs/How-to-Create-and-Maintain-a-Tap.md">Homebrew文档</a>和<a href="https://github.com/Homebrew/brew/blob/master/docs/Formula-Cookbook.md">配方-formula，食谱-cookbook</a>更多细节.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#6272a4"># .goreleaser.yml</span>
+brew:
+  <span style="color:#6272a4"># 食谱的名称模板</span>
+  <span style="color:#6272a4"># 默认为项目名称</span>
+  name: myproject
+
+  <span style="color:#6272a4"># 用于push 的 tap存储库。</span>
+  github:
+    owner: user
+    name: homebrew-tap
+
+  <span style="color:#6272a4"># 网址模板。</span>
+  <span style="color:#6272a4"># 默认为 &#34;https://github.com/&lt;repo_owner&gt;/&lt;repo_name&gt;/releases/download/{{ .Tag }}/{{ .ArtifactName }}&#34;</span>
+  url_template: <span style="color:#f1fa8c">&#34;http://github.mycompany.com/foo/bar/releases/{{ .Tag }}/{{ .ArtifactName }}&#34;</span>
+
+  <span style="color:#6272a4"># 允许您设置自定义下载策略。</span>
+  <span style="color:#6272a4"># 默认为空。</span>
+  download_strategy: GitHubPrivateRepositoryReleaseDownloadStrategy
+
+  <span style="color:#6272a4"># 提交存储库的 Git作者。</span>
+  <span style="color:#6272a4"># 显示默认值。</span>
+  commit_author:
+    name: goreleaserbot
+    email: goreleaser@carlosbecker.com
+
+  <span style="color:#6272a4"># 存储库中，放置配方的文件夹。</span>
+  <span style="color:#6272a4"># 默认为根文件夹。</span>
+  folder: Formula
+
+  <span style="color:#6272a4"># 为二进制文件的用户提供警告。</span>
+  <span style="color:#6272a4"># 默认为空。</span>
+  caveats: <span style="color:#f1fa8c">&#34;How to use this binary&#34;</span>
+
+  <span style="color:#6272a4"># 您应用的主页。</span>
+  <span style="color:#6272a4"># 默认为空。</span>
+  homepage: <span style="color:#f1fa8c">&#34;https://example.com/&#34;</span>
+
+  <span style="color:#6272a4"># 你的应用程序的描述。</span>
+  <span style="color:#6272a4"># 默认为空。</span>
+  description: <span style="color:#f1fa8c">&#34;Software to create fast and easy drum rolls.&#34;</span>
+
+  <span style="color:#6272a4"># 设置此项，将阻止goreleaser实际提交更新配方</span>
+  <span style="color:#6272a4"># 替代为，配方文件仅存储在dist文件夹中，</span>
+  <span style="color:#6272a4"># 将push的责任给用户。</span>
+  <span style="color:#6272a4"># 默认值为false。</span>
+  skip_upload: <span style="color:#ff79c6">true</span>
+
+  <span style="color:#6272a4"># 你的包所依赖的包。</span>
+  dependencies:
+    - git
+    - zsh
+
+  <span style="color:#6272a4"># 与您的包冲突的包。</span>
+  conflicts:
+    - svn
+    - bash
+
+  <span style="color:#6272a4"># 指定作为服务运行的包。</span>
+  <span style="color:#6272a4"># 默认为空。</span>
+  plist: <span style="color:#f1fa8c">|
+</span><span style="color:#f1fa8c">    &lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;
+</span><span style="color:#f1fa8c">    ...</span>
+
+  <span style="color:#6272a4"># 你可以&#34;brew test&#34;你的配方。</span>
+  <span style="color:#6272a4"># 默认为空。</span>
+  test: <span style="color:#f1fa8c">|
+</span><span style="color:#f1fa8c">    system &#34;#{bin}/program --version&#34;
+</span><span style="color:#f1fa8c">    ...</span>
+
+  <span style="color:#6272a4"># brew的自定义安装脚本。</span>
+  <span style="color:#6272a4"># 默认为&#39;bin.install &#34;program&#34;&#39;。</span>
+  install: <span style="color:#f1fa8c">|
+</span><span style="color:#f1fa8c">    bin.install &#34;program&#34;
+</span><span style="color:#f1fa8c">    ...</span></code></pre></div>
+<blockquote>
+<p>了解有关<a href="/templates">命名模板引擎</a>的更多信息.</p>
+</blockquote>
+
+<p>通过定义<code>brew</code>部分,GoReleaser将负责发布Homebrew tap.假设当前标签是<code>v1.2.3</code>,上面的配置会生成一个<code>program.rb</code>配方, 其在<code>user/homebrew-tap</code>库的<code>Formula</code>文件夹中:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rb" data-lang="rb"><span style="color:#ff79c6">class</span> <span style="color:#50fa7b">Program</span> <span style="color:#ff79c6">&lt;</span> Formula
+  desc <span style="color:#f1fa8c">&#34;How to use this binary&#34;</span>
+  homepage <span style="color:#f1fa8c">&#34;https://github.com/user/repo&#34;</span>
+  url <span style="color:#f1fa8c">&#34;https://github.com/user/repo/releases/download/v1.2.3/program_v1.2.3_macOs_64bit.zip&#34;</span>
+  version <span style="color:#f1fa8c">&#34;v1.2.3&#34;</span>
+  sha256 <span style="color:#f1fa8c">&#34;9ee30fc358fae8d248a2d7538957089885da321dca3f09e3296fe2058e7fff74&#34;</span>
+
+  depends_on <span style="color:#f1fa8c">&#34;git&#34;</span>
+  depends_on <span style="color:#f1fa8c">&#34;zsh&#34;</span>
+
+  <span style="color:#ff79c6">def</span> <span style="color:#50fa7b">install</span>
+    bin<span style="color:#ff79c6">.</span>install <span style="color:#f1fa8c">&#34;program&#34;</span>
+  <span style="color:#ff79c6">end</span>
+<span style="color:#ff79c6">end</span></code></pre></div>
+<p><strong>重点</strong>:请注意,GoReleaser尚未生成有效的homebrew-core配方.生成的配方旨在发布为<a href="https://docs.brew.sh/Taps.html">homebrew taps</a>，并且目前的形式不会被任何官方brew软件库接受.</p>
+
+		</div>
+	
+		<div class="Page" id="Scoop">
+			<h1><a href="https://goreleaser.com/scoop/">Scoop</a></h1>
+			<p>在发布到GitHub之后,GoReleaser可以生成,并发布一个 <em>Scoop App Manifest</em> 到您有权访问的存储库.</p>
+
+<p>该<code>scoop</code>部分指定应如何创建清单。请参阅下面的注释示例:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#6272a4"># .goreleaser.yml</span>
+scoop:
+  <span style="color:#6272a4"># 网址模板。</span>
+  <span style="color:#6272a4"># 默认为&#34;https://github.com/&lt;repo_owner&gt;/&lt;repo_name&gt;/releases/download/{{ .Tag }}/{{ .ArtifactName }}&#34;</span>
+  url_template: <span style="color:#f1fa8c">&#34;http://github.mycompany.com/foo/bar/releases/{{ .Tag }}/{{ .ArtifactName }}&#34;</span>
+
+  <span style="color:#6272a4"># 将应用清单推送到的存储库。</span>
+  bucket:
+    owner: user
+    name: scoop-bucket
+
+  <span style="color:#6272a4"># 提交存储库的Git作者。</span>
+  <span style="color:#6272a4"># 显示默认值。</span>
+  commit_author:
+    name: goreleaserbot
+    email: goreleaser@carlosbecker.com
+
+  <span style="color:#6272a4"># 您应用的主页。</span>
+  <span style="color:#6272a4"># 默认为空。</span>
+  homepage: <span style="color:#f1fa8c">&#34;https://example.com/&#34;</span>
+
+  <span style="color:#6272a4"># 你的应用程序的描述。</span>
+  <span style="color:#6272a4"># 默认为空。</span>
+  description: <span style="color:#f1fa8c">&#34;Software to create fast and easy drum rolls.&#34;</span>
+
+  <span style="color:#6272a4"># 你的应用许可证</span>
+  <span style="color:#6272a4"># 默认为空。</span>
+  license: MIT
+
+  <span style="color:#6272a4"># 在应用程序更新之间，保留的数据</span>
+  persist:
+  - <span style="color:#f1fa8c">&#34;data&#34;</span>
+  - <span style="color:#f1fa8c">&#34;config.toml&#34;</span></code></pre></div>
+<p>通过定义<code>scoop</code>部分,GoReleaser将负责发布Scoop应用程序。假设项目名称是<code>drumroll</code>且目前的标签是<code>v1.2.3</code>,上面的配置会生成一个<code>drumroll.json</code>清单，显示在<code>bucket</code>字段指定的存储库根目录.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+  <span style="color:#ff79c6">&#34;version&#34;</span>: <span style="color:#f1fa8c">&#34;1.2.3&#34;</span>,
+  <span style="color:#ff79c6">&#34;architecture&#34;</span>: {
+    <span style="color:#ff79c6">&#34;64bit&#34;</span>: {
+      <span style="color:#ff79c6">&#34;url&#34;</span>:
+        <span style="color:#f1fa8c">&#34;https://github.com/user/drumroll/releases/download/1.2.3/drumroll_1.2.3_windows_amd64.tar.gz&#34;</span>,
+      <span style="color:#ff79c6">&#34;bin&#34;</span>: <span style="color:#f1fa8c">&#34;drumroll.exe&#34;</span>,
+      <span style="color:#ff79c6">&#34;hash&#34;</span>: <span style="color:#f1fa8c">&#34;86920b1f04173ee08773136df31305c0dae2c9927248ac259e02aafd92b6008a&#34;</span>
+    },
+    <span style="color:#ff79c6">&#34;32bit&#34;</span>: {
+      <span style="color:#ff79c6">&#34;url&#34;</span>:
+        <span style="color:#f1fa8c">&#34;https://github.com/user/drumroll/releases/download/1.2.3/drumroll_1.2.3_windows_386.tar.gz&#34;</span>,
+      <span style="color:#ff79c6">&#34;bin&#34;</span>: <span style="color:#f1fa8c">&#34;drumroll.exe&#34;</span>,
+      <span style="color:#ff79c6">&#34;hash&#34;</span>: <span style="color:#f1fa8c">&#34;283faa524ef41987e51c8786c61bb56658a489f63512b32139d222b3ee1d18e6&#34;</span>
+    }
+  },
+  <span style="color:#ff79c6">&#34;homepage&#34;</span>: <span style="color:#f1fa8c">&#34;https://example.com/&#34;</span>
+}</code></pre></div>
+<p>然后,您的用户可以执行以下操作来安装您应用</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">scoop bucket add app https://github.com/org/repo.git
+scoop install app</code></pre></div>
+<p>你可以查看一下<a href="https://github.com/lukesampson/scoop/wiki">Scoop文档</a>更多细节.</p>
+
+		</div>
+	
+		<div class="Page" id="Release-版告">
+			<h1><a href="https://goreleaser.com/release/">Release-版告</a></h1>
+			
+
+<p>GoReleaser 根据当前标记,创建 GitHub 版本,上传所有存档，并根据自上一个标记以来的新提交生成更改日志-changelog.</p>
+
+<p>让我们来看看可以定制的<code>release</code>部分内容:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#6272a4"># .goreleaser.yml</span>
+release:
+  <span style="color:#6272a4"># 要release的存储库。</span>
+  <span style="color:#6272a4"># 默认值从原始远程URL中提取。</span>
+  github:
+    owner: user
+    name: repo
+
+  <span style="color:#6272a4"># 如果设置为true，则不会自动发布该版本。</span>
+  <span style="color:#6272a4"># 默认值为false。</span>
+  draft: <span style="color:#ff79c6">true</span>
+
+  <span style="color:#6272a4"># 如果设置为true，则将发布tag为 预发布版本。</span>
+  <span style="color:#6272a4"># 默认值为false。</span>
+  prerelease: <span style="color:#ff79c6">true</span>
+
+  <span style="color:#6272a4"># 您可以更改GitHub版本的名称。</span>
+  <span style="color:#6272a4"># 默认是``</span>
+  name_template: <span style="color:#f1fa8c">&#39;{{.ProjectName}}-v{{.Version}} {{.Env.USER}}&#39;</span>
+
+  <span style="color:#6272a4"># 您可以禁用此管道，将不上传到GitHub</span>
+  <span style="color:#6272a4"># 默认为false。</span>
+  disable: <span style="color:#ff79c6">true</span></code></pre></div>
+<blockquote>
+<p>了解有关<a href="/templates">命名模板引擎</a>的更多信息.</p>
+</blockquote>
+
+<h2 id="自定义更改日志">自定义更改日志</h2>
+
+<p>您可以使用自定义配置文件中<code>changelog</code>的部分，来修改生成changelog的方式:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#6272a4"># .goreleaser.yml</span>
+changelog:
+  <span style="color:#6272a4"># 可以是asc，desc或empty</span>
+  <span style="color:#6272a4"># 默认为空</span>
+  sort: asc
+  filters:
+    <span style="color:#6272a4"># 删除与下方列表匹配的commit信息，将不在changelog显示</span>
+    <span style="color:#6272a4"># 默认为空</span>
+    exclude:
+      - <span style="color:#f1fa8c">&#39;^docs:&#39;</span>
+      - typo
+      - (?i)foo</code></pre></div>
+<h2 id="自定义发行说明">自定义发行说明</h2>
+
+<p>您可以自定义一个包含发行说明的<strong>文件</strong>,并将其传递给<code>--release-notes=FILE</code>参数。然后,GoReleaser 将使用您文件的内容，而跳过自己的发行说明生成。您可以使用 Markdown 格式化文件的内容.</p>
+
+<p>在 Unix 系统上,您还可以使用<a href="https://en.wikipedia.org/wiki/Process_substitution">process substitution</a>命令，生成发行说明。即列出自上一个标记以来的所有提交,但跳过以<code>Merge</code>要么<code>docs</code>开头的提交,你可以运行这个命令:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-console" data-lang="console">$ goreleaser --release-notes &lt;(some_changelog_generator)</code></pre></div>
+<p>您可以使用的,一些更改日志生成器-<code>some_changelog_generator</code>:</p>
+
+<ul>
+<li><a href="https://github.com/buchanae/github-release-notes">buchanae/github-release-notes</a></li>
+</ul>
+
+		</div>
+	
+		<div class="Page" id="S3">
+			<h1><a href="https://goreleaser.com/s3/">S3</a></h1>
+			
+
+<p>至<a href="https://github.com/goreleaser/goreleaser/releases/tag/v0.74.0">v0.74.0</a>起，GoReleaser 支持将存档推送到 Amazon S3 和其他 API 兼容的云存储(例如<a href="https://www.minio.io">minio</a>).</p>
+
+<p>现在,实现非常简单,也可能不会涵盖所有用例。如果您需要其中一个用例,请打开问题/请求.</p>
+
+<h2 id="定制">定制</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#6272a4"># .goreleaser.yml</span>
+s3:
+  <span style="color:#6272a4"># 你可以有多个s3配置</span>
+  - <span style="color:#6272a4"># Bucket名称（不带 s3:// 前缀）</span>
+    <span style="color:#6272a4"># 默认为空。</span>
+    bucket: my-bucket
+    <span style="color:#6272a4"># AWS区域使用。</span>
+    <span style="color:#6272a4"># 默认值为 us-east-1</span>
+    region: us-east-<span style="color:#bd93f9">1</span>
+    <span style="color:#6272a4"># Bucket内 路径/名称 的模板。</span>
+    <span style="color:#6272a4"># 默认为`{{ .ProjectName }}/{{ .Tag }}`</span>
+    folder: <span style="color:#f1fa8c">&#39;foo/bar/{{.Version}}&#39;</span>
+    <span style="color:#6272a4"># 如果你有多个profiles在〜/.aws配置中, </span>
+    <span style="color:#6272a4"># 设置用于此s3配置的自定义配置文件。这将有助于定义哪个</span>
+    <span style="color:#6272a4"># s3桶使用哪个配置文件。</span>
+    <span style="color:#6272a4"># 默认为空。</span>
+    profile: my-profile
+    <span style="color:#6272a4"># Endpoint允许您设置自定义端点，这对</span>
+    <span style="color:#6272a4"># 例如，想要将您的存档推送到minio服务器很有用。</span>
+    <span style="color:#6272a4"># 默认为AWS S3 URL。</span>
+    endpoint: <span style="color:#f1fa8c">&#39;http://minio.foo.com&#39;</span>
+    <span style="color:#6272a4"># 使用指定的固定ACL，设置对象的ACL。</span>
+    <span style="color:#6272a4"># 默认为私有。</span>
+    acl: public-read</code></pre></div>
+<blockquote>
+<p>了解有关<a href="/templates">命名模板引擎</a>的更多信息.了解有关<a href="https://docs.aws.amazon.com/AmazonS3/latest/API/RESTObjectPUTacl.html">acl</a>的更多信息.</p>
+</blockquote>
+
+<h2 id="认证">认证</h2>
+
+<p>GoReleaser 使用<a href="https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html">由 aws-cli 定义的相同方法</a>进行身份验证.你可以看看<a href="https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html">其文档</a>了解更多信息.</p>
+
+<p>目前它支持身份验证:</p>
+
+<ul>
+<li><p>一个是<a href="https://docs.aws.amazon.com/sdk-for-go/api/aws/credentials/#EnvProvider">EnvProvider</a>，它从正在运行的进程的环境变量中检索凭据。环境凭据永不过期.使用的环境变量:</p>
+
+<ul>
+<li><p>访问密钥ID-Access Key ID: <code>AWS_ACCESS_KEY_ID</code> 或 <code>AWS_ACCESS_KEY</code></p></li>
+
+<li><p>Secret Access Key: <code>AWS_SECRET_ACCESS_KEY</code> 或 <code>AWS_SECRET_KEY</code></p></li>
+</ul></li>
+
+<li><p>一个是<a href="https://docs.aws.amazon.com/sdk-for-go/api/aws/credentials/#SharedCredentialsProvider">SharedCredentialsProvider</a>，它从当前用户的主目录中检索凭据,并跟踪这些凭据是否已过期.</p></li>
+</ul>
+
+<p>配置文件 ini 文件示例:<code>$HOME/.aws/credentials</code></p>
+
+<ul>
+<li>还有具有启用 <strong>SharedConfigState</strong> 的 <strong>AssumeRoleTokenProvider</strong>，它使用 MFA 提示 stdin 上的令牌代码.去<a href="https://docs.aws.amazon.com/sdk-for-go/api/aws/session/">其会议文档</a>了解更多细节.</li>
+</ul>
+
+<p>您还可以为每个 S3 配置设置不同的配置文件名称,例如,您可以将其推送到不同帐户中的Bucket.</p>
+
+		</div>
+	
+		<div class="Page" id="Artifactory-存档工厂">
+			<h1><a href="https://goreleaser.com/artifactory/">Artifactory-存档工厂</a></h1>
+			
+
+<p>至<a href="https://github.com/goreleaser/goreleaser/releases/tag/v0.38.0">v0.38.0</a>以来,GoReleaser支持构建和推送存档到Artifactory.</p>
+
+<h2 id="这个怎么运作">这个怎么运作</h2>
+
+<p>您可以声明多个Artifactory实例。您<code>builds</code>部分生成的所有二进制文件，都将被推送到每个配置的Artifactory.</p>
+
+<p>如果您只有一个Artifactory实例，则配置就像添加上传目标和用户名一样简单<code>.goreleaser.yml</code>文件:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">artifactories:
+  - name: production
+    target: http://&lt;Your-Instance&gt;:<span style="color:#bd93f9">8081</span>/artifactory/example-repo-local/{{ .ProjectName }}/{{ .Version }}/
+    username: goreleaser</code></pre></div>
+<p>先决条件:</p>
+
+<ul>
+<li>正在运行的Artifactory实例</li>
+<li>用户+密码/ API密钥,用于上传存档</li>
+</ul>
+
+<h3 id="目标-target">目标-target</h3>
+
+<p>该<code>target</code>是，将存档上传到的URL(*没有*存档的名称).</p>
+
+<p>在上传<code>binary</code>到目标模式下，一个<code>goreleaser</code>示例配置，可以看起来像</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">- mode: binary
+  target: <span style="color:#f1fa8c">&#39;http://artifacts.company.com:8081/artifactory/example-repo-local/{{ .ProjectName }}/{{ .Version }}/{{ .Os }}/{{ .Arch }}{{ if .Arm }}{{ .Arm }}{{ end }}&#39;</span></code></pre></div>
+<p>并将导致最终部署,如<code>http://artifacts.company.com:8081/artifactory/example-repo-local/goreleaser/1.0.0/Darwin/x86_64/goreleaser</code>.</p>
+
+<p>支持的变量:</p>
+
+<ul>
+<li><strong>Version</strong></li>
+<li><strong>Tag</strong></li>
+<li><strong>ProjectName</strong></li>
+<li><strong>Os</strong></li>
+<li><strong>Arch</strong></li>
+<li><strong>Arm</strong></li>
+</ul>
+
+<p><em>注意</em>:变量 <em>Os</em>, <em>Arch</em> 和 <em>Arm</em> 仅在上传<code>binary</code>模式下，受支持.</p>
+
+<h3 id="用户名">用户名</h3>
+
+<p>您配置的用户名需要根据您的Artifactory进行身份验证.</p>
+
+<p>您可以在配置文件中设置用户名,如上所示,也可以从环境变量中读取.配置的Artifactory实例名称，将用于构建环境变量名称。这样我们就支持多个实例的auth。这也意味着每个goreleaser配置中的每个配置的实例<code>name</code>是唯一的.</p>
+
+<p>环境变量的名称将是<code>ARTIFACTORY_NAME_USERNAME</code>。如果您的实例已命名<code>production</code>,您可以将用户名存储在环境变量中<code>ARTIFACTORY_PRODUCTION_USERNAME</code>。该名称将转换为 <em>大写</em>.</p>
+
+<p>如果在配置文件中，找到已配置的用户名,则根本不使用环境变量.</p>
+
+<h3 id="密码-api密钥">密码/ API密钥</h3>
+
+<p>密码或API密钥，将存储在环境变量中。使用您的Artifactory实例的已配置名称。通过这种方式,我们支持多个实例的auth.这也意味着每个goreleaser配置中的每个配置的实例<code>name</code>是唯一的.</p>
+
+<p>环境变量的名称将是<code>ARTIFACTORY_NAME_SECRET</code>.如果您的实例已命名<code>production</code>,您需要将密码存储在环境变量中<code>ARTIFACTORY_PRODUCTION_SECRET</code>。该名称将转换为大写.</p>
+
+<h3 id="服务器认证">服务器认证</h3>
+
+<p>您可以对您的Artifactory TLS服务器进行身份验证，在您的配置中添加X.509可信证书链.</p>
+
+<p>可信证书链，用于验证服务器证书.</p>
+
+<p>您可以使用<code>trusted_certificates</code>设置artifactory部分的可信证书链，在YAML字段区块上使用PEM编码证书,如下所示:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">puts:
+  - name: <span style="color:#f1fa8c">&#34;some artifactory server with a private TLS certificate&#34;</span>
+    <span style="color:#6272a4">#...(other settings)...</span>
+    trusted_certificates: <span style="color:#f1fa8c">|
+</span><span style="color:#f1fa8c">      -----BEGIN CERTIFICATE-----
+</span><span style="color:#f1fa8c">      MIIDrjCCApagAwIBAgIIShr2zchZo+8wDQYJKoZIhvcNAQENBQAwNTEXMBUGA1UE
+</span><span style="color:#f1fa8c">      ...(edited content)...
+</span><span style="color:#f1fa8c">      TyzMJasj5BPZrmKjJb6O/tOtEIJ66xPSBTxPShkEYHnB7A==
+</span><span style="color:#f1fa8c">      -----END CERTIFICATE-----
+</span><span style="color:#f1fa8c">      -----BEGIN CERTIFICATE-----
+</span><span style="color:#f1fa8c">      MIIDrjCCApagAwIBAgIIShr2zchZo+8wDQYJKoZIhvcNAQENBQAwNTEXMBUGA1UE
+</span><span style="color:#f1fa8c">      ...(edited content)...
+</span><span style="color:#f1fa8c">      TyzMJasj5BPZrmKjJb6O/tOtEIJ66xPSBTxPShkEYHnB7A==
+</span><span style="color:#f1fa8c">      -----END CERTIFICATE-----</span></code></pre></div>
+<h2 id="定制">定制</h2>
+
+<p>当然,你可以自定义很多东西:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#6272a4"># .goreleaser.yml</span>
+artifactories:
+  <span style="color:#6272a4"># 您可以拥有多个Artifactory实例。</span>
+  -
+    <span style="color:#6272a4"># artifactory实例的唯一名称。 用于标识实例</span>
+    name: production
+    <span style="color:#6272a4"># 上传模式。 有效选项是`binary`和`archive`。</span>
+    <span style="color:#6272a4"># 如果mode是`archive`，则不支持目标名称的 _Os_，_ Arch_ 和 _Arm_ 变量。</span>
+    <span style="color:#6272a4"># 在这种情况下，这些变量是空的。</span>
+    <span style="color:#6272a4"># 默认是`archive`。</span>
+    mode: archive
+    <span style="color:#6272a4"># 您的Artifactory实例的URL + 要部署到的路径</span>
+    target: http://artifacts.company.com:<span style="color:#bd93f9">8081</span>/artifactory/example-repo-local/{{ .ProjectName }}/{{ .Version }}/
+    <span style="color:#6272a4"># 将用于部署的用户</span>
+    username: deployuser
+    <span style="color:#6272a4"># 上传校验和（默认为false）</span>
+    checksum: <span style="color:#ff79c6">true</span>
+    <span style="color:#6272a4"># 上传签名（默认为false）</span>
+    signature: <span style="color:#ff79c6">true</span>
+    <span style="color:#6272a4"># 用于验证服务器证书的证书链</span>
+    trusted_certificates: <span style="color:#f1fa8c">|
+</span><span style="color:#f1fa8c">      -----BEGIN CERTIFICATE-----
+</span><span style="color:#f1fa8c">      MIIDrjCCApagAwIBAgIIShr2zchZo+8wDQYJKoZIhvcNAQENBQAwNTEXMBUGA1UE
+</span><span style="color:#f1fa8c">      ...(edited content)...
+</span><span style="color:#f1fa8c">      TyzMJasj5BPZrmKjJb6O/tOtEIJ66xPSBTxPShkEYHnB7A==
+</span><span style="color:#f1fa8c">      -----END CERTIFICATE-----</span></code></pre></div>
+<p>这些设置应该能让您，将存档推送到多个Artifactories.</p>
+
+		</div>
+	
+		<div class="Page" id="Bintray">
+			<h1><a href="https://goreleaser.com/bintray/">Bintray</a></h1>
+			
+
+<h2 id="这个怎么运作">这个怎么运作</h2>
+
+<p>上传Bintray是一个简单<a href="https://goreleaser.com/customization/#HTTP%20Put">使用HTTP PUT</a>的例子.</p>
+
+<h3 id="前后必备条件">前后必备条件:</h3>
+
+<ul>
+<li>在Bintray中，创建用户和/或组织</li>
+<li>在Bintray中，创建一个通用存储库</li>
+<li>创建一个名称与您的<code>ProjectName</code>名称匹配的包</li>
+<li>发布后,不要忘记发布上传的文件(通过UI或<a href="https://bintray.com/docs/api/#_publish_discard_uploaded_content">REST API</a>)</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">puts:
+  - name: bintray
+    target: https://api.bintray.com/content/user.or.org.name/generic.repo.name/{{ .ProjectName }}/{{ .Version }}/
+    username: goreleaser</code></pre></div>
+<p>请参阅<a href="https://goreleaser.com/customization/#HTTP%20Put">HTTP Put</a>的更多细节.</p>
+
+		</div>
+	
+		<div class="Page" id="HTTP Put">
+			<h1><a href="https://goreleaser.com/put/">HTTP Put</a></h1>
+			
+
+<p>GoReleaser支持构建和，只使用简单的HTTP PUT请求推送存档到HTTP服务器.</p>
+
+<h2 id="这个怎么运作">这个怎么运作</h2>
+
+<p>您可以声明多个Put实例。您<code>builds</code>部分生成的所有二进制文件，将被推送到每个配置的Put.</p>
+
+<p>如果您只有一个Put实例,则配置就像添加上传目标和用户名到<code>.goreleaser.yml</code>文件一样简单:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">puts:
+  - name: production
+    target: http://some.server/some/path/example-repo-local/{{ .ProjectName }}/{{ .Version }}/
+    username: goreleaser</code></pre></div>
+<p>先决条件:</p>
+
+<ul>
+<li>接受PUT请求的HTTP服务器</li>
+<li>用户+密码,用于使用PUT请求上传存档(如果服务器需要)</li>
+</ul>
+
+<h3 id="目标-target">目标-target</h3>
+
+<p>该<code>target</code>是将存档上传到的URL(*没有*存档的名称).</p>
+
+<p>在上传<code>binary</code>与目标模式下，一个<code>goreleaser</code>示例配置，可以看起来像</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">- mode: binary
+  target: <span style="color:#f1fa8c">&#39;http://some.server/some/path/example-repo-local/{{ .ProjectName }}/{{ .Version }}/{{ .Os }}/{{ .Arch }}{{ if .Arm }}{{ .Arm }}{{ end }}&#39;</span></code></pre></div>
+<p>将导致发送HTTP PUT请求<code>http://some.server/some/path/example-repo-local/goreleaser/1.0.0/Darwin/x86_64/goreleaser</code>.</p>
+
+<p>支持的变量:</p>
+
+<ul>
+<li><strong>Version</strong></li>
+<li><strong>Tag</strong></li>
+<li><strong>ProjectName</strong></li>
+<li><strong>Os</strong></li>
+<li><strong>Arch</strong></li>
+<li><strong>Arm</strong></li>
+</ul>
+
+<blockquote>
+<p><strong>警告</strong>:变量<code>Os</code>,<code>Arch</code>和<code>Arm</code>仅在上传<code>binary</code>模式下受支持.</p>
+</blockquote>
+
+<h3 id="用户名">用户名</h3>
+
+<p>您配置的用户名必须对您的HTTP服务器有效.</p>
+
+<p>您可以在配置文件中设置用户名，如上所示，也可以从环境变量中读取。你配置的HTTP服务器名称，将用于构建环境变量名称。这样我们就支持多个实例的auth。这也意味着每个goreleaser配置的每个配置的实例<code>name</code>是唯一的.</p>
+
+<p>环境变量的名称将是<code>PUT_NAME_USERNAME</code>.如果您的实例已命名为<code>production</code>，您可以将用户名存储在<code>PUT_PRODUCTION_USERNAME</code>环境变量中。该名称将转换为大写。</p>
+
+<p>如果在配置文件中找到已配置的用户名,则根本不使用环境变量.</p>
+
+<h3 id="密码">密码</h3>
+
+<p>密码将存储在环境变量中.将使用配置的HTTP服务器名称.这样我们就支持多个实例的auth.这也意味着每个goreleaser配置的每个配置的实例<code>name</code>是唯一的。</p>
+
+<p>环境变量的名称将是<code>PUT_NAME_SECRET</code>.如果您的实例已命名为<code>production</code>，您需要将秘密存储在<code>PUT_PRODUCTION_SECRET</code>环境变量中。该名称将转换为大写.</p>
+
+<h3 id="服务器认证">服务器认证</h3>
+
+<p>您可以对您的TLS服务器进行身份验证,在您的put配置中添加X.509可信证书链.</p>
+
+<p>可信证书链，用于验证服务器证书.</p>
+
+<p>您可以使用<code>trusted_certificates</code>设置artifactory部分的可信证书链，在YAML字段区块上使用PEM编码证书,如下所示:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">puts:
+  - name: <span style="color:#f1fa8c">&#34;some HTTP/TLS server&#34;</span>
+    <span style="color:#6272a4">#...(other settings)...</span>
+    trusted_certificates: <span style="color:#f1fa8c">|
+</span><span style="color:#f1fa8c">      -----BEGIN CERTIFICATE-----
+</span><span style="color:#f1fa8c">      MIIDrjCCApagAwIBAgIIShr2zchZo+8wDQYJKoZIhvcNAQENBQAwNTEXMBUGA1UE
+</span><span style="color:#f1fa8c">      ...(edited content)...
+</span><span style="color:#f1fa8c">      TyzMJasj5BPZrmKjJb6O/tOtEIJ66xPSBTxPShkEYHnB7A==
+</span><span style="color:#f1fa8c">      -----END CERTIFICATE-----
+</span><span style="color:#f1fa8c">      -----BEGIN CERTIFICATE-----
+</span><span style="color:#f1fa8c">      MIIDrjCCApagAwIBAgIIShr2zchZo+8wDQYJKoZIhvcNAQENBQAwNTEXMBUGA1UE
+</span><span style="color:#f1fa8c">      ...(edited content)...
+</span><span style="color:#f1fa8c">      TyzMJasj5BPZrmKjJb6O/tOtEIJ66xPSBTxPShkEYHnB7A==
+</span><span style="color:#f1fa8c">      -----END CERTIFICATE-----</span></code></pre></div>
+<h2 id="定制">定制</h2>
+
+<p>当然,你可以自定义很多东西:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#6272a4"># .goreleaser.yml</span>
+puts:
+  <span style="color:#6272a4"># 您可以拥有多个Put实例。</span>
+  -
+    <span style="color:#6272a4"># Put实例的唯一名称。 用于标识实例。</span>
+    name: production
+    <span style="color:#6272a4"># 上传模式。 有效选项是`binary`和`archive`。</span>
+    <span style="color:#6272a4"># 如果mode是`archive`，则不支持目标名称的变量_Os _，_ Arch_和_Arm_。</span>
+    <span style="color:#6272a4"># 在这种情况下，这些变量是空的。</span>
+    <span style="color:#6272a4"># 默认是`archive`。</span>
+    mode: archive
+    <span style="color:#6272a4"># 用作HTTP PUT请求目标的URL</span>
+    target: https://some.server/some/path/example-repo-local/{{ .ProjectName }}/{{ .Version }}/
+    <span style="color:#6272a4"># 将用于部署的用户</span>
+    username: deployuser
+    <span style="color:#6272a4"># 您可以使用可选标头，</span>
+    <span style="color:#6272a4"># 告诉GoReleaser在上传请求时，传递artifact的SHA256校验。</span>
+    <span style="color:#6272a4"># 默认为空。</span>
+    checksum_header: -X-SHA256-Sum
+    <span style="color:#6272a4"># 上传校验和（默认为false）</span>
+    checksum: <span style="color:#ff79c6">true</span>
+    <span style="color:#6272a4"># 上传签名（默认为false）</span>
+    signature: <span style="color:#ff79c6">true</span>
+    <span style="color:#6272a4"># 用于验证服务器证书的证书链</span>
+    trusted_certificates: <span style="color:#f1fa8c">|
+</span><span style="color:#f1fa8c">      -----BEGIN CERTIFICATE-----
+</span><span style="color:#f1fa8c">      MIIDrjCCApagAwIBAgIIShr2zchZo+8wDQYJKoZIhvcNAQENBQAwNTEXMBUGA1UE
+</span><span style="color:#f1fa8c">      ...(edited content)...
+</span><span style="color:#f1fa8c">      TyzMJasj5BPZrmKjJb6O/tOtEIJ66xPSBTxPShkEYHnB7A==
+</span><span style="color:#f1fa8c">      -----END CERTIFICATE-----</span></code></pre></div>
+<p>这些设置应该允许您，将存档推送到多个HTTP服务器.</p>
+
+		</div>
+	
+		<div class="Page" id="Docker">
+			<h1><a href="https://goreleaser.com/docker/">Docker</a></h1>
+			
+
+<p>至<a href="https://github.com/goreleaser/goreleaser/releases/tag/v0.31.0">v0.31.0</a>以来,GoReleaser支持构建和推送Docker镜像.</p>
+
+<h2 id="这个怎么运作">这个怎么运作</h2>
+
+<p>您可以声明多个Docker镜像。它们将与您<code>builds</code>部分生成的二进制文件进行匹配.</p>
+
+<p>如果你只有一个<code>build</code>设置，配置就像添加镜像名称到你<code>.goreleaser.yml</code>文件一样简单:</p>
+
+<p>docker镜像声明支持模板。了解有关<a href="/templates">命名模板引擎</a>的更多信息.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">dockers:
+  - image_templates:
+    - user/repo</code></pre></div>
+<p>你还需要在项目的根文件夹中，创建一个<code>Dockerfile</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dockerfile" data-lang="dockerfile"><span style="color:#ff79c6">FROM</span><span style="color:#f1fa8c"> scratch</span>
+COPY mybin /
+<span style="color:#ff79c6">ENTRYPOINT</span><span style="color:#f1fa8c"> [&#34;/mybin&#34;]</span></code></pre></div>
+<p>此配置将构建，并推送名为的Docker镜像<code>user/repo:tagname</code>.</p>
+
+<blockquote>
+<p><strong>注意</strong>:请注意,在docker构建阶段，没有构建任何go文件,我们只是将二进制文件复制到<code>scratch</code>镜像和设置入口点-<strong>ENTRYPOINT</strong>.</p>
+</blockquote>
+
+<h2 id="定制">定制</h2>
+
+<p>当然,你可以自定义很多东西:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#6272a4"># .goreleaser.yml</span>
+dockers:
+  <span style="color:#6272a4"># 您可以拥有多个Docker镜像。</span>
+  -
+    <span style="color:#6272a4"># 应该使用的构建二进制文件的GOOS。</span>
+    goos: linux
+    <span style="color:#6272a4"># 应该使用的构建二进制文件的GOARCH。</span>
+    goarch: amd64
+    <span style="color:#6272a4"># 应该使用的构建二进制文件的GOARM。</span>
+    goarm: <span style="color:#f1fa8c">&#39;&#39;</span>
+    <span style="color:#6272a4"># 应使用的构建二进制文件的名称。</span>
+    binary: mybinary
+    <span style="color:#6272a4"># Docker镜像名称的模板。</span>
+    image_templates:
+    - <span style="color:#f1fa8c">&#34;myuser/myimage:latest&#34;</span>
+    - <span style="color:#f1fa8c">&#34;myuser/myimage:{{ .Tag }}&#34;</span>
+    - <span style="color:#f1fa8c">&#34;myuser/myimage:{{ .Tag }}-{{ .Env.GO_VERSION }}&#34;</span>
+    - <span style="color:#f1fa8c">&#34;myuser/myimage:v{{ .Major }}&#34;</span>
+    - <span style="color:#f1fa8c">&#34;gcr.io/myuser/myimage:latest&#34;</span>
+    <span style="color:#6272a4"># 跳过docker推送。 如果你也有草稿版本可能会有用。</span>
+    <span style="color:#6272a4"># 默认为false。</span>
+    skip_push: <span style="color:#ff79c6">false</span>
+    <span style="color:#6272a4"># Dockerfile的路径（来自项目根目录）。</span>
+    dockerfile: Dockerfile 
+    <span style="color:#6272a4"># docker构建参数的模板。</span>
+    build_flag_templates:
+    - <span style="color:#f1fa8c">&#34;--label=org.label-schema.schema-version=1.0&#34;</span>
+    - <span style="color:#f1fa8c">&#34;--label=org.label-schema.version={{.Version}}&#34;</span>
+    - <span style="color:#f1fa8c">&#34;--label=org.label-schema.name={{.ProjectName}}&#34;</span>
+    - <span style="color:#f1fa8c">&#34;--build-arg=FOO={{.ENV.Bar}}&#34;</span>
+    <span style="color:#6272a4"># 如果您要Dockerfile复制二进制文件以外的文件，</span>
+    <span style="color:#6272a4"># 你也应该在这里列出它们。</span>
+    extra_files:
+    - config.yml</code></pre></div>
+<blockquote>
+<p>了解有关<a href="/templates">命名模板引擎</a>的更多信息.</p>
+</blockquote>
+
+<p>这些设置应该允许您生成多个Docker镜像，例如,使用多个<code>FROM</code>语句,以及为项目中的每个二进制文件生成一个镜像.</p>
+
+<h2 id="通用镜像名称">通用镜像名称</h2>
+
+<p>某些用户可能希望将其镜像名称保持为通用名称。这可以通过在定义中添加模板语言来实现:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#6272a4"># .goreleaser.yml</span>
+project: foo
+dockers:
+  -
+    binary: mybinary
+    image_templates:
+    - <span style="color:#f1fa8c">&#34;myuser/{{.ProjectName}}&#34;</span></code></pre></div>
+<p>这将构建，并公开以下镜像:</p>
+
+<ul>
+<li><code>myuser/foo</code></li>
+</ul>
+
+<blockquote>
+<p>了解有关<a href="/templates">命名模板引擎</a>的更多信息.</p>
+</blockquote>
+
+<h2 id="当前主要版本-docker镜像就保持更新">当前主要版本，docker镜像就保持更新，</h2>
+
+<p>某些用户可能希望当<code>v1.6.4</code>(例如)已建成，之后在push docker标签版本，能使用<code>:v1</code>,<code>:v1.6</code>,<code>:v1.6.4</code>和<code>:latest</code>。这可以通过使用多个<code>image_templates</code>来完成:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#6272a4"># .goreleaser.yml</span>
+dockers:
+  -
+    binary: mybinary
+    image_templates:
+    - <span style="color:#f1fa8c">&#34;myuser/myimage:{{ .Tag }}&#34;</span>
+    - <span style="color:#f1fa8c">&#34;myuser/myimage:v{{ .Major }}&#34;</span>
+    - <span style="color:#f1fa8c">&#34;myuser/myimage:v{{ .Major }}.{{ .Minor }}&#34;</span>
+    - <span style="color:#f1fa8c">&#34;myuser/myimage:latest&#34;</span></code></pre></div>
+<p>这将构建，并发布以下镜像:</p>
+
+<ul>
+<li><code>myuser/myimage:v1.6.4</code></li>
+<li><code>myuser/myimage:v1</code></li>
+<li><code>myuser/myimage:v1.6</code></li>
+<li><code>myuser/myimage:latest</code></li>
+</ul>
+
+<p>通过这些设置,您可以使用多个标签推送几个不同的docker镜像.</p>
+
+<blockquote>
+<p>了解有关<a href="/templates">命名模板引擎</a>的更多信息.</p>
+</blockquote>
+
+<h2 id="发布到多个docker注册表">发布到多个docker注册表</h2>
+
+<p>某些用户可能希望，将镜像推送到多个docker注册表。这可以通过使用多个<code>image_templates</code>来完成:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#6272a4"># .goreleaser.yml</span>
+dockers:
+  -
+    binary: mybinary
+    image_templates:
+    - <span style="color:#f1fa8c">&#34;docker.io/myuser/myimage:{{ .Tag }}&#34;</span>
+    - <span style="color:#f1fa8c">&#34;docker.io/myuser/myimage:latest&#34;</span>
+    - <span style="color:#f1fa8c">&#34;gcr.io/myuser/myimage:{{ .Tag }}&#34;</span>
+    - <span style="color:#f1fa8c">&#34;gcr.io/myuser/myimage:latest&#34;</span></code></pre></div>
+<p>这将构建，并发布以下镜像到<code>docker.io</code>和<code>gcr.io</code>:</p>
+
+<ul>
+<li><code>myuser/myimage:v1.6.4</code></li>
+<li><code>myuser/myimage:latest</code></li>
+</ul>
+
+<h2 id="应用docker构建参数">应用docker构建参数</h2>
+
+<p>可以使用<code>build_flag_templates</code>构建参数。参数必须是有效的docker build参数.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#6272a4"># .goreleaser.yml</span>
+dockers:
+  -
+    binary: mybinary
+    image_templates:
+        - <span style="color:#f1fa8c">&#34;myuser/myimage&#34;</span>
+    build_flag_templates:
+    - <span style="color:#f1fa8c">&#34;--label=org.label-schema.schema-version=1.0&#34;</span>
+    - <span style="color:#f1fa8c">&#34;--label=org.label-schema.version={{.Version}}&#34;</span>
+    - <span style="color:#f1fa8c">&#34;--label=org.label-schema.name={{.ProjectName}}&#34;</span></code></pre></div>
+<p>这将执行以下命令:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">docker build -t myuser/myimage . <span style="color:#f1fa8c">\
+</span><span style="color:#f1fa8c"></span>  --label<span style="color:#ff79c6">=</span>org.label-schema.schema-version<span style="color:#ff79c6">=</span><span style="color:#bd93f9">1</span>.0 <span style="color:#f1fa8c">\
+</span><span style="color:#f1fa8c"></span>  --label<span style="color:#ff79c6">=</span>org.label-schema.version<span style="color:#ff79c6">=</span><span style="color:#bd93f9">1</span>.6.4 <span style="color:#f1fa8c">\
+</span><span style="color:#f1fa8c"></span>  --label<span style="color:#ff79c6">=</span>org.label-schema.name<span style="color:#ff79c6">=</span>mybinary<span style="color:#f1fa8c">&#34;</span></code></pre></div>
+<blockquote>
+<p>了解有关<a href="/templates">命名模板引擎</a>的更多信息.</p>
+</blockquote>
+
+		</div>
+	
+
+						<div class="Footer">
+	<p>Made with ❤️ by GoReleaser contributors.</p>
+</div>
+<script src="https://goreleaser.com/js/index.js"></script>
+
+					</div>
+				</div>
+		</div>
+	</body>
+</html>

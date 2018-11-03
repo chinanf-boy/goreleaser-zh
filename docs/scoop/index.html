@@ -1,0 +1,119 @@
+
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>Scoop &middot; GoReleaser</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		
+		
+		<meta http-equiv="content-language" content="en-us" />
+		<meta name="generator" content="Hugo 0.49.2" />
+		<link rel="stylesheet" href="https://goreleaser.com/css/index.css">
+		<link rel="apple-touch-icon" href="https://goreleaser.com/apple-touch-icon.png">
+		<link rel="shortcut icon" href="https://goreleaser.com/favicon.ico" type="image/x-icon">
+	</head>
+
+	<body>
+		<div class="Wrapper">
+			<div class="Container">
+				<div class="Header">
+  <a href="https://goreleaser.com/">
+	<div class="Title center">
+		
+			<img alt="GoReleaser Logo" src="https://avatars2.githubusercontent.com/u/24697112?v=3&amp;s=140" height="140" />
+		
+		<span class="text">GoReleaser</span>
+		<span class="subtext"></span>
+	</div>
+  </a>
+</div>
+
+				<div class="Content-wrapper">
+					<div class="Sidebar">
+	<div class="Menu">
+		<div class="item">
+			<a href="https://goreleaser.com/">Home</a>
+		</div>
+		
+
+		
+	</div>
+</div>
+
+					<div class="Content">
+						
+	<div class="Page" id="">
+		<h1>Scoop</h1>
+		<p>在发布到GitHub之后,GoReleaser可以生成,并发布一个 <em>Scoop App Manifest</em> 到您有权访问的存储库.</p>
+
+<p>该<code>scoop</code>部分指定应如何创建清单。请参阅下面的注释示例:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#6272a4"># .goreleaser.yml</span>
+scoop:
+  <span style="color:#6272a4"># 网址模板。</span>
+  <span style="color:#6272a4"># 默认为&#34;https://github.com/&lt;repo_owner&gt;/&lt;repo_name&gt;/releases/download/{{ .Tag }}/{{ .ArtifactName }}&#34;</span>
+  url_template: <span style="color:#f1fa8c">&#34;http://github.mycompany.com/foo/bar/releases/{{ .Tag }}/{{ .ArtifactName }}&#34;</span>
+
+  <span style="color:#6272a4"># 将应用清单推送到的存储库。</span>
+  bucket:
+    owner: user
+    name: scoop-bucket
+
+  <span style="color:#6272a4"># 提交存储库的Git作者。</span>
+  <span style="color:#6272a4"># 显示默认值。</span>
+  commit_author:
+    name: goreleaserbot
+    email: goreleaser@carlosbecker.com
+
+  <span style="color:#6272a4"># 您应用的主页。</span>
+  <span style="color:#6272a4"># 默认为空。</span>
+  homepage: <span style="color:#f1fa8c">&#34;https://example.com/&#34;</span>
+
+  <span style="color:#6272a4"># 你的应用程序的描述。</span>
+  <span style="color:#6272a4"># 默认为空。</span>
+  description: <span style="color:#f1fa8c">&#34;Software to create fast and easy drum rolls.&#34;</span>
+
+  <span style="color:#6272a4"># 你的应用许可证</span>
+  <span style="color:#6272a4"># 默认为空。</span>
+  license: MIT
+
+  <span style="color:#6272a4"># 在应用程序更新之间，保留的数据</span>
+  persist:
+  - <span style="color:#f1fa8c">&#34;data&#34;</span>
+  - <span style="color:#f1fa8c">&#34;config.toml&#34;</span></code></pre></div>
+<p>通过定义<code>scoop</code>部分,GoReleaser将负责发布Scoop应用程序。假设项目名称是<code>drumroll</code>且目前的标签是<code>v1.2.3</code>,上面的配置会生成一个<code>drumroll.json</code>清单，显示在<code>bucket</code>字段指定的存储库根目录.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+  <span style="color:#ff79c6">&#34;version&#34;</span>: <span style="color:#f1fa8c">&#34;1.2.3&#34;</span>,
+  <span style="color:#ff79c6">&#34;architecture&#34;</span>: {
+    <span style="color:#ff79c6">&#34;64bit&#34;</span>: {
+      <span style="color:#ff79c6">&#34;url&#34;</span>:
+        <span style="color:#f1fa8c">&#34;https://github.com/user/drumroll/releases/download/1.2.3/drumroll_1.2.3_windows_amd64.tar.gz&#34;</span>,
+      <span style="color:#ff79c6">&#34;bin&#34;</span>: <span style="color:#f1fa8c">&#34;drumroll.exe&#34;</span>,
+      <span style="color:#ff79c6">&#34;hash&#34;</span>: <span style="color:#f1fa8c">&#34;86920b1f04173ee08773136df31305c0dae2c9927248ac259e02aafd92b6008a&#34;</span>
+    },
+    <span style="color:#ff79c6">&#34;32bit&#34;</span>: {
+      <span style="color:#ff79c6">&#34;url&#34;</span>:
+        <span style="color:#f1fa8c">&#34;https://github.com/user/drumroll/releases/download/1.2.3/drumroll_1.2.3_windows_386.tar.gz&#34;</span>,
+      <span style="color:#ff79c6">&#34;bin&#34;</span>: <span style="color:#f1fa8c">&#34;drumroll.exe&#34;</span>,
+      <span style="color:#ff79c6">&#34;hash&#34;</span>: <span style="color:#f1fa8c">&#34;283faa524ef41987e51c8786c61bb56658a489f63512b32139d222b3ee1d18e6&#34;</span>
+    }
+  },
+  <span style="color:#ff79c6">&#34;homepage&#34;</span>: <span style="color:#f1fa8c">&#34;https://example.com/&#34;</span>
+}</code></pre></div>
+<p>然后,您的用户可以执行以下操作来安装您应用</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">scoop bucket add app https://github.com/org/repo.git
+scoop install app</code></pre></div>
+<p>你可以查看一下<a href="https://github.com/lukesampson/scoop/wiki">Scoop文档</a>更多细节.</p>
+</div>
+
+						<div class="Footer">
+	<p>Made with ❤️ by GoReleaser contributors.</p>
+</div>
+<script src="https://goreleaser.com/js/index.js"></script>
+
+					</div>
+				</div>
+		</div>
+	</body>
+</html>

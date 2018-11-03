@@ -1,0 +1,130 @@
+
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>快速开始 &middot; GoReleaser</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		
+		
+		<meta http-equiv="content-language" content="en-us" />
+		<meta name="generator" content="Hugo 0.49.2" />
+		<link rel="stylesheet" href="https://goreleaser.com/css/index.css">
+		<link rel="apple-touch-icon" href="https://goreleaser.com/apple-touch-icon.png">
+		<link rel="shortcut icon" href="https://goreleaser.com/favicon.ico" type="image/x-icon">
+	</head>
+
+	<body>
+		<div class="Wrapper">
+			<div class="Container">
+				<div class="Header">
+  <a href="https://goreleaser.com/">
+	<div class="Title center">
+		
+			<img alt="GoReleaser Logo" src="https://avatars2.githubusercontent.com/u/24697112?v=3&amp;s=140" height="140" />
+		
+		<span class="text">GoReleaser</span>
+		<span class="subtext"></span>
+	</div>
+  </a>
+</div>
+
+				<div class="Content-wrapper">
+					<div class="Sidebar">
+	<div class="Menu">
+		<div class="item">
+			<a href="https://goreleaser.com/">Home</a>
+		</div>
+		
+
+		
+	</div>
+</div>
+
+					<div class="Content">
+						
+	<div class="Page" id="">
+		<h1>快速开始</h1>
+		
+
+<p>在这个例子中,我们将构建,存档和发布Go项目.</p>
+
+<p>创建一个GitHub存储库，并添加一个主包:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#6272a4">// main.go
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">package</span> main
+
+<span style="color:#8be9fd;font-style:italic">func</span> main() {
+  <span style="color:#8be9fd;font-style:italic">println</span>(<span style="color:#f1fa8c">&#34;Ba dum, tss!&#34;</span>)
+}</code></pre></div>
+<p>运行<code>goreleaser init</code>创建一个例子，<code>.goreleaser.yaml</code>文件:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-console" data-lang="console">$ goreleaser init
+
+   • Generating .goreleaser.yml file
+   • config created; please edit accordingly to your needs file=.goreleaser.yml</code></pre></div>
+<p>生成的配置文件如下所示:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#6272a4"># This is an example goreleaser.yaml file with some sane defaults.</span>
+<span style="color:#6272a4"># Make sure to check the documentation at http://goreleaser.com</span>
+builds:
+- env:
+  - CGO_ENABLED=<span style="color:#bd93f9">0</span>
+archive:
+  replacements:
+    darwin: Darwin
+    linux: Linux
+    windows: Windows
+    <span style="color:#bd93f9">386</span>: i386
+    amd64: x86_64
+checksum:
+  name_template: <span style="color:#f1fa8c">&#39;checksums.txt&#39;</span>
+snapshot:
+  name_template: <span style="color:#f1fa8c">&#34;{{ .Tag }}-next&#34;</span>
+changelog:
+  sort: asc
+  filters:
+    exclude:
+    - <span style="color:#f1fa8c">&#39;^docs:&#39;</span>
+    - <span style="color:#f1fa8c">&#39;^test:&#39;</span></code></pre></div>
+<p>GoReleaser将为您的应用程序构建<code>Windows,Linux和macOS</code>的二进制文件,包括<code>amd64和i386</code>系结构.您可以通过更改定义的<code>builds</code>部分。查看<a href="/build">其文档</a>获得更多信息.</p>
+
+<p>构建二进制文件后,GoReleaser将为每个<code>OS/Arch组合</code>创建一个单独存档文件。您可以自定义<code>archive</code>部分的多项内容。查看<a href="/archive">其文档</a>获得更多信息.</p>
+
+<p>你需要导出一个<code>GITHUB_TOKEN</code>环境变量,它应该包含一个有效的GitHub<code>repo</code>的tag范围。它用于将版本部署到您的GitHub存储库.您可以在<a href="https://github.com/settings/tokens/new">这里</a>创建令牌.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-console" data-lang="console">$ export GITHUB_TOKEN=`YOUR_TOKEN`</code></pre></div>
+<p>GoReleaser会使用您的存储库最新的<a href="https://git-scm.com/book/en/v2/Git-Basics-Tagging">Git tag</a>。下面创建一个tag，并将其推送到GitHub:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-console" data-lang="console">$ git tag -a v0.1.0 -m &#34;First release&#34;
+$ git push origin v0.1.0</code></pre></div>
+<blockquote>
+<p><strong>注意</strong>:查看您的tag是否符合<a href="/semver">语义版本控制</a>.</p>
+</blockquote>
+
+<p>如果您还不想创建tag,还可以使用，基于最新提交的版本的<code>--snapshot</code>参数.</p>
+
+<p>现在您可以在存储库的根目录下，运行GoReleaser:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-console" data-lang="console">$ goreleaser</code></pre></div>
+<p>就这样! 查看您的GitHub项目的发布页面。该版本应如下所示:</p>
+
+<p><a href="https://github.com/goreleaser/goreleaser/releases">
+  <img width="100%"
+    src="https://cloud.githubusercontent.com/assets/245435/23342061/fbcbd506-fc31-11e6-9d2b-4c1b776dee9c.png">
+</a></p>
+
+<h2 id="浅运行">浅运行</h2>
+
+<p>如果你想在发布&rdquo;真实&rdquo;版本之前，测试所有内容,你可以使用<code>--skip-publish</code>参数，只会构建和打包东西:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-console" data-lang="console">$ goreleaser release --skip-publish</code></pre></div>
+<p>您可以查看其他选项:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-console" data-lang="console">$ goreleaser --help</code></pre></div>
+<p>和</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-console" data-lang="console">$ goreleaser release --help</code></pre></div></div>
+
+						<div class="Footer">
+	<p>Made with ❤️ by GoReleaser contributors.</p>
+</div>
+<script src="https://goreleaser.com/js/index.js"></script>
+
+					</div>
+				</div>
+		</div>
+	</body>
+</html>

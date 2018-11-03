@@ -1,19 +1,20 @@
 ---
-title: Name Templates
+title: 命名 模版
 series: customization
 hideFromIndex: true
 weight: 25
 ---
+
 GoReleaser的配置文件中的几个字段支持模板.
 
-这些字段通常以后缀为后缀`_template`,但有时他们可能不会.每个部分的文档应明确指出模板可用的字段.
+这些字段通常以`_template`为后缀，但有时不是。每个部分的文档应明确指出模板可用的字段.
 
 在支持模板的字段上,此字段始终可用:
 
 | 键 | 描述 |
 | :-: | :-: |
 | `.ProjectName` | 项目名称 |
-| `.Version` | 正在发布的版本(`v`前缀剥离) |
+| `.Version` | 正在发布的版本(剥离`v`前缀) |
 | `.Tag` | 当前的git标签 |
 | `.ShortCommit` | git提交短哈希 |
 | `.FullCommit` | git提交完整哈希 |
@@ -26,7 +27,7 @@ GoReleaser的配置文件中的几个字段支持模板.
 | `.Date` | RFC3339格式的当前UTC日期 |
 | `.Timestamp` | Unix格式的当前UTC时间 |
 
-在与单个工件(例如,二进制名称)相关的字段上,您可能有一些额外的字段:
+在与单个存档(例如,二进制名称)相关的字段上,您能有一些额外的字段:
 
 | 键 | 描述 |
 | :-: | :-: |
@@ -42,13 +43,13 @@ GoReleaser的配置文件中的几个字段支持模板.
 | :-: | :-: |
 | `time "01/02/2006"` | 指定格式的当前UTC时间 |
 
-使用所有这些字段,您可以按照自己想要的方式组合工件的名称:
+使用所有这些字段,您可以按照自己想要的方式组合存档的名称:
 
 ```yaml
 example_template: '{{ .ProjectName }}_{{ .Env.USER }}_{{ time "2006" }}'
 ```
 
-例如,如果要将go版本添加到某个工件:
+例如,如果要将go版本添加到某个存档:
 
 ```yaml
 foo_template: 'foo_{{ .Env.GOVERSION }}'
@@ -60,4 +61,4 @@ foo_template: 'foo_{{ .Env.GOVERSION }}'
 GOVERSION_NR=$(go version | awk '{print $3;}') goreleaser
 ```
 
-> 请注意,这些是假设的示例和字段`foo_template`和`example_template`不是有效的GoReleaser配置.
+> 请注意,这些是假设的示例和`foo_template`和`example_template`字段不是有效的GoReleaser配置.

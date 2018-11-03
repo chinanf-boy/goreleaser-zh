@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>https://goreleaser.com/introduction/</loc>
+  </url>
+  
+  <url>
+    <loc>https://goreleaser.com/quick-start/</loc>
+  </url>
+  
+  <url>
+    <loc>https://goreleaser.com/project/</loc>
+  </url>
+  
+  <url>
+    <loc>https://goreleaser.com/semver/</loc>
+  </url>
+  
+  <url>
+    <loc>https://goreleaser.com/cgo/</loc>
+  </url>
+  
+  <url>
+    <loc>https://goreleaser.com/hooks/</loc>
+  </url>
+  
+  <url>
+    <loc>https://goreleaser.com/environment/</loc>
+  </url>
+  
+  <url>
+    <loc>https://goreleaser.com/templates/</loc>
+  </url>
+  
+  <url>
+    <loc>https://goreleaser.com/build/</loc>
+  </url>
+  
+  <url>
+    <loc>https://goreleaser.com/customization/</loc>
+  </url>
+  
+  <url>
+    <loc>https://goreleaser.com/archive/</loc>
+  </url>
+  
+  <url>
+    <loc>https://goreleaser.com/checksum/</loc>
+  </url>
+  
+  <url>
+    <loc>https://goreleaser.com/sign/</loc>
+  </url>
+  
+  <url>
+    <loc>https://goreleaser.com/snapshots/</loc>
+  </url>
+  
+  <url>
+    <loc>https://goreleaser.com/nfpm/</loc>
+  </url>
+  
+  <url>
+    <loc>https://goreleaser.com/snapcraft/</loc>
+  </url>
+  
+  <url>
+    <loc>https://goreleaser.com/homebrew/</loc>
+  </url>
+  
+  <url>
+    <loc>https://goreleaser.com/scoop/</loc>
+  </url>
+  
+  <url>
+    <loc>https://goreleaser.com/release/</loc>
+  </url>
+  
+  <url>
+    <loc>https://goreleaser.com/s3/</loc>
+  </url>
+  
+  <url>
+    <loc>https://goreleaser.com/artifactory/</loc>
+  </url>
+  
+  <url>
+    <loc>https://goreleaser.com/bintray/</loc>
+  </url>
+  
+  <url>
+    <loc>https://goreleaser.com/put/</loc>
+  </url>
+  
+  <url>
+    <loc>https://goreleaser.com/docker/</loc>
+  </url>
+  
+  <url>
+    <loc>https://goreleaser.com/ci/</loc>
+  </url>
+  
+  <url>
+    <loc>https://goreleaser.com/deprecations/</loc>
+  </url>
+  
+  <url>
+    <loc>https://goreleaser.com/sponsors/</loc>
+  </url>
+  
+  <url>
+    <loc>https://goreleaser.com/tutorials/</loc>
+  </url>
+  
+  <url>
+    <loc>https://goreleaser.com/contrib/</loc>
+  </url>
+  
+  <url>
+    <loc>https://goreleaser.com/links/</loc>
+  </url>
+  
+  <url>
+    <loc>https://goreleaser.com/categories/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://goreleaser.com/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://goreleaser.com/tags/</loc>
+    <priority>0</priority>
+  </url>
+  
+</urlset>

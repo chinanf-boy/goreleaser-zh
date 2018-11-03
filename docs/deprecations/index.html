@@ -1,0 +1,201 @@
+
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>弃用通知 &middot; GoReleaser</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		
+		
+		<meta http-equiv="content-language" content="en-us" />
+		<meta name="generator" content="Hugo 0.49.2" />
+		<link rel="stylesheet" href="https://goreleaser.com/css/index.css">
+		<link rel="apple-touch-icon" href="https://goreleaser.com/apple-touch-icon.png">
+		<link rel="shortcut icon" href="https://goreleaser.com/favicon.ico" type="image/x-icon">
+	</head>
+
+	<body>
+		<div class="Wrapper">
+			<div class="Container">
+				<div class="Header">
+  <a href="https://goreleaser.com/">
+	<div class="Title center">
+		
+			<img alt="GoReleaser Logo" src="https://avatars2.githubusercontent.com/u/24697112?v=3&amp;s=140" height="140" />
+		
+		<span class="text">GoReleaser</span>
+		<span class="subtext"></span>
+	</div>
+  </a>
+</div>
+
+				<div class="Content-wrapper">
+					<div class="Sidebar">
+	<div class="Menu">
+		<div class="item">
+			<a href="https://goreleaser.com/">Home</a>
+		</div>
+		
+
+		
+	</div>
+</div>
+
+					<div class="Content">
+						
+	<div class="Page" id="">
+		<h1>弃用通知</h1>
+		
+
+<p>此页面将用于列出GoReleaser的弃用通知.</p>
+
+<p>弃用代码将在弃用之后，约6个月后删除.</p>
+
+<h1 id="主动弃用通知">主动弃用通知</h1>
+
+<h2 id="docker-image">docker.image</h2>
+
+<blockquote>
+<p>自2018-10-20</p>
+</blockquote>
+
+<p>不推荐使用此属性,以支持更灵活<code>image_templates</code>.我们的想法是能够使用模板定义多个镜像和标签,而不仅仅是一个带有标签模板的镜像.这种灵活性允许将镜像推送到多个注册表.</p>
+
+<p>改变这个:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">dockers:
+- image: foo/bar
+  tag_templates:
+    - <span style="color:#f1fa8c">&#39;{{ .Tag }}&#39;</span></code></pre></div>
+<p>到这个:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">dockers:
+- image_templates:
+    - <span style="color:#f1fa8c">&#39;foo/bar:{{ .Tag }}&#39;</span></code></pre></div>
+<h2 id="docker-tag-templates">docker.tag_templates</h2>
+
+<blockquote>
+<p>自2018-10-20</p>
+</blockquote>
+
+<p>不推荐使用此属性,以支持更灵活<code>image_templates</code>.我们的想法是能够使用模板定义多个镜像和标签,而不仅仅是一个带有标签模板的镜像.</p>
+
+<p>改变这个:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">dockers:
+- image: foo/bar
+  tag_templates:
+    - <span style="color:#f1fa8c">&#39;{{ .Tag }}&#39;</span></code></pre></div>
+<p>到这个:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">dockers:
+- image_templates:
+    - <span style="color:#f1fa8c">&#39;foo/bar:{{ .Tag }}&#39;</span></code></pre></div>
+<!--
+
+Template for new deprecations:
+
+## property
+
+> since yyyy-mm-dd
+
+Description.
+
+Change this:
+
+```yaml
+```
+
+to this:
+
+```yaml
+```
+
+ -->
+
+<h2 id="git-short-hash">git.short_hash</h2>
+
+<blockquote>
+<p>自2018-10-03</p>
+</blockquote>
+
+<p>此属性用于告诉GoReleaser使用短git哈希，而不是完整哈希。将其删除,有利于指定的模板变量(<code>.FullCommit</code>和<code>.ShortCommit</code>).</p>
+
+<p>改变这个:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">git:
+  short_hash: <span style="color:#ff79c6">true</span>
+
+fake:
+  foo_template: <span style="color:#f1fa8c">&#39;blah {{ .Commit }}&#39;</span></code></pre></div>
+<p>到这个:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">fake:
+  foo_template: <span style="color:#f1fa8c">&#39;blah {{ .ShortCommit }}&#39;</span></code></pre></div>
+<h1 id="过期的弃用通知">过期的弃用通知</h1>
+
+<p>以下选项已弃用约6个月,现在不受支持.</p>
+
+<h2 id="fpm">fpm</h2>
+
+<blockquote>
+<p>自2018-02-17</p>
+
+<p>删除2017-08-15</p>
+</blockquote>
+
+<p>FPM不赞成，使用nfpm,这是一个用Go编写的更简单的替代方法.目标是消除ruby依赖性,从而简化CI/CD管道.</p>
+
+<p>只需更换<code>fpm</code>关键字<code>nfpm</code>在你的<code>goreleaser.yaml</code>文件.</p>
+
+<p>改变这个:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">fpm:
+  <span style="color:#6272a4"># ...</span></code></pre></div>
+<p>到这个:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">nfpm:
+  <span style="color:#6272a4"># ...</span></code></pre></div>
+<h2 id="docker-tag-template">docker.tag_template</h2>
+
+<blockquote>
+<p>自2018年1月19日</p>
+
+<p>删除2017-08-15</p>
+</blockquote>
+
+<p>此属性已被弃用,有利于复数<code>tag_templates</code>。我们的想法是能够定义几个标签而不是一个标签.</p>
+
+<p>改变这个:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">dockers:
+- image: foo/bar
+  tag_template: <span style="color:#f1fa8c">&#39;{{ .Tag }}&#39;</span></code></pre></div>
+<p>到这个:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">dockers:
+- image: foo/bar
+  tag_templates:
+    - <span style="color:#f1fa8c">&#39;{{ .Tag }}&#39;</span></code></pre></div>
+<h2 id="docker-latest">docker.latest</h2>
+
+<blockquote>
+<p>自2018年1月19日</p>
+
+<p>删除2017-08-15</p>
+</blockquote>
+
+<p>该<code>latest</code>Docker配置中的字段已弃用,换成新的<code>tag_templates</code>字段.</p>
+
+<p>改变这个:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">dockers:
+- image: foo/bar
+  latest: <span style="color:#ff79c6">true</span></code></pre></div>
+<p>到这个:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">dockers:
+- image: foo/bar
+  tag_templates:
+    - <span style="color:#f1fa8c">&#39;{{ .Tag }}&#39;</span>
+    - latest</code></pre></div></div>
+
+						<div class="Footer">
+	<p>Made with ❤️ by GoReleaser contributors.</p>
+</div>
+<script src="https://goreleaser.com/js/index.js"></script>
+
+					</div>
+				</div>
+		</div>
+	</body>
+</html>

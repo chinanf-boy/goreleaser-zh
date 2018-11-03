@@ -1,0 +1,143 @@
+
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>Snapcraft &middot; GoReleaser</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		
+		
+		<meta http-equiv="content-language" content="en-us" />
+		<meta name="generator" content="Hugo 0.49.2" />
+		<link rel="stylesheet" href="https://goreleaser.com/css/index.css">
+		<link rel="apple-touch-icon" href="https://goreleaser.com/apple-touch-icon.png">
+		<link rel="shortcut icon" href="https://goreleaser.com/favicon.ico" type="image/x-icon">
+	</head>
+
+	<body>
+		<div class="Wrapper">
+			<div class="Container">
+				<div class="Header">
+  <a href="https://goreleaser.com/">
+	<div class="Title center">
+		
+			<img alt="GoReleaser Logo" src="https://avatars2.githubusercontent.com/u/24697112?v=3&amp;s=140" height="140" />
+		
+		<span class="text">GoReleaser</span>
+		<span class="subtext"></span>
+	</div>
+  </a>
+</div>
+
+				<div class="Content-wrapper">
+					<div class="Sidebar">
+	<div class="Menu">
+		<div class="item">
+			<a href="https://goreleaser.com/">Home</a>
+		</div>
+		
+
+		
+	</div>
+</div>
+
+					<div class="Content">
+						
+	<div class="Page" id="">
+		<h1>Snapcraft</h1>
+		<p>GoReleaser也可以生成<code>snap</code>包.<a href="http://snapcraft.io/">snapcraft</a>是一种新的打包格式,可以让您将项目直接发布到Ubuntu商店。从那里它将安装在所有的<a href="https://snapcraft.io/docs/core/install">支持的Linux发行版</a>，具有自动和更新事件。</p>
+
+<p>你可以在<a href="https://snapcraft.io/docs/">snapcraft 文档</a>中阅读更多相关信息.</p>
+
+<p>可用选项:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#6272a4"># .goreleaser.yml</span>
+snapcraft:
+  <span style="color:#6272a4"># 您可以更改包的名称。</span>
+  <span style="color:#6272a4"># Default: `{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}`</span>
+  name_template: <span style="color:#f1fa8c">&#34;{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}&#34;</span>
+
+  <span style="color:#6272a4"># 替换包名称中的 GOOS和GOARCH。</span>
+  <span style="color:#6272a4"># key 应该是有效的 GOOS或GOARCH。</span>
+  <span style="color:#6272a4"># value 是各自的替代品。</span>
+  <span style="color:#6272a4"># 默认值为空。</span>
+  replacements:
+    amd64: <span style="color:#bd93f9">64</span>-bit
+    <span style="color:#bd93f9">386</span>: <span style="color:#bd93f9">32</span>-bit
+    darwin: macOS
+    linux: Tux
+
+  <span style="color:#6272a4"># snap的名称。这是可选的。</span>
+  <span style="color:#6272a4"># 默认为项目名称。</span>
+  name: drumroll
+
+  <span style="color:#6272a4"># 然后将snap发布到snapcraft商店。</span>
+  <span style="color:#6272a4"># 请记住，您首先需要`snapcraft login`。</span>
+  <span style="color:#6272a4"># 默认值为false。</span>
+  publish: <span style="color:#ff79c6">true</span>
+
+  <span style="color:#6272a4"># 您提供了惊人的snap软件。</span>
+  <span style="color:#6272a4"># 最多79个字符。</span>
+  summary: Software to create fast and easy drum rolls.
+
+  <span style="color:#6272a4"># 这是您的snap的描述。你有一两段话要告诉你</span>
+  <span style="color:#6272a4"># 关于snap的最重要的故事。保持在100字以内，</span>
+  <span style="color:#6272a4"># 我们住在推文空间，你的描述希望在短时间内看起来很好</span>
+  <span style="color:#6272a4"># 商店。</span>
+  description: <span style="color:#f1fa8c">|
+</span><span style="color:#f1fa8c">    这是最好的滚筒应用。</span>
+     安装它，愉快！
+
+  <span style="color:#6272a4"># 在它准备好了，将snap发布给所有用户之前的挡板，</span>
+  <span style="color:#6272a4"># `devel`将让你只发布到&#39;edge`和&#39;beta`版本到商店</span>
+  <span style="color:#6272a4"># `stable`也会让你发布`candidate`和`stable`版本</span>
+  <span style="color:#6272a4"># 有关该频道的更多信息：</span>
+  <span style="color:#6272a4"># Https://snapcraft.io/docs/reference/channels</span>
+  grade: stable
+
+  <span style="color:#6272a4"># 您可以设置snap，以遵循三种不同的限制策略：</span>
+  <span style="color:#6272a4"># `strict`，`devmode`和`classic`。</span>
+  <span style="color:#6272a4"># 快速严格的限制建议仅在您自己的命名空间中进行读写。</span>
+  <span style="color:#6272a4"># 额外严格捕获的权限可以声明为应用程序的“插件”，这里</span>
+  <span style="color:#6272a4"># 我稍后会解释。有关限制的更多信息：</span>
+  <span style="color:#6272a4"># Https://snapcraft.io/docs/reference/confinement</span>
+  confinement: strict
+
+  <span style="color:#6272a4"># GoReleaser构建的每个二进制文件都是snap中的应用程序。在这一部分</span>
+  <span style="color:#6272a4"># 您可以声明这些二进制文件的其他详细信息。这是可选的。</span>
+  apps:
+
+    <span style="color:#6272a4"># 应用程序的名称必须，与二进制构建的名称或snap的名称相同。</span>
+    drumroll:
+
+      <span style="color:#6272a4"># 如果您的应用需要其他权限，才能在其默认值之外工作</span>
+      <span style="color:#6272a4"># 下面空间中，宣布它们。</span>
+      <span style="color:#6272a4"># 您可以阅读有关可用插头的文档</span>
+      <span style="color:#6272a4"># 允许的可用内容：</span>
+      <span style="color:#6272a4"># Https://snapcraft.io/docs/reference/interfaces。</span>
+      plugs: [<span style="color:#f1fa8c">&#34;home&#34;</span>, <span style="color:#f1fa8c">&#34;network&#34;</span>]
+
+      <span style="color:#6272a4"># 如果您希望自己的应用始终自动后台启动</span>
+      <span style="color:#6272a4"># 你可以使它成为一个简单的守护进程。</span>
+      daemon: simple
+
+      <span style="color:#6272a4"># 如果要将args传递给二进制文件，可以使用</span>
+      <span style="color:#6272a4"># Args选项。</span>
+      args: --foo</code></pre></div>
+<blockquote>
+<p>了解有关<a href="/templates">命名模板引擎</a>的更多信息.</p>
+</blockquote>
+
+<p>请注意,GoReleaser不会安装<code>snapcraft</code>，或它的任何依赖.</p>
+</div>
+
+						<div class="Footer">
+	<p>Made with ❤️ by GoReleaser contributors.</p>
+</div>
+<script src="https://goreleaser.com/js/index.js"></script>
+
+					</div>
+				</div>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,186 @@
+
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>NFPM &middot; GoReleaser</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		
+		
+		<meta http-equiv="content-language" content="en-us" />
+		<meta name="generator" content="Hugo 0.49.2" />
+		<link rel="stylesheet" href="https://goreleaser.com/css/index.css">
+		<link rel="apple-touch-icon" href="https://goreleaser.com/apple-touch-icon.png">
+		<link rel="shortcut icon" href="https://goreleaser.com/favicon.ico" type="image/x-icon">
+	</head>
+
+	<body>
+		<div class="Wrapper">
+			<div class="Container">
+				<div class="Header">
+  <a href="https://goreleaser.com/">
+	<div class="Title center">
+		
+			<img alt="GoReleaser Logo" src="https://avatars2.githubusercontent.com/u/24697112?v=3&amp;s=140" height="140" />
+		
+		<span class="text">GoReleaser</span>
+		<span class="subtext"></span>
+	</div>
+  </a>
+</div>
+
+				<div class="Content-wrapper">
+					<div class="Sidebar">
+	<div class="Menu">
+		<div class="item">
+			<a href="https://goreleaser.com/">Home</a>
+		</div>
+		
+
+		
+	</div>
+</div>
+
+					<div class="Content">
+						
+	<div class="Page" id="">
+		<h1>NFPM</h1>
+		<p>GoReleaser可以连到<a href="https://github.com/goreleaser/nfpm">nfpm</a>，生成和发布<code>.deb</code>和<code>.rpm</code>包.</p>
+
+<p>可用选项:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#6272a4">#.goreleaser.yml</span>
+nfpm:
+  <span style="color:#6272a4"># 包名</span>
+  <span style="color:#6272a4"># Default: `{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}`</span>
+  name_template: <span style="color:#f1fa8c">&#34;{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}&#34;</span>
+
+  <span style="color:#6272a4"># 替换 存档名称中的 GOOS 和 GOARCH.</span>
+  <span style="color:#6272a4"># Keys 应为合法 GOOSs 或 GOARCHs.</span>
+  <span style="color:#6272a4"># Values 应为 恰当的替代名称.</span>
+  <span style="color:#6272a4"># 默认是 空.</span>
+  replacements:
+    amd64: <span style="color:#bd93f9">64</span>-bit
+    <span style="color:#bd93f9">386</span>: <span style="color:#bd93f9">32</span>-bit
+    darwin: macOS
+    linux: Tux
+
+  <span style="color:#6272a4"># 你应用的 vendor.</span>
+  <span style="color:#6272a4"># 默认为 空</span>
+  vendor: Drum Roll Inc.
+  <span style="color:#6272a4"># 你应用的 homepage.</span>
+  <span style="color:#6272a4"># 默认为 空</span>
+  homepage: https://example.com/
+
+  <span style="color:#6272a4"># 你应用的 主项目人 (可能时 you).</span>
+  <span style="color:#6272a4"># 默认为 空</span>
+  maintainer: Drummer &lt;drum-roll@example.com<span style="color:#f1fa8c">&gt;
+</span><span style="color:#f1fa8c">
+</span><span style="color:#f1fa8c">  # 你应用的 描述.</span>
+  <span style="color:#6272a4"># 默认为 空</span>
+  description: Software to create fast and easy drum rolls.
+
+  <span style="color:#6272a4"># 你应用的 license.</span>
+  <span style="color:#6272a4"># 默认为 空</span>
+  license: Apache <span style="color:#bd93f9">2.0</span>
+
+  <span style="color:#6272a4"># 生成格式.</span>
+  formats:
+    - deb
+    - rpm
+
+  <span style="color:#6272a4"># 你包所依赖的包。</span>
+  dependencies:
+    - git
+    - zsh
+
+  <span style="color:#6272a4"># 软件包建议安装的软件包。</span>
+  <span style="color:#6272a4"># 对于RPM软件包，需要rpmbuild &gt;= 4.13</span>
+  recommends:
+    - bzr
+    - gtk
+
+  <span style="color:#6272a4"># 软件包建议安装的软件包。</span>
+  <span style="color:#6272a4"># 对于RPM软件包，需要rpmbuild &gt;= 4.13</span>
+  suggests:
+    - cvs
+    - ksh
+
+  <span style="color:#6272a4"># 与您的包冲突的包。</span>
+  conflicts:
+    - svn
+    - bash
+
+  <span style="color:#6272a4"># 覆盖二进制文件的默认目的地为 /usr/local/bin</span>
+  bindir: /usr/bin
+
+  <span style="color:#6272a4"># 应该由你程序实现创建和管理的空文件夹。</span>
+  <span style="color:#6272a4"># 默认为空</span>
+  empty_folders:
+  - /var/log/foobar
+
+  <span style="color:#6272a4"># 要添加到包中的文件或目录（超出二进制文件）。</span>
+  <span style="color:#6272a4"># Key 是从 源 路径/globs 中获取文件。</span>
+  <span style="color:#6272a4"># Value 是包中文件的目标位置。</span>
+  files:
+    <span style="color:#f1fa8c">&#34;scripts/etc/init.d/&#34;</span>: <span style="color:#f1fa8c">&#34;/etc/init.d&#34;</span>
+    <span style="color:#f1fa8c">&#34;path/**/glob&#34;</span>: <span style="color:#f1fa8c">&#34;/var/foo/glob&#34;</span>
+
+  <span style="color:#6272a4"># 要添加到包中的配置文件。它们大致与上面fiels相同</span>
+  <span style="color:#6272a4"># ，但包管理器对待它们方式不同（同时</span>
+  <span style="color:#6272a4"># 卸载，主要是）。</span>
+  <span style="color:#6272a4"># Key 是从 源 路径/globs 中获取文件。</span>
+  <span style="color:#6272a4"># Value 是包中文件的目标位置。</span>
+  config_files:
+    <span style="color:#f1fa8c">&#34;tmp/app_generated.conf&#34;</span>: <span style="color:#f1fa8c">&#34;/etc/app.conf&#34;</span>
+    <span style="color:#f1fa8c">&#34;conf/*.conf&#34;</span>: <span style="color:#f1fa8c">&#34;/etc/foo/&#34;</span>
+
+  <span style="color:#6272a4"># 在安装包期间执行的脚本。</span>
+  <span style="color:#6272a4"># Key 是安装过程的阶段</span>
+  <span style="color:#6272a4"># Values 是将要执行的脚本的路径</span>
+  scripts:
+    preinstall: <span style="color:#f1fa8c">&#34;scripts/preinstall.sh&#34;</span>
+    postinstall: <span style="color:#f1fa8c">&#34;scripts/postinstall.sh&#34;</span>
+    preremove: <span style="color:#f1fa8c">&#34;scripts/preremove.sh&#34;</span>
+    postremove: <span style="color:#f1fa8c">&#34;scripts/postremove.sh&#34;</span>
+
+  <span style="color:#6272a4"># 每个包格式，可以覆盖一些属性。</span>
+  overrides:
+    deb:
+      conflicts:
+        - subversion
+      dependencies:
+        - git
+      suggests:
+        - gitk
+      recommends:
+        - tig
+      empty_folders:
+      - /var/log/bar
+    rpm:
+      replacements:
+        amd64: x86_64
+      name_template: <span style="color:#f1fa8c">&#34;{{ .ProjectName }}-{{ .Version }}-{{ .Arch }}&#34;</span>
+      files:
+        <span style="color:#f1fa8c">&#34;tmp/man.gz&#34;</span>: <span style="color:#f1fa8c">&#34;/usr/share/man/man8/app.8.gz&#34;</span>
+      config_files:
+        <span style="color:#f1fa8c">&#34;tmp/app_generated.conf&#34;</span>: <span style="color:#f1fa8c">&#34;/etc/app-rpm.conf&#34;</span>
+      scripts:
+        preinstall: <span style="color:#f1fa8c">&#34;scripts/preinstall-rpm.sh&#34;</span></code></pre></div>
+<blockquote>
+<p>了解有关<a href="/templates">命名模板引擎</a>的更多信息.</p>
+</blockquote>
+
+<p>请注意,GoReleaser不会为你安装<code>rpmbuild</code>或任何依赖.就目前而言,如果要生成rpm包，<code>rpmbuild</code>是需要的, 建议使用<code>apt-get install rpm</code>要么<code>brew install rpm</code>安装它.</p>
+</div>
+
+						<div class="Footer">
+	<p>Made with ❤️ by GoReleaser contributors.</p>
+</div>
+<script src="https://goreleaser.com/js/index.js"></script>
+
+					</div>
+				</div>
+		</div>
+	</body>
+</html>

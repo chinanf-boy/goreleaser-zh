@@ -10,7 +10,7 @@ GoReleaser需要一个**GitHub API token** ，其具有选择`repo`范围，具�
 
 此**token**应添加到环境变量中`GITHUB_TOKEN`.以下是Travis CI的使用方法:[在存储库设置中,定义环境变量](https://docs.travis-ci.com/user/environment-variables/#Defining-Variables-in-Repository-Settings).
 
-或者,您可以在文件中提供GitHub令牌。默认情况下，GoReleaser会检查`~/.config/goreleaser/github_token`,您可以在`.goreleaser.yml`文件中更改它:
+或者,您可以在文件中提供GitHub令牌。默认情况下，GoReleaser会查看`~/.config/goreleaser/github_token`,您可以在`.goreleaser.yml`文件中更改它:
 
 ```yaml
 # .goreleaser.yml

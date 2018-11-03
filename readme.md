@@ -31,7 +31,7 @@
 
 <!-- doc-templite END generated -->
 
-- [ ] [goreleaser 网站中文翻译](http://chinanf-boy.github.io/goreleaser-zh) | [源](./www)
+- [x] [goreleaser 网站中文翻译](http://chinanf-boy.github.io/goreleaser-zh) | [源](./www)
 
 ### 贡献
 
@@ -53,7 +53,7 @@
 
 GoReleaser 为多个平台构建 Go 二进制文件,创建 GitHub 版本,然后将 Homebrew 公式推送到 tap 存储库。可将所有这些都包含在你最喜欢的 CI 中.
 
-该项目遵守贡献者公约[行为守则](CODE_OF_CONDUCT.md)。支持参与此代码。感谢您的贡献.请参考我们的[贡献指南](CONTRIBUTING.md)了解更多信息.
+该项目遵守贡献者公约[行为守则](CODE_OF_CONDUCT.md)。支持参与此代码。感谢您的贡献.请参考我们的[贡献指南](CONTRIBUTING.zh.md)了解更多信息.
 
 如有问题请加入[#goreleaser](https://gophers.slack.com/messages/goreleaser/)通道中的[Gophers Slack](https://invite.slack.golangbridge.org/).
 
@@ -112,7 +112,7 @@ GoReleaser 为多个平台构建 Go 二进制文件,创建 GitHub 版本,然后�
 
 ## 贡献者
 
-感谢所有贡献者.\[[请看](CONTRIBUTING.md)].<a href="https://github.com/goreleaser/goreleaser/graphs/contributors"><img src="https://opencollective.com/goreleaser/contributors.svg?width=890" /></a>
+感谢所有贡献者.\[[请看](CONTRIBUTING.zh.md)].<a href="https://github.com/goreleaser/goreleaser/graphs/contributors"><img src="https://opencollective.com/goreleaser/contributors.svg?width=890" /></a>
 
 ## 随着时间的推移,观星者
 

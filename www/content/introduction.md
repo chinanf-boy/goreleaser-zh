@@ -33,7 +33,7 @@ scoop bucket add goreleaser https://github.com/goreleaser/scoop-bucket.git
 scoop install goreleaser
 ```
 
-> 检查[tap源](https://github.com/goreleaser/homebrew-tap)，了解更多细节.
+> 查看[tap源](https://github.com/goreleaser/homebrew-tap)，了解更多细节.
 
 ### 使用Docker
 

@@ -1,56 +1,55 @@
 ---
-title: Release
+title: Release-版告
 series: customization
 hideFromIndex: true
 weight: 110
 ---
-GoReleaser将使用当前标记创建GitHub版本,上传所有工件并根据自上一个标记以来的新提交生成更改日志.
 
-让我们来看看可以定制的内容`release`部分:
+GoReleaser 根据当前标记,创建 GitHub 版本,上传所有存档，并根据自上一个标记以来的新提交生成更改日志-changelog.
+
+让我们来看看可以定制的`release`部分内容:
 
 ```yml
 # .goreleaser.yml
 release:
-  # Repo in which the release will be created.
-  # Default is extracted from the origin remote URL.
+  # 要release的存储库。
+  # 默认值从原始远程URL中提取。
   github:
     owner: user
     name: repo
 
-  # If set to true, will not auto-publish the release.
-  # Default is false.
+  # 如果设置为true，则不会自动发布该版本。
+  # 默认值为false。
   draft: true
 
-  # If set to true, will mark the release as not ready for production.
-  # Default is false.
+  # 如果设置为true，则将发布tag为 预发布版本。
+  # 默认值为false。
   prerelease: true
 
-  # You can change the name of the GitHub release.
-  # Default is ``
-  name_template: "{{.ProjectName}}-v{{.Version}} {{.Env.USER}}"
+  # 您可以更改GitHub版本的名称。
+  # 默认是``
+  name_template: '{{.ProjectName}}-v{{.Version}} {{.Env.USER}}'
 
-  # You can disable this pipe in order to not upload any artifacts to
-  # GitHub.
-  # Defaults to false.
+  # 您可以禁用此管道，将不上传到GitHub
+  # 默认为false。
   disable: true
 ```
 
-> 了解有关的更多信息[名称模板引擎](/templates).
+> 了解有关[命名模板引擎](/templates)的更多信息.
 
 ## 自定义更改日志
 
-您可以使用自定义生成更改日志的方式`changelog`配置文件中的部分:
+您可以使用自定义配置文件中`changelog`的部分，来修改生成changelog的方式:
 
 ```yaml
 # .goreleaser.yml
 changelog:
-  # could either be asc, desc or empty
-  # Default is empty
+  # 可以是asc，desc或empty
+  # 默认为空
   sort: asc
   filters:
-    # commit messages matching the regexp listed here will be removed from
-    # the changelog
-    # Default is empty
+    # 删除与下方列表匹配的commit信息，将不在changelog显示
+    # 默认为空
     exclude:
       - '^docs:'
       - typo
@@ -59,14 +58,14 @@ changelog:
 
 ## 自定义发行说明
 
-您可以指定包含自定义发行说明的文件,并将其传递给`--release-notes=FILE`旗.然后,GoReleaser将使用您文件的内容跳过自己的发行说明生成.您可以使用Markdown格式化文件的内容.
+您可以自定义一个包含发行说明的**文件**,并将其传递给`--release-notes=FILE`参数。然后,GoReleaser 将使用您文件的内容，而跳过自己的发行说明生成。您可以使用 Markdown 格式化文件的内容.
 
-在Unix系统上,您还可以使用在线生成发行说明[过程替代](https://en.wikipedia.org/wiki/Process_substitution).列出自上一个标记以来的所有提交,但跳过以.开头的提交`Merge`要么`docs`,你可以运行这个命令:
+在 Unix 系统上,您还可以使用[process substitution](https://en.wikipedia.org/wiki/Process_substitution)命令，生成发行说明。即列出自上一个标记以来的所有提交,但跳过以`Merge`要么`docs`开头的提交,你可以运行这个命令:
 
 ```console
 $ goreleaser --release-notes <(some_changelog_generator)
 ```
 
-您可以使用的一些更改日志生成器:
+您可以使用的,一些更改日志生成器-`some_changelog_generator`:
 
--   [buchanae / github上释放小笔记](https://github.com/buchanae/github-release-notes)
+- [buchanae/github-release-notes](https://github.com/buchanae/github-release-notes)

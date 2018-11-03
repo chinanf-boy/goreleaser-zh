@@ -1,0 +1,120 @@
+
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>S3 &middot; GoReleaser</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		
+		
+		<meta http-equiv="content-language" content="en-us" />
+		<meta name="generator" content="Hugo 0.49.2" />
+		<link rel="stylesheet" href="https://goreleaser.com/css/index.css">
+		<link rel="apple-touch-icon" href="https://goreleaser.com/apple-touch-icon.png">
+		<link rel="shortcut icon" href="https://goreleaser.com/favicon.ico" type="image/x-icon">
+	</head>
+
+	<body>
+		<div class="Wrapper">
+			<div class="Container">
+				<div class="Header">
+  <a href="https://goreleaser.com/">
+	<div class="Title center">
+		
+			<img alt="GoReleaser Logo" src="https://avatars2.githubusercontent.com/u/24697112?v=3&amp;s=140" height="140" />
+		
+		<span class="text">GoReleaser</span>
+		<span class="subtext"></span>
+	</div>
+  </a>
+</div>
+
+				<div class="Content-wrapper">
+					<div class="Sidebar">
+	<div class="Menu">
+		<div class="item">
+			<a href="https://goreleaser.com/">Home</a>
+		</div>
+		
+
+		
+	</div>
+</div>
+
+					<div class="Content">
+						
+	<div class="Page" id="">
+		<h1>S3</h1>
+		
+
+<p>至<a href="https://github.com/goreleaser/goreleaser/releases/tag/v0.74.0">v0.74.0</a>起，GoReleaser 支持将存档推送到 Amazon S3 和其他 API 兼容的云存储(例如<a href="https://www.minio.io">minio</a>).</p>
+
+<p>现在,实现非常简单,也可能不会涵盖所有用例。如果您需要其中一个用例,请打开问题/请求.</p>
+
+<h2 id="定制">定制</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#6272a4"># .goreleaser.yml</span>
+s3:
+  <span style="color:#6272a4"># 你可以有多个s3配置</span>
+  - <span style="color:#6272a4"># Bucket名称（不带 s3:// 前缀）</span>
+    <span style="color:#6272a4"># 默认为空。</span>
+    bucket: my-bucket
+    <span style="color:#6272a4"># AWS区域使用。</span>
+    <span style="color:#6272a4"># 默认值为 us-east-1</span>
+    region: us-east-<span style="color:#bd93f9">1</span>
+    <span style="color:#6272a4"># Bucket内 路径/名称 的模板。</span>
+    <span style="color:#6272a4"># 默认为`{{ .ProjectName }}/{{ .Tag }}`</span>
+    folder: <span style="color:#f1fa8c">&#39;foo/bar/{{.Version}}&#39;</span>
+    <span style="color:#6272a4"># 如果你有多个profiles在〜/.aws配置中, </span>
+    <span style="color:#6272a4"># 设置用于此s3配置的自定义配置文件。这将有助于定义哪个</span>
+    <span style="color:#6272a4"># s3桶使用哪个配置文件。</span>
+    <span style="color:#6272a4"># 默认为空。</span>
+    profile: my-profile
+    <span style="color:#6272a4"># Endpoint允许您设置自定义端点，这对</span>
+    <span style="color:#6272a4"># 例如，想要将您的存档推送到minio服务器很有用。</span>
+    <span style="color:#6272a4"># 默认为AWS S3 URL。</span>
+    endpoint: <span style="color:#f1fa8c">&#39;http://minio.foo.com&#39;</span>
+    <span style="color:#6272a4"># 使用指定的固定ACL，设置对象的ACL。</span>
+    <span style="color:#6272a4"># 默认为私有。</span>
+    acl: public-read</code></pre></div>
+<blockquote>
+<p>了解有关<a href="/templates">命名模板引擎</a>的更多信息.了解有关<a href="https://docs.aws.amazon.com/AmazonS3/latest/API/RESTObjectPUTacl.html">acl</a>的更多信息.</p>
+</blockquote>
+
+<h2 id="认证">认证</h2>
+
+<p>GoReleaser 使用<a href="https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html">由 aws-cli 定义的相同方法</a>进行身份验证.你可以看看<a href="https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html">其文档</a>了解更多信息.</p>
+
+<p>目前它支持身份验证:</p>
+
+<ul>
+<li><p>一个是<a href="https://docs.aws.amazon.com/sdk-for-go/api/aws/credentials/#EnvProvider">EnvProvider</a>，它从正在运行的进程的环境变量中检索凭据。环境凭据永不过期.使用的环境变量:</p>
+
+<ul>
+<li><p>访问密钥ID-Access Key ID: <code>AWS_ACCESS_KEY_ID</code> 或 <code>AWS_ACCESS_KEY</code></p></li>
+
+<li><p>Secret Access Key: <code>AWS_SECRET_ACCESS_KEY</code> 或 <code>AWS_SECRET_KEY</code></p></li>
+</ul></li>
+
+<li><p>一个是<a href="https://docs.aws.amazon.com/sdk-for-go/api/aws/credentials/#SharedCredentialsProvider">SharedCredentialsProvider</a>，它从当前用户的主目录中检索凭据,并跟踪这些凭据是否已过期.</p></li>
+</ul>
+
+<p>配置文件 ini 文件示例:<code>$HOME/.aws/credentials</code></p>
+
+<ul>
+<li>还有具有启用 <strong>SharedConfigState</strong> 的 <strong>AssumeRoleTokenProvider</strong>，它使用 MFA 提示 stdin 上的令牌代码.去<a href="https://docs.aws.amazon.com/sdk-for-go/api/aws/session/">其会议文档</a>了解更多细节.</li>
+</ul>
+
+<p>您还可以为每个 S3 配置设置不同的配置文件名称,例如,您可以将其推送到不同帐户中的Bucket.</p>
+</div>
+
+						<div class="Footer">
+	<p>Made with ❤️ by GoReleaser contributors.</p>
+</div>
+<script src="https://goreleaser.com/js/index.js"></script>
+
+					</div>
+				</div>
+		</div>
+	</body>
+</html>

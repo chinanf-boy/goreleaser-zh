@@ -1,0 +1,270 @@
+
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>持续集成 &middot; GoReleaser</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		
+		
+		<meta http-equiv="content-language" content="en-us" />
+		<meta name="generator" content="Hugo 0.49.2" />
+		<link rel="stylesheet" href="https://goreleaser.com/css/index.css">
+		<link rel="apple-touch-icon" href="https://goreleaser.com/apple-touch-icon.png">
+		<link rel="shortcut icon" href="https://goreleaser.com/favicon.ico" type="image/x-icon">
+	</head>
+
+	<body>
+		<div class="Wrapper">
+			<div class="Container">
+				<div class="Header">
+  <a href="https://goreleaser.com/">
+	<div class="Title center">
+		
+			<img alt="GoReleaser Logo" src="https://avatars2.githubusercontent.com/u/24697112?v=3&amp;s=140" height="140" />
+		
+		<span class="text">GoReleaser</span>
+		<span class="subtext"></span>
+	</div>
+  </a>
+</div>
+
+				<div class="Content-wrapper">
+					<div class="Sidebar">
+	<div class="Menu">
+		<div class="item">
+			<a href="https://goreleaser.com/">Home</a>
+		</div>
+		
+
+		
+	</div>
+</div>
+
+					<div class="Content">
+						
+	<div class="Page" id="">
+		<h1>持续集成</h1>
+		
+
+<p>GoReleaser的第一次commit的构建思想，是作为CI集成的一部分运行.</p>
+
+<p>让我们看看如何让它在流行的CI软件上运行.</p>
+
+<h2 id="travis-ci">Travis CI</h2>
+
+<p>您可能希望将项目设置为新tag，就自动<a href="https://travis-ci.org">Travis</a>部署, 例如:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#6272a4"># .travis.yml</span>
+language: go
+
+addons:
+  apt:
+    packages:
+    <span style="color:#6272a4"># needed for the nfpm pipe:</span>
+    - rpm
+    <span style="color:#6272a4"># needed for the snap pipe:</span>
+    - snapcraft
+
+env:
+<span style="color:#6272a4"># needed for the snap pipe:</span>
+- PATH=/snap/bin:$PATH
+
+install:
+<span style="color:#6272a4"># needed for the snap pipe:</span>
+- sudo snap install snapcraft --classic
+
+<span style="color:#6272a4"># needed for the docker pipe</span>
+services:
+- docker
+
+after_success:
+<span style="color:#6272a4"># docker login is required if you want to push docker images.</span>
+<span style="color:#6272a4"># DOCKER_PASSWORD should be a secret in your .travis.yml configuration.</span>
+- test -n <span style="color:#f1fa8c">&#34;$TRAVIS_TAG&#34;</span> <span style="color:#ff79c6">&amp;&amp;</span> docker login -u=myuser -p=<span style="color:#f1fa8c">&#34;$DOCKER_PASSWORD&#34;</span>
+<span style="color:#6272a4"># snapcraft login is required if you want to push snapcraft packages to the</span>
+<span style="color:#6272a4"># store.</span>
+<span style="color:#6272a4"># You&#39;ll need to run `snapcraft export-login snap.login` and</span>
+<span style="color:#6272a4"># `travis encrypt-file snap.login --add` to add the key to the travis</span>
+<span style="color:#6272a4"># environment.</span>
+- test -n <span style="color:#f1fa8c">&#34;$TRAVIS_TAG&#34;</span> <span style="color:#ff79c6">&amp;&amp;</span> snapcraft login --with snap.login
+
+<span style="color:#6272a4"># calls goreleaser</span>
+deploy:
+- provider: script
+  skip_cleanup: <span style="color:#ff79c6">true</span>
+  script: curl -sL https://git.io/goreleaser <span style="color:#f1fa8c">| bash
+</span><span style="color:#f1fa8c">  on:
+</span><span style="color:#f1fa8c">    tags: true
+</span><span style="color:#f1fa8c">    condition: $TRAVIS_OS_NAME = linux</span></code></pre></div>
+<p>注意最后一行(<code>condition: $TRAVIS_OS_NAME = linux</code>): 如果您运行具有多个Go版本和/或多个操作系统的构建矩阵，这一点很重要。如果是这种情况,您将需要确保GoReleaser只运行一次。</p>
+
+<h2 id="circleci">CircleCI</h2>
+
+<p>这是如何与<a href="https://circleci.com">CircleCI 2.0</a>协作:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#6272a4"># .circleci/config.yml</span>
+version: <span style="color:#bd93f9">2</span>
+jobs:
+  release:
+    docker:
+      - image: circleci/golang:<span style="color:#bd93f9">1.10</span>
+    steps:
+      - checkout
+      - run: curl -sL https://git.io/goreleaser <span style="color:#f1fa8c">| bash</span>
+workflows:
+  version: <span style="color:#bd93f9">2</span>
+  release:
+    jobs:
+      - release:
+          filters:
+            branches:
+              ignore: /.<span style="color:#ff79c6">*/</span>
+            tags:
+              only: /v[<span style="color:#bd93f9">0</span>-<span style="color:#bd93f9">9</span>]+(\.[<span style="color:#bd93f9">0</span>-<span style="color:#bd93f9">9</span>]+)<span style="color:#ff79c6">*(-.*)*/</span></code></pre></div>
+<h2 id="drone">Drone</h2>
+
+<p>默认情况下,Drone不会获取标签。<code>plugins/git</code>与默认值一起使用,在大多数情况下，我们需要覆盖<code>clone</code>步骤，启用标签，以使<code>goreleaser</code>工作正常.</p>
+
+<p>在这个例子中，我们每次推送新标签时，都会创建一个新版本.请注意,您需在<strong>repo settings</strong>中启用<code>tags</code>和添加<code>github_token</code>密钥.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">pipeline:
+  clone:
+    image: plugins/git
+    tags: <span style="color:#ff79c6">true</span>
+
+  test:
+    image: golang:<span style="color:#bd93f9">1.10</span>
+    commands:
+      - go test ./... -race
+
+  release:
+    image: golang:<span style="color:#bd93f9">1.10</span>
+    secrets: [github_token]
+    commands:
+      curl -sL https://git.io/goreleaser <span style="color:#f1fa8c">| bash
+</span><span style="color:#f1fa8c">    when:
+</span><span style="color:#f1fa8c">      event: tag</span></code></pre></div>
+<h2 id="google-cloudbuild">Google CloudBuild</h2>
+
+<p>CloudBuild使用的克隆与你github repo不同: 似乎你的更改被拉取到了像下面<code>source.developers.google.com/p/YourProjectId/r/github-YourGithubUser-YourGithubRepo</code>类似的repo，和这就是你正在建设的东西.</p>
+
+<p>这个repo具有糟糕的名称，所以为了防止Goreleaser发布到错误的github repo。请输入你的信息，到<code>.goreleaser.yml</code>文件的release部分:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">release:
+  github:
+    owner: YourGithubUser
+    name: YourGithubRepo</code></pre></div>
+<p>创建两个构建触发器:</p>
+
+<ul>
+<li>常规CI的&rdquo;推送到任何分支&rdquo;触发器(不调用goreleaser)</li>
+<li>一个&rdquo;push to tag&rdquo;触发器，它调用goreleaser</li>
+</ul>
+
+<p>推送到任何分支触发器可以使用<code>Dockerfile</code>或<code>cloudbuild.yaml</code>,您喜欢就好.</p>
+
+<p>你应该有一个专用的cloudbuild.release.yaml,它只能被&rdquo;push to tag&rdquo;触发器使用.</p>
+
+<p>在这个例子中,我们每次推送新标签时，都会创建一个新版本.看看<a href="https://cloud.google.com/cloud-build/docs/securing-builds/use-encrypted-secrets-credentials">使用加密资源</a>文档，其中有如何加密和base64编码你的github令牌.</p>
+
+<p>构建使用的克隆<a href="https://issuetracker.google.com/u/1/issues/113668706">时没有标签</a>，这就是为什么，我们必须明确运行<code>git tag $TAG_NAME</code>的原因( 请注意,只有当你的构建由&rdquo;push to tag&rdquo;触发时,才设置$TAG_NAME。) 这将允许goreleaser使用该版本创建一个版本，但它并<strong>不会</strong>构建一个适当只包含自先前标记以来提交的消息的<strong>changelog</strong>,.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">steps:
+~ <span style="color:#6272a4"># Setup the workspace so we have a viable place to point GOPATH at.</span>
+~ - name: gcr.io/cloud-builders/go
+~   env: [<span style="color:#f1fa8c">&#39;PROJECT_ROOT=github.com/YourGithubUser/YourGithubRepo&#39;</span>]
+~_  args: [<span style="color:#f1fa8c">&#39;env&#39;</span>]
+
+~ <span style="color:#6272a4"># Create github release.</span>
+~ - name: goreleaser/goreleaser
+~   entrypoint: /bin/sh
+~   dir: gopath/src/github.com
+~   env: [<span style="color:#f1fa8c">&#39;GOPATH=/workspace/gopath&#39;</span>]
+~   args: [<span style="color:#f1fa8c">&#39;-c&#39;</span>, <span style="color:#f1fa8c">&#39;cd YourGithubUser/YourGithubRepo &amp;&amp; git tag $TAG_NAME &amp;&amp; /goreleaser&#39;</span> ]
+~_  secretEnv: [<span style="color:#f1fa8c">&#39;GITHUB_TOKEN&#39;</span>]
+
+  secrets:
+~ - kmsKeyName: projects/YourProjectId/locations/global/keyRings/YourKeyRing/cryptoKeys/YourKey
+~   secretEnv:
+~     GITHUB_TOKEN: <span style="color:#f1fa8c">|
+</span><span style="color:#f1fa8c">~       ICAgICAgICBDaVFBZUhVdUVoRUtBdmZJSGxVWnJDZ0hOU2NtMG1ES0k4WjF3L04zT3pEazhRbDZr
+</span><span style="color:#f1fa8c">~       QVVTVVFEM3dVYXU3cVJjK0g3T25UVW82YjJaCiAgICAgICAgREtBMWVNS0hOZzcyOUtmSGoyWk1x
+</span><span style="color:#f1fa8c">~_      ICAgICAgIEgwYndIaGUxR1E9PQo=</span></code></pre></div>
+<h2 id="semaphore">Semaphore</h2>
+
+<p>在<a href="https://semaphoreci.com">Sempahore 2.0</a>的每个项目，都在<code>.semaphore/semaphore.yml</code>指定默认管道的开头.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#6272a4"># .semaphore/semaphore.yml.</span>
+version: v1.<span style="color:#bd93f9">0</span>
+name: Build
+agent:
+  machine:
+    type: e1-standard-<span style="color:#bd93f9">2</span>
+    os_image: ubuntu1804
+
+blocks:
+  - name: <span style="color:#f1fa8c">&#34;Test&#34;</span>
+    task:
+      prologue:
+        commands:
+          <span style="color:#6272a4"># set go version</span>
+          - sem-version go <span style="color:#bd93f9">1.11</span>
+          - <span style="color:#f1fa8c">&#34;export GOPATH=~/go&#34;</span>
+          - <span style="color:#f1fa8c">&#34;export PATH=/home/semaphore/go/bin:$PATH&#34;</span>
+          - checkout
+
+      jobs:
+        - name: <span style="color:#f1fa8c">&#34;Lint&#34;</span>
+          commands:
+            - go get ./...
+            - go test ./...
+
+<span style="color:#6272a4"># On Semaphore 2.0 deployment and delivery is managed with promotions,</span>
+<span style="color:#6272a4"># which may be automatic or manual and optionally depend on conditions.</span>
+promotions:
+    - name: Release
+       pipeline_file: goreleaser.yml
+       auto_promote_on:
+         - result: passed
+           branch:
+             - <span style="color:#f1fa8c">&#34;^refs/tags/v*&#34;</span></code></pre></div>
+<p><code>.semaphore/goreleaser.yml</code>中的管道文件:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">version: <span style="color:#f1fa8c">&#34;v1.0&#34;</span>
+name: GoReleaser
+agent:
+  machine:
+    type: e1-standard-<span style="color:#bd93f9">2</span>
+    os_image: ubuntu1804
+blocks:
+  - name: <span style="color:#f1fa8c">&#34;Release&#34;</span>
+    task:
+      secrets:
+        - name: goreleaser
+      prologue:
+        commands:
+          - sem-version go <span style="color:#bd93f9">1.11</span>
+          - <span style="color:#f1fa8c">&#34;export GOPATH=~/go&#34;</span>
+          - <span style="color:#f1fa8c">&#34;export PATH=/home/semaphore/go/bin:$PATH&#34;</span>
+          - checkout
+      jobs:
+      - name: goreleaser
+        commands:
+          - curl -sL https://git.io/goreleaser <span style="color:#f1fa8c">| bash</span></code></pre></div>
+<p>下面的YAML文件,<code>createSecret.yml</code>创建一个名为goreleaser的密钥项，其包含一个名为<strong>GITHUB_TOKEN</strong>的环境变量:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">apiVersion: v1alpha
+kind: Secret
+metadata:
+  name: goreleaser
+data:
+  env_vars:
+    - name: GITHUB_TOKEN
+      value: <span style="color:#f1fa8c">&#34;4afk4388304hfhei34950dg43245&#34;</span></code></pre></div>
+<p>查看<a href="https://docs.semaphoreci.com/article/15-secrets">管理密钥</a>的更详细文档.</p>
+</div>
+
+						<div class="Footer">
+	<p>Made with ❤️ by GoReleaser contributors.</p>
+</div>
+<script src="https://goreleaser.com/js/index.js"></script>
+
+					</div>
+				</div>
+		</div>
+	</body>
+</html>

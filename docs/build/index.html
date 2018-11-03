@@ -1,0 +1,162 @@
+
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>构建 &middot; GoReleaser</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		
+		
+		<meta http-equiv="content-language" content="en-us" />
+		<meta name="generator" content="Hugo 0.49.2" />
+		<link rel="stylesheet" href="https://goreleaser.com/css/index.css">
+		<link rel="apple-touch-icon" href="https://goreleaser.com/apple-touch-icon.png">
+		<link rel="shortcut icon" href="https://goreleaser.com/favicon.ico" type="image/x-icon">
+	</head>
+
+	<body>
+		<div class="Wrapper">
+			<div class="Container">
+				<div class="Header">
+  <a href="https://goreleaser.com/">
+	<div class="Title center">
+		
+			<img alt="GoReleaser Logo" src="https://avatars2.githubusercontent.com/u/24697112?v=3&amp;s=140" height="140" />
+		
+		<span class="text">GoReleaser</span>
+		<span class="subtext"></span>
+	</div>
+  </a>
+</div>
+
+				<div class="Content-wrapper">
+					<div class="Sidebar">
+	<div class="Menu">
+		<div class="item">
+			<a href="https://goreleaser.com/">Home</a>
+		</div>
+		
+
+		
+	</div>
+</div>
+
+					<div class="Content">
+						
+	<div class="Page" id="">
+		<h1>构建</h1>
+		
+
+<p>可以通过多种方式自定义构建.您可以指定哪个<code>GOOS</code>,<code>GOARCH</code>和<code>GOARM</code>构建二进制文件(goreleaser将生成所有组合的矩阵)，您可以更改二进制文件的名称,命令参数,环境变量,钩子等.</p>
+
+<p>这是一个<code>builds</code>注释，指定了所有字段部分:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#6272a4"># .goreleaser.yml</span>
+builds:
+  <span style="color:#6272a4"># 你能用 多个 构建 定义，yaml格式</span>
+  -
+    <span style="color:#6272a4">#  main.go 文件或者主包的路径 .</span>
+    <span style="color:#6272a4"># 默认 `.`.</span>
+    main: ./cmd/main.go
+
+    <span style="color:#6272a4"># 命名 最终二进制文件的模版.</span>
+    <span style="color:#6272a4"># 默认是 项目目录的名称.</span>
+    binary: program
+
+    <span style="color:#6272a4"># 设置 命令参数到自定义的 build tags.</span>
+    <span style="color:#6272a4"># 默认是 空.</span>
+    flags:
+      - -tags=dev
+
+    <span style="color:#6272a4"># Custom asmflags templates.</span>
+    <span style="color:#6272a4"># 默认是 空.</span>
+    asmflags:
+      - -D mysymbol
+      - all=-trimpath={{.Env.GOPATH}}
+
+    <span style="color:#6272a4"># Custom gcflags templates.</span>
+    <span style="color:#6272a4"># 默认是 空.</span>
+    gcflags:
+      - all=-trimpath={{.Env.GOPATH}}
+      - ./dontoptimizeme=-N
+
+    <span style="color:#6272a4"># Custom ldflags templates.</span>
+    <span style="color:#6272a4"># 默认是 `-s -w -X main.version={{.Version}} -X main.commit={{.Commit}} -X main.date={{.Date}}`.</span>
+    ldflags:
+     - -s -w -X main.build={{.Version}}
+     - ./usemsan=-msan
+
+    <span style="color:#6272a4"># 运行构建期间的环境变量.</span>
+    <span style="color:#6272a4"># 默认是 空.</span>
+    env:
+      - CGO_ENABLED=<span style="color:#bd93f9">0</span>
+
+    <span style="color:#6272a4"># GOOS 构建列表r.</span>
+    <span style="color:#6272a4"># 更多内容，请参考: https://golang.org/doc/install/source#environment</span>
+    <span style="color:#6272a4"># 默认为 darwin 和 linux.</span>
+    goos:
+      - freebsd
+      - windows
+
+    <span style="color:#6272a4"># GOARCH 构建系结构.</span>
+    <span style="color:#6272a4"># 更多内容，请参考: https://golang.org/doc/install/source#environment</span>
+    <span style="color:#6272a4"># 默认为 386 和 amd64.</span>
+    goarch:
+      - amd64
+      - arm
+      - arm64
+
+    <span style="color:#6272a4"># GOARM 要构建的 ， 若GOARCH 是 arm时.</span>
+    <span style="color:#6272a4"># 更多内容，请参考: https://golang.org/doc/install/source#environment</span>
+    <span style="color:#6272a4"># 默认是 只有 6.</span>
+    goarm:
+      - <span style="color:#bd93f9">6</span>
+      - <span style="color:#bd93f9">7</span>
+
+    <span style="color:#6272a4">#  GOOS + GOARCH + GOARM 组合忽略列表.</span>
+    <span style="color:#6272a4"># 默认是 空.</span>
+    ignore:
+      - goos: darwin
+        goarch: <span style="color:#bd93f9">386</span>
+      - goos: linux
+        goarch: arm
+        goarm: <span style="color:#bd93f9">7</span>
+
+    <span style="color:#6272a4"># Hooks 可用于 自定义最终二进制文件,</span>
+    <span style="color:#6272a4"># 例如, 运行 generators.</span>
+    <span style="color:#6272a4"># 默认 都为 空.</span>
+    hooks:
+      pre: rice embed-go
+      post: ./script.sh</code></pre></div>
+<blockquote>
+<p>了解有关<a href="/templates">命名模板引擎</a>的更多信息。</p>
+</blockquote>
+
+<h2 id="将环境变量传递给ldflags">将环境变量传递给ldflags</h2>
+
+<p>你可以通过在模板中使用<code>{{ .Env.VARIABLE_NAME }}</code>来做到这一点,例如:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">builds:
+  - ldflags:
+   - -s -w -X <span style="color:#f1fa8c">&#34;main.goversion={{.Env.GOVERSION}}&#34;</span></code></pre></div>
+<p>然后你可以运行:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-console" data-lang="console">GOVERSION=$(go version) goreleaser</code></pre></div>
+<h2 id="go模块">Go模块</h2>
+
+<p>如果你使用Go 1.11的<strong>go模块</strong>或<strong>vgo</strong>，当GoReleaser运行时,它可能会尝试下载依赖项。由于多个构建并行运行,因此很可能会失败.</p>
+
+<p>你可以在启动<code>goreleaser</code>之前，通过运行<code>go mod download</code>解决这个问题，或者添加一个<a href="/hooks">hook</a>，像这样<code>.goreleaser.yaml</code>文件:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">before:
+  hooks:
+  - go mod download
+<span style="color:#6272a4"># rest of the file...</span></code></pre></div></div>
+
+						<div class="Footer">
+	<p>Made with ❤️ by GoReleaser contributors.</p>
+</div>
+<script src="https://goreleaser.com/js/index.js"></script>
+
+					</div>
+				</div>
+		</div>
+	</body>
+</html>

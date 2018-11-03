@@ -1,0 +1,214 @@
+
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>Docker &middot; GoReleaser</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		
+		
+		<meta http-equiv="content-language" content="en-us" />
+		<meta name="generator" content="Hugo 0.49.2" />
+		<link rel="stylesheet" href="https://goreleaser.com/css/index.css">
+		<link rel="apple-touch-icon" href="https://goreleaser.com/apple-touch-icon.png">
+		<link rel="shortcut icon" href="https://goreleaser.com/favicon.ico" type="image/x-icon">
+	</head>
+
+	<body>
+		<div class="Wrapper">
+			<div class="Container">
+				<div class="Header">
+  <a href="https://goreleaser.com/">
+	<div class="Title center">
+		
+			<img alt="GoReleaser Logo" src="https://avatars2.githubusercontent.com/u/24697112?v=3&amp;s=140" height="140" />
+		
+		<span class="text">GoReleaser</span>
+		<span class="subtext"></span>
+	</div>
+  </a>
+</div>
+
+				<div class="Content-wrapper">
+					<div class="Sidebar">
+	<div class="Menu">
+		<div class="item">
+			<a href="https://goreleaser.com/">Home</a>
+		</div>
+		
+
+		
+	</div>
+</div>
+
+					<div class="Content">
+						
+	<div class="Page" id="">
+		<h1>Docker</h1>
+		
+
+<p>至<a href="https://github.com/goreleaser/goreleaser/releases/tag/v0.31.0">v0.31.0</a>以来,GoReleaser支持构建和推送Docker镜像.</p>
+
+<h2 id="这个怎么运作">这个怎么运作</h2>
+
+<p>您可以声明多个Docker镜像。它们将与您<code>builds</code>部分生成的二进制文件进行匹配.</p>
+
+<p>如果你只有一个<code>build</code>设置，配置就像添加镜像名称到你<code>.goreleaser.yml</code>文件一样简单:</p>
+
+<p>docker镜像声明支持模板。了解有关<a href="/templates">命名模板引擎</a>的更多信息.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">dockers:
+  - image_templates:
+    - user/repo</code></pre></div>
+<p>你还需要在项目的根文件夹中，创建一个<code>Dockerfile</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dockerfile" data-lang="dockerfile"><span style="color:#ff79c6">FROM</span><span style="color:#f1fa8c"> scratch</span>
+COPY mybin /
+<span style="color:#ff79c6">ENTRYPOINT</span><span style="color:#f1fa8c"> [&#34;/mybin&#34;]</span></code></pre></div>
+<p>此配置将构建，并推送名为的Docker镜像<code>user/repo:tagname</code>.</p>
+
+<blockquote>
+<p><strong>注意</strong>:请注意,在docker构建阶段，没有构建任何go文件,我们只是将二进制文件复制到<code>scratch</code>镜像和设置入口点-<strong>ENTRYPOINT</strong>.</p>
+</blockquote>
+
+<h2 id="定制">定制</h2>
+
+<p>当然,你可以自定义很多东西:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#6272a4"># .goreleaser.yml</span>
+dockers:
+  <span style="color:#6272a4"># 您可以拥有多个Docker镜像。</span>
+  -
+    <span style="color:#6272a4"># 应该使用的构建二进制文件的GOOS。</span>
+    goos: linux
+    <span style="color:#6272a4"># 应该使用的构建二进制文件的GOARCH。</span>
+    goarch: amd64
+    <span style="color:#6272a4"># 应该使用的构建二进制文件的GOARM。</span>
+    goarm: <span style="color:#f1fa8c">&#39;&#39;</span>
+    <span style="color:#6272a4"># 应使用的构建二进制文件的名称。</span>
+    binary: mybinary
+    <span style="color:#6272a4"># Docker镜像名称的模板。</span>
+    image_templates:
+    - <span style="color:#f1fa8c">&#34;myuser/myimage:latest&#34;</span>
+    - <span style="color:#f1fa8c">&#34;myuser/myimage:{{ .Tag }}&#34;</span>
+    - <span style="color:#f1fa8c">&#34;myuser/myimage:{{ .Tag }}-{{ .Env.GO_VERSION }}&#34;</span>
+    - <span style="color:#f1fa8c">&#34;myuser/myimage:v{{ .Major }}&#34;</span>
+    - <span style="color:#f1fa8c">&#34;gcr.io/myuser/myimage:latest&#34;</span>
+    <span style="color:#6272a4"># 跳过docker推送。 如果你也有草稿版本可能会有用。</span>
+    <span style="color:#6272a4"># 默认为false。</span>
+    skip_push: <span style="color:#ff79c6">false</span>
+    <span style="color:#6272a4"># Dockerfile的路径（来自项目根目录）。</span>
+    dockerfile: Dockerfile 
+    <span style="color:#6272a4"># docker构建参数的模板。</span>
+    build_flag_templates:
+    - <span style="color:#f1fa8c">&#34;--label=org.label-schema.schema-version=1.0&#34;</span>
+    - <span style="color:#f1fa8c">&#34;--label=org.label-schema.version={{.Version}}&#34;</span>
+    - <span style="color:#f1fa8c">&#34;--label=org.label-schema.name={{.ProjectName}}&#34;</span>
+    - <span style="color:#f1fa8c">&#34;--build-arg=FOO={{.ENV.Bar}}&#34;</span>
+    <span style="color:#6272a4"># 如果您要Dockerfile复制二进制文件以外的文件，</span>
+    <span style="color:#6272a4"># 你也应该在这里列出它们。</span>
+    extra_files:
+    - config.yml</code></pre></div>
+<blockquote>
+<p>了解有关<a href="/templates">命名模板引擎</a>的更多信息.</p>
+</blockquote>
+
+<p>这些设置应该允许您生成多个Docker镜像，例如,使用多个<code>FROM</code>语句,以及为项目中的每个二进制文件生成一个镜像.</p>
+
+<h2 id="通用镜像名称">通用镜像名称</h2>
+
+<p>某些用户可能希望将其镜像名称保持为通用名称。这可以通过在定义中添加模板语言来实现:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#6272a4"># .goreleaser.yml</span>
+project: foo
+dockers:
+  -
+    binary: mybinary
+    image_templates:
+    - <span style="color:#f1fa8c">&#34;myuser/{{.ProjectName}}&#34;</span></code></pre></div>
+<p>这将构建，并公开以下镜像:</p>
+
+<ul>
+<li><code>myuser/foo</code></li>
+</ul>
+
+<blockquote>
+<p>了解有关<a href="/templates">命名模板引擎</a>的更多信息.</p>
+</blockquote>
+
+<h2 id="当前主要版本-docker镜像就保持更新">当前主要版本，docker镜像就保持更新，</h2>
+
+<p>某些用户可能希望当<code>v1.6.4</code>(例如)已建成，之后在push docker标签版本，能使用<code>:v1</code>,<code>:v1.6</code>,<code>:v1.6.4</code>和<code>:latest</code>。这可以通过使用多个<code>image_templates</code>来完成:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#6272a4"># .goreleaser.yml</span>
+dockers:
+  -
+    binary: mybinary
+    image_templates:
+    - <span style="color:#f1fa8c">&#34;myuser/myimage:{{ .Tag }}&#34;</span>
+    - <span style="color:#f1fa8c">&#34;myuser/myimage:v{{ .Major }}&#34;</span>
+    - <span style="color:#f1fa8c">&#34;myuser/myimage:v{{ .Major }}.{{ .Minor }}&#34;</span>
+    - <span style="color:#f1fa8c">&#34;myuser/myimage:latest&#34;</span></code></pre></div>
+<p>这将构建，并发布以下镜像:</p>
+
+<ul>
+<li><code>myuser/myimage:v1.6.4</code></li>
+<li><code>myuser/myimage:v1</code></li>
+<li><code>myuser/myimage:v1.6</code></li>
+<li><code>myuser/myimage:latest</code></li>
+</ul>
+
+<p>通过这些设置,您可以使用多个标签推送几个不同的docker镜像.</p>
+
+<blockquote>
+<p>了解有关<a href="/templates">命名模板引擎</a>的更多信息.</p>
+</blockquote>
+
+<h2 id="发布到多个docker注册表">发布到多个docker注册表</h2>
+
+<p>某些用户可能希望，将镜像推送到多个docker注册表。这可以通过使用多个<code>image_templates</code>来完成:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#6272a4"># .goreleaser.yml</span>
+dockers:
+  -
+    binary: mybinary
+    image_templates:
+    - <span style="color:#f1fa8c">&#34;docker.io/myuser/myimage:{{ .Tag }}&#34;</span>
+    - <span style="color:#f1fa8c">&#34;docker.io/myuser/myimage:latest&#34;</span>
+    - <span style="color:#f1fa8c">&#34;gcr.io/myuser/myimage:{{ .Tag }}&#34;</span>
+    - <span style="color:#f1fa8c">&#34;gcr.io/myuser/myimage:latest&#34;</span></code></pre></div>
+<p>这将构建，并发布以下镜像到<code>docker.io</code>和<code>gcr.io</code>:</p>
+
+<ul>
+<li><code>myuser/myimage:v1.6.4</code></li>
+<li><code>myuser/myimage:latest</code></li>
+</ul>
+
+<h2 id="应用docker构建参数">应用docker构建参数</h2>
+
+<p>可以使用<code>build_flag_templates</code>构建参数。参数必须是有效的docker build参数.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#6272a4"># .goreleaser.yml</span>
+dockers:
+  -
+    binary: mybinary
+    image_templates:
+        - <span style="color:#f1fa8c">&#34;myuser/myimage&#34;</span>
+    build_flag_templates:
+    - <span style="color:#f1fa8c">&#34;--label=org.label-schema.schema-version=1.0&#34;</span>
+    - <span style="color:#f1fa8c">&#34;--label=org.label-schema.version={{.Version}}&#34;</span>
+    - <span style="color:#f1fa8c">&#34;--label=org.label-schema.name={{.ProjectName}}&#34;</span></code></pre></div>
+<p>这将执行以下命令:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">docker build -t myuser/myimage . <span style="color:#f1fa8c">\
+</span><span style="color:#f1fa8c"></span>  --label<span style="color:#ff79c6">=</span>org.label-schema.schema-version<span style="color:#ff79c6">=</span><span style="color:#bd93f9">1</span>.0 <span style="color:#f1fa8c">\
+</span><span style="color:#f1fa8c"></span>  --label<span style="color:#ff79c6">=</span>org.label-schema.version<span style="color:#ff79c6">=</span><span style="color:#bd93f9">1</span>.6.4 <span style="color:#f1fa8c">\
+</span><span style="color:#f1fa8c"></span>  --label<span style="color:#ff79c6">=</span>org.label-schema.name<span style="color:#ff79c6">=</span>mybinary<span style="color:#f1fa8c">&#34;</span></code></pre></div>
+<blockquote>
+<p>了解有关<a href="/templates">命名模板引擎</a>的更多信息.</p>
+</blockquote>
+</div>
+
+						<div class="Footer">
+	<p>Made with ❤️ by GoReleaser contributors.</p>
+</div>
+<script src="https://goreleaser.com/js/index.js"></script>
+
+					</div>
+				</div>
+		</div>
+	</body>
+</html>

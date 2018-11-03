@@ -4,89 +4,88 @@ series: customization
 hideFromIndex: true
 weight: 81
 ---
-GoReleaser也可以生成`snap`包.[捕捉](http://snapcraft.io/)是一种新的打包格式,可以让您将项目直接发布到Ubuntu商店.从那里它将安装在所有的[支持的Linux发行版](https://snapcraft.io/docs/core/install),具有自动和事务更新.
+GoReleaser也可以生成`snap`包.[snapcraft](http://snapcraft.io/)是一种新的打包格式,可以让您将项目直接发布到Ubuntu商店。从那里它将安装在所有的[支持的Linux发行版](https://snapcraft.io/docs/core/install)，具有自动和更新事件。
 
-你可以在中阅读更多相关信息[snapcraft docs](https://snapcraft.io/docs/).
+你可以在[snapcraft 文档](https://snapcraft.io/docs/)中阅读更多相关信息.
 
 可用选项:
 
 ```yml
 # .goreleaser.yml
 snapcraft:
-  # You can change the name of the package.
+  # 您可以更改包的名称。
   # Default: `{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}`
   name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
 
-  # Replacements for GOOS and GOARCH in the package name.
-  # Keys should be valid GOOSs or GOARCHs.
-  # Values are the respective replacements.
-  # Default is empty.
+  # 替换包名称中的 GOOS和GOARCH。
+  # key 应该是有效的 GOOS或GOARCH。
+  # value 是各自的替代品。
+  # 默认值为空。
   replacements:
     amd64: 64-bit
     386: 32-bit
     darwin: macOS
     linux: Tux
 
-  # The name of the snap. This is optional.
-  # Default is project name.
+  # snap的名称。这是可选的。
+  # 默认为项目名称。
   name: drumroll
 
-  # Wether to publish the snap to the snapcraft store.
-  # Remember you need to `snapcraft login` first.
-  # Defaults to false.
+  # 然后将snap发布到snapcraft商店。
+  # 请记住，您首先需要`snapcraft login`。
+  # 默认值为false。
   publish: true
 
-  # Single-line elevator pitch for your amazing snap.
-  # 79 char long at most.
+  # 您提供了惊人的snap软件。
+  # 最多79个字符。
   summary: Software to create fast and easy drum rolls.
 
-  # This the description of your snap. You have a paragraph or two to tell the
-  # most important story about your snap. Keep it under 100 words though,
-  # we live in tweetspace and your description wants to look good in the snap
-  # store.
+  # 这是您的snap的描述。你有一两段话要告诉你
+  # 关于snap的最重要的故事。保持在100字以内，
+  # 我们住在推文空间，你的描述希望在短时间内看起来很好
+  # 商店。
   description: |
-    This is the best drum roll application out there.
-    Install it and awe!
+    这是最好的滚筒应用。
+     安装它，愉快！
 
-  # A guardrail to prevent you from releasing a snap to all your users before
-  # it is ready.
-  # `devel` will let you release only to the `edge` and `beta` channels in the
-  # store. `stable` will let you release also to the `candidate` and `stable`
-  # channels. More info about channels here:
-  # https://snapcraft.io/docs/reference/channels
+  # 在它准备好了，将snap发布给所有用户之前的挡板，
+  # `devel`将让你只发布到'edge`和'beta`版本到商店
+  # `stable`也会让你发布`candidate`和`stable`版本
+  # 有关该频道的更多信息：
+  # Https://snapcraft.io/docs/reference/channels
   grade: stable
 
-  # Snaps can be setup to follow three different confinement policies:
-  # `strict`, `devmode` and `classic`. A strict confinement where the snap
-  # can only read and write in its own namespace is recommended. Extra
-  # permissions for strict snaps can be declared as `plugs` for the app, which
-  # are explained later. More info about confinement here:
-  # https://snapcraft.io/docs/reference/confinement
+  # 您可以设置snap，以遵循三种不同的限制策略：
+  # `strict`，`devmode`和`classic`。
+  # 快速严格的限制建议仅在您自己的命名空间中进行读写。
+  # 额外严格捕获的权限可以声明为应用程序的“插件”，这里
+  # 我稍后会解释。有关限制的更多信息：
+  # Https://snapcraft.io/docs/reference/confinement
   confinement: strict
 
-  # Each binary built by GoReleaser is an app inside the snap. In this section
-  # you can declare extra details for those binaries. It is optional.
+  # GoReleaser构建的每个二进制文件都是snap中的应用程序。在这一部分
+  # 您可以声明这些二进制文件的其他详细信息。这是可选的。
   apps:
 
-    # The name of the app must be the same name as the binary built or the snapcraft name.
+    # 应用程序的名称必须，与二进制构建的名称或snap的名称相同。
     drumroll:
 
-      # If your app requires extra permissions to work outside of its default
-      # confined space, declare them here.
-      # You can read the documentation about the available plugs and the
-      # things they allow:
-      # https://snapcraft.io/docs/reference/interfaces.
+      # 如果您的应用需要其他权限，才能在其默认值之外工作
+      # 下面空间中，宣布它们。
+      # 您可以阅读有关可用插头的文档
+      # 允许的可用内容：
+      # Https://snapcraft.io/docs/reference/interfaces。
       plugs: ["home", "network"]
 
-      # If you want your app to be autostarted and to always run in the
-      # background, you can make it a simple daemon.
+      # 如果您希望自己的应用始终自动后台启动
+      # 你可以使它成为一个简单的守护进程。
       daemon: simple
 
-      # If you any to pass args to your binary, you can add them with the
-      # args option.
+      # 如果要将args传递给二进制文件，可以使用
+      # Args选项。
       args: --foo
 ```
 
-> 了解有关的更多信息[名称模板引擎](/templates).
+> 了解有关[命名模板引擎](/templates)的更多信息.
 
-请注意,GoReleaser不会安装`snapcraft`也不是你的任何依赖.
+请注意,GoReleaser不会安装`snapcraft`，或它的任何依赖.

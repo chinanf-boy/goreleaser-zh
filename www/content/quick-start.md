@@ -70,7 +70,7 @@ $ git tag -a v0.1.0 -m "First release"
 $ git push origin v0.1.0
 ```
 
-> **注意**:检查您的tag是否符合[语义版本控制](/semver).
+> **注意**:查看您的tag是否符合[语义版本控制](/semver).
 
 如果您还不想创建tag,还可以使用，基于最新提交的版本的`--snapshot`参数.
 
@@ -80,7 +80,7 @@ $ git push origin v0.1.0
 $ goreleaser
 ```
 
-就这样! 检查您的GitHub项目的发布页面。该版本应如下所示:
+就这样! 查看您的GitHub项目的发布页面。该版本应如下所示:
 
 <a href="https://github.com/goreleaser/goreleaser/releases">
   <img width="100%"

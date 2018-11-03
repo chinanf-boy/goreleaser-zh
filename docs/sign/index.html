@@ -1,0 +1,94 @@
+
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>Signing-签名 &middot; GoReleaser</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		
+		
+		<meta http-equiv="content-language" content="en-us" />
+		<meta name="generator" content="Hugo 0.49.2" />
+		<link rel="stylesheet" href="https://goreleaser.com/css/index.css">
+		<link rel="apple-touch-icon" href="https://goreleaser.com/apple-touch-icon.png">
+		<link rel="shortcut icon" href="https://goreleaser.com/favicon.ico" type="image/x-icon">
+	</head>
+
+	<body>
+		<div class="Wrapper">
+			<div class="Container">
+				<div class="Header">
+  <a href="https://goreleaser.com/">
+	<div class="Title center">
+		
+			<img alt="GoReleaser Logo" src="https://avatars2.githubusercontent.com/u/24697112?v=3&amp;s=140" height="140" />
+		
+		<span class="text">GoReleaser</span>
+		<span class="subtext"></span>
+	</div>
+  </a>
+</div>
+
+				<div class="Content-wrapper">
+					<div class="Sidebar">
+	<div class="Menu">
+		<div class="item">
+			<a href="https://goreleaser.com/">Home</a>
+		</div>
+		
+
+		
+	</div>
+</div>
+
+					<div class="Content">
+						
+	<div class="Page" id="">
+		<h1>Signing-签名</h1>
+		<p>GoReleaser可以对部分或全部生成的存档进行签名。签名可确保您自己生成的存档与您的公共签名密钥，您的用户可以验证他们生成的签名.</p>
+
+<p>签名与校验文件结合使用,通常只对签校验文件就足够了.</p>
+
+<p>默认配置是，使用<a href="https://www.gnupg.org/">GnuPG</a>的校验文件，创建签名和你的默认密钥。要启用签名,只需添加</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#6272a4"># goreleaser.yml</span>
+sign:
+   artifacts: checksum</code></pre></div>
+<p>要自定义签名流程,您可以使用以下选项:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#6272a4"># .goreleaser.yml</span>
+sign:
+  <span style="color:#6272a4">#  signature 文件名称.</span>
+  <span style="color:#6272a4"># &#39;${artifact}&#39; 是应 sign 的存档路径.</span>
+  <span style="color:#6272a4">#</span>
+  <span style="color:#6272a4"># signature: &#34;${artifact}.sig&#34;</span>
+
+  <span style="color:#6272a4"># signature 命令路径</span>
+  <span style="color:#6272a4">#</span>
+  <span style="color:#6272a4"># cmd: gpg</span>
+
+  <span style="color:#6272a4"># 上面 command 的参数</span>
+  <span style="color:#6272a4">#</span>
+  <span style="color:#6272a4"># 使用特定 key，去sign </span>
+  <span style="color:#6272a4"># args: [&#34;-u&#34;, &#34;&lt;key id, fingerprint, email, ...&gt;&#34;, &#34;--output&#34;, &#34;${signature}&#34;, &#34;--detach-sign&#34;, &#34;${artifact}&#34;]</span>
+  <span style="color:#6272a4">#</span>
+  <span style="color:#6272a4"># args: [&#34;--output&#34;, &#34;${signature}&#34;, &#34;--detach-sign&#34;, &#34;${artifact}&#34;]</span>
+
+
+  <span style="color:#6272a4"># 哪些要 sign</span>
+  <span style="color:#6272a4">#</span>
+  <span style="color:#6272a4">#   checksum: 只有 checksum 文件(s)</span>
+  <span style="color:#6272a4">#   all:      所有</span>
+  <span style="color:#6272a4">#   none:     不 signing</span>
+  <span style="color:#6272a4">#</span>
+  <span style="color:#6272a4"># artifacts: none</span></code></pre></div></div>
+
+						<div class="Footer">
+	<p>Made with ❤️ by GoReleaser contributors.</p>
+</div>
+<script src="https://goreleaser.com/js/index.js"></script>
+
+					</div>
+				</div>
+		</div>
+	</body>
+</html>

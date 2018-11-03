@@ -1,0 +1,133 @@
+
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>存档文件 &middot; GoReleaser</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		
+		
+		<meta http-equiv="content-language" content="en-us" />
+		<meta name="generator" content="Hugo 0.49.2" />
+		<link rel="stylesheet" href="https://goreleaser.com/css/index.css">
+		<link rel="apple-touch-icon" href="https://goreleaser.com/apple-touch-icon.png">
+		<link rel="shortcut icon" href="https://goreleaser.com/favicon.ico" type="image/x-icon">
+	</head>
+
+	<body>
+		<div class="Wrapper">
+			<div class="Container">
+				<div class="Header">
+  <a href="https://goreleaser.com/">
+	<div class="Title center">
+		
+			<img alt="GoReleaser Logo" src="https://avatars2.githubusercontent.com/u/24697112?v=3&amp;s=140" height="140" />
+		
+		<span class="text">GoReleaser</span>
+		<span class="subtext"></span>
+	</div>
+  </a>
+</div>
+
+				<div class="Content-wrapper">
+					<div class="Sidebar">
+	<div class="Menu">
+		<div class="item">
+			<a href="https://goreleaser.com/">Home</a>
+		</div>
+		
+
+		
+	</div>
+</div>
+
+					<div class="Content">
+						
+	<div class="Page" id="">
+		<h1>存档文件</h1>
+		
+
+<p>构建的二进制文件将与<code>README</code>和<code>LICENSE</code>文件一起存档到<code>tar.gz</code>文件。在<code>archive</code>里面您可以自定义存档名称,其他文件和格式.</p>
+
+<p>这是一个<code>archive</code>，指定了所有字段部分的注释:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#6272a4"># .goreleaser.yml</span>
+archive:
+  <span style="color:#6272a4"># 存档 命名 模版.</span>
+  <span style="color:#6272a4"># 默认:</span>
+  <span style="color:#6272a4"># - if 格式为 `tar.gz` 或者 `zip`:</span>
+  <span style="color:#6272a4">#   - `{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}`</span>
+  <span style="color:#6272a4"># - if 格式为 是 `binary`:</span>
+  <span style="color:#6272a4">#   - `{{ .Binary }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}`</span>
+  name_template: <span style="color:#f1fa8c">&#34;{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}&#34;</span>
+
+  <span style="color:#6272a4"># 替换 存档名称中的 GOOS 和 GOARCH.</span>
+  <span style="color:#6272a4"># Keys 应为合法 GOOSs 或 GOARCHs.</span>
+  <span style="color:#6272a4"># Values 应为 恰当的替代名称.</span>
+  <span style="color:#6272a4"># 默认是 空.</span>
+  replacements:
+    amd64: <span style="color:#bd93f9">64</span>-bit
+    <span style="color:#bd93f9">386</span>: <span style="color:#bd93f9">32</span>-bit
+    darwin: macOS
+    linux: Tux
+
+  <span style="color:#6272a4"># 设为 true, 如果你想 所有 文件都包裹进存档文件.</span>
+  <span style="color:#6272a4"># 若设为 true 和 你 解压&#39;goreleaser_Linux_arm64.tar.gz&#39;,</span>
+  <span style="color:#6272a4"># 你会得到 &#39;goreleaser_Linux_arm64&#39; 文件夹.</span>
+  <span style="color:#6272a4"># If 设为 false, 所有文件都分离开来.</span>
+  <span style="color:#6272a4"># 默认是 false.</span>
+  wrap_in_directory: <span style="color:#ff79c6">true</span>
+
+  <span style="color:#6272a4"># Archive 格式. 合法选项 `tar.gz`, `zip` and `binary`.</span>
+  <span style="color:#6272a4"># 若 `binary`, 压缩文件不创建，且 binaries 代之直接上传.</span>
+  <span style="color:#6272a4"># 与 name_template 合作 和 下面 files字段中会被忽略.</span>
+  <span style="color:#6272a4"># 默认是 `tar.gz`.</span>
+  format: zip
+
+  <span style="color:#6272a4"># 可根据 GOOSs，指定 格式.</span>
+  <span style="color:#6272a4"># 常见情况是，window下为zip格式.</span>
+  <span style="color:#6272a4"># 默认是 空.</span>
+  format_overrides:
+    - goos: windows
+      format: zip
+
+  <span style="color:#6272a4"># 你想加入到 archive，匹配的 files/globs，.</span>
+  <span style="color:#6272a4"># 默认为匹配 `LICENCE*`, `LICENSE*` ,</span>
+  <span style="color:#6272a4"># `README*` 和 `CHANGELOG*` (大小写略) 的文件.</span>
+  files:
+    - LICENSE.txt
+    - README.md
+    - CHANGELOG.md
+    - docs/*
+    - design/<span style="color:#ff79c6">*.png</span>
+    - templates/<span style="color:#ff79c6">**/*</span></code></pre></div>
+<blockquote>
+<p>了解有关<a href="/templates">命名模板引擎</a>的更多信息.</p>
+</blockquote>
+
+<p>您可以使用 glob表示法 添加整个文件夹,其子文件夹和文件,例如:<code>myfolder/**/*</code>.</p>
+
+<h2 id="仅包装二进制文件">仅包装二进制文件</h2>
+
+<p>由于，如果文件列表为空，GoReleaser将始终添加<code>README</code>和<code>LICENSE</code>文件到存档。所以您需要提供把 archive 下的<code>files</code>填充.</p>
+
+<p>极客工作，是使用这样的东西:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#6272a4"># goreleaser.yml</span>
+archive:
+  files:
+  - none*</code></pre></div>
+<p>这将<strong>添加</strong> <code>none*</code> <strong>glob匹配</strong>的所有文件，假设您<strong>没有</strong>与该glob匹配的任何文件,<strong>只</strong>会将二进制文件添加到存档中.</p>
+
+<p>有关更多信息,请查看<a href="https://github.com/goreleaser/goreleaser/issues/602">#602</a></p>
+</div>
+
+						<div class="Footer">
+	<p>Made with ❤️ by GoReleaser contributors.</p>
+</div>
+<script src="https://goreleaser.com/js/index.js"></script>
+
+					</div>
+				</div>
+		</div>
+	</body>
+</html>

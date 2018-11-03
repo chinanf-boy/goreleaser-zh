@@ -1,0 +1,751 @@
+
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>GoReleaser</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		
+		
+		<meta http-equiv="content-language" content="en-us" />
+		<meta name="generator" content="Hugo 0.49.2" />
+		<link rel="stylesheet" href="https://goreleaser.com/css/index.css">
+		<link rel="apple-touch-icon" href="https://goreleaser.com/apple-touch-icon.png">
+		<link rel="shortcut icon" href="https://goreleaser.com/favicon.ico" type="image/x-icon">
+	</head>
+
+	<body>
+		<div class="Wrapper">
+			<div class="Container">
+				<div class="Header">
+  <a href="https://goreleaser.com/">
+	<div class="Title center">
+		
+			<img alt="GoReleaser Logo" src="https://avatars2.githubusercontent.com/u/24697112?v=3&amp;s=140" height="140" />
+		
+		<span class="text">GoReleaser</span>
+		<span class="subtext"></span>
+	</div>
+  </a>
+</div>
+
+				<div class="Content-wrapper">
+					<div class="Sidebar">
+	<div class="Menu">
+		<div class="item">
+			<a href="https://goreleaser.com/">Home</a>
+		</div>
+		
+		
+			
+				<div class="item">
+					<a href="https://goreleaser.com/introduction/">介绍</a>
+				</div>
+			
+		
+			
+				<div class="item">
+					<a href="https://goreleaser.com/quick-start/">快速开始</a>
+				</div>
+			
+		
+			
+		
+			
+				<div class="item">
+					<a href="https://goreleaser.com/semver/">Semantic 版本化</a>
+				</div>
+			
+		
+			
+				<div class="item">
+					<a href="https://goreleaser.com/cgo/">CGO</a>
+				</div>
+			
+		
+			
+		
+			
+				<div class="item">
+					<a href="https://goreleaser.com/environment/">变量</a>
+				</div>
+			
+		
+			
+		
+			
+		
+			
+				<div class="item">
+					<a href="https://goreleaser.com/customization/">自定义</a>
+				</div>
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+				<div class="item">
+					<a href="https://goreleaser.com/ci/">持续集成</a>
+				</div>
+			
+		
+			
+				<div class="item">
+					<a href="https://goreleaser.com/deprecations/">弃用通知</a>
+				</div>
+			
+		
+			
+				<div class="item">
+					<a href="https://goreleaser.com/sponsors/">赞助商</a>
+				</div>
+			
+		
+			
+				<div class="item">
+					<a href="https://goreleaser.com/tutorials/">教程</a>
+				</div>
+			
+		
+			
+				<div class="item">
+					<a href="https://goreleaser.com/contrib/">贡献</a>
+				</div>
+			
+		
+			
+				<div class="item">
+					<a href="https://goreleaser.com/links/">关联</a>
+				</div>
+			
+		
+			
+		
+			
+		
+			
+		
+		
+
+		
+	</div>
+</div>
+
+					<div class="Content">
+						
+	
+	
+		
+			<div class="Page" id="介绍">
+				<h1><a href="https://goreleaser.com/introduction/">介绍</a></h1>
+				
+
+<p><a href="https://github.com/goreleaser/goreleaser">GoReleaser</a>是Go项目的发布自动化工具,目标是简化构建,release和发布步骤,同时为所有步骤提供适当的自定义选项.</p>
+
+<p>GoReleaser是为CI工具而构建的;你只需要在您的构建脚本中<a href="#ci_integration">下载并执行它</a>。您可以通过<a href="#Customization">定制</a>一个关于你的发布过程的<code>.goreleaser.yml</code>文件.</p>
+
+<p>这个想法始于一个<a href="https://github.com/goreleaser/old-go-releaser">简单的shell脚本</a>，但它很快变得更加复杂，我也希望通过<code>Homebrew taps</code>发布二进制文件，这会使脚本变得更加hacky，所以我放弃了它，并在Go中重写了整个内容.</p>
+
+<h2 id="安装goreleaser">安装Goreleaser</h2>
+
+<p>有三种方法可以安装GoReleaser:</p>
+
+<h3 id="使用homebrew">使用homebrew</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">brew install goreleaser/tap/goreleaser</code></pre></div>
+<h3 id="使用snapcraft">使用snapcraft</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">snap install goreleaser</code></pre></div>
+<h3 id="使用scoop">使用Scoop</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">scoop bucket add goreleaser https://github.com/goreleaser/scoop-bucket.git
+scoop install goreleaser</code></pre></div>
+<blockquote>
+<p>查看<a href="https://github.com/goreleaser/homebrew-tap">tap源</a>，了解更多细节.</p>
+</blockquote>
+
+<h3 id="使用docker">使用Docker</h3>
+
+<p>您可以使用Docker来执行简单的发布.目前,提供的docker镜像不支持snapcraft.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-console" data-lang="console">$ docker run --rm --privileged \
+  -v $PWD:/go/src/github.com/user/repo \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  -w /go/src/github.com/user/repo \
+  -e GITHUB_TOKEN \
+  -e DOCKER_USERNAME \
+  -e DOCKER_PASSWORD \
+  goreleaser/goreleaser release</code></pre></div>
+<p>请注意,镜像几乎总是最后一个稳定的Go版本.</p>
+
+<p>如果您需要更多东西,我们鼓励您拥有自己的镜像。你可以使用GoReleaser自身的<a href="https://github.com/goreleaser/goreleaser/blob/master/Dockerfile">Dockerfile</a>作为示例.</p>
+
+<h2 id="手动">手动</h2>
+
+<p>从<a href="https://github.com/goreleaser/goreleaser/releases/latest">发布页面</a>下载您喜欢的味道，并手动安装.</p>
+
+<h3 id="用go-get">用go get</h3>
+
+<p>注意:此方法需要Go 1.10+.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-console" data-lang="console">$ go get -d github.com/goreleaser/goreleaser
+$ cd $GOPATH/src/github.com/goreleaser/goreleaser
+$ dep ensure -vendor-only
+$ make setup build</code></pre></div>
+<p>建议也运行下<code>dep ensure</code>，确保依赖项的版本正确.</p>
+
+		</div>
+		
+	
+		
+			<div class="Page" id="快速开始">
+				<h1><a href="https://goreleaser.com/quick-start/">快速开始</a></h1>
+				
+
+<p>在这个例子中,我们将构建,存档和发布Go项目.</p>
+
+<p>创建一个GitHub存储库，并添加一个主包:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#6272a4">// main.go
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">package</span> main
+
+<span style="color:#8be9fd;font-style:italic">func</span> main() {
+  <span style="color:#8be9fd;font-style:italic">println</span>(<span style="color:#f1fa8c">&#34;Ba dum, tss!&#34;</span>)
+}</code></pre></div>
+<p>运行<code>goreleaser init</code>创建一个例子，<code>.goreleaser.yaml</code>文件:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-console" data-lang="console">$ goreleaser init
+
+   • Generating .goreleaser.yml file
+   • config created; please edit accordingly to your needs file=.goreleaser.yml</code></pre></div>
+<p>生成的配置文件如下所示:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#6272a4"># This is an example goreleaser.yaml file with some sane defaults.</span>
+<span style="color:#6272a4"># Make sure to check the documentation at http://goreleaser.com</span>
+builds:
+- env:
+  - CGO_ENABLED=<span style="color:#bd93f9">0</span>
+archive:
+  replacements:
+    darwin: Darwin
+    linux: Linux
+    windows: Windows
+    <span style="color:#bd93f9">386</span>: i386
+    amd64: x86_64
+checksum:
+  name_template: <span style="color:#f1fa8c">&#39;checksums.txt&#39;</span>
+snapshot:
+  name_template: <span style="color:#f1fa8c">&#34;{{ .Tag }}-next&#34;</span>
+changelog:
+  sort: asc
+  filters:
+    exclude:
+    - <span style="color:#f1fa8c">&#39;^docs:&#39;</span>
+    - <span style="color:#f1fa8c">&#39;^test:&#39;</span></code></pre></div>
+<p>GoReleaser将为您的应用程序构建<code>Windows,Linux和macOS</code>的二进制文件,包括<code>amd64和i386</code>系结构.您可以通过更改定义的<code>builds</code>部分。查看<a href="/build">其文档</a>获得更多信息.</p>
+
+<p>构建二进制文件后,GoReleaser将为每个<code>OS/Arch组合</code>创建一个单独存档文件。您可以自定义<code>archive</code>部分的多项内容。查看<a href="/archive">其文档</a>获得更多信息.</p>
+
+<p>你需要导出一个<code>GITHUB_TOKEN</code>环境变量,它应该包含一个有效的GitHub<code>repo</code>的tag范围。它用于将版本部署到您的GitHub存储库.您可以在<a href="https://github.com/settings/tokens/new">这里</a>创建令牌.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-console" data-lang="console">$ export GITHUB_TOKEN=`YOUR_TOKEN`</code></pre></div>
+<p>GoReleaser会使用您的存储库最新的<a href="https://git-scm.com/book/en/v2/Git-Basics-Tagging">Git tag</a>。下面创建一个tag，并将其推送到GitHub:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-console" data-lang="console">$ git tag -a v0.1.0 -m &#34;First release&#34;
+$ git push origin v0.1.0</code></pre></div>
+<blockquote>
+<p><strong>注意</strong>:查看您的tag是否符合<a href="/semver">语义版本控制</a>.</p>
+</blockquote>
+
+<p>如果您还不想创建tag,还可以使用，基于最新提交的版本的<code>--snapshot</code>参数.</p>
+
+<p>现在您可以在存储库的根目录下，运行GoReleaser:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-console" data-lang="console">$ goreleaser</code></pre></div>
+<p>就这样! 查看您的GitHub项目的发布页面。该版本应如下所示:</p>
+
+<p><a href="https://github.com/goreleaser/goreleaser/releases">
+  <img width="100%"
+    src="https://cloud.githubusercontent.com/assets/245435/23342061/fbcbd506-fc31-11e6-9d2b-4c1b776dee9c.png">
+</a></p>
+
+<h2 id="浅运行">浅运行</h2>
+
+<p>如果你想在发布&rdquo;真实&rdquo;版本之前，测试所有内容,你可以使用<code>--skip-publish</code>参数，只会构建和打包东西:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-console" data-lang="console">$ goreleaser release --skip-publish</code></pre></div>
+<p>您可以查看其他选项:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-console" data-lang="console">$ goreleaser --help</code></pre></div>
+<p>和</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-console" data-lang="console">$ goreleaser release --help</code></pre></div>
+		</div>
+		
+	
+		
+	
+		
+			<div class="Page" id="Semantic 版本化">
+				<h1><a href="https://goreleaser.com/semver/">Semantic 版本化</a></h1>
+				<p>GoReleaser强制为，执行Semantic版本控制,并在非兼容标签上出错.</p>
+
+<p>你的标签<strong>应该</strong>是有效的<a href="http://semver.org/">语义版本</a>。如果不是,GoReleaser将会出错.</p>
+
+<p>该<code>v</code>前缀不是强制性的.你可以查看一下<a href="/templates">模板</a>文档，以了解如何在名称模板中，使用tag或Semantic版本的方方面面.</p>
+
+		</div>
+		
+	
+		
+			<div class="Page" id="CGO">
+				<h1><a href="https://goreleaser.com/cgo/">CGO</a></h1>
+				<p>不幸的是,GoReleaser不支持CGO.</p>
+
+<p>您可以在<a href="https://github.com/goreleaser/goreleaser/issues/708">这个Issue</a>中查看有关此内容的讨论.</p>
+
+<p>您可以在上面，找到有关解决方法的问题注释.</p>
+
+		</div>
+		
+	
+		
+	
+		
+			<div class="Page" id="变量">
+				<h1><a href="https://goreleaser.com/environment/">变量</a></h1>
+				
+
+<h2 id="github令牌">GitHub令牌</h2>
+
+<p>GoReleaser需要一个<strong>GitHub API token</strong> ，其具有选择<code>repo</code>范围，具有部署到GitHub的权限。你可以创建一个<a href="https://github.com/settings/tokens/new">点-这里</a>.</p>
+
+<p>此<strong>token</strong>应添加到环境变量中<code>GITHUB_TOKEN</code>.以下是Travis CI的使用方法:<a href="https://docs.travis-ci.com/user/environment-variables/#Defining-Variables-in-Repository-Settings">在存储库设置中,定义环境变量</a>.</p>
+
+<p>或者,您可以在文件中提供GitHub令牌。默认情况下，GoReleaser会查看<code>~/.config/goreleaser/github_token</code>,您可以在<code>.goreleaser.yml</code>文件中更改它:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#6272a4"># .goreleaser.yml</span>
+env_files:
+  github_token: ~/.path/to/my/token</code></pre></div>
+<h2 id="github企业版">GitHub企业版</h2>
+
+<p>要使用GitHub Enterprise，你需要提供其URL搭配<code>.goreleaser.yml</code>配置文件，给予GoReleaser使用:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#6272a4"># .goreleaser.yml</span>
+github_urls:
+  api: https://git.company.com/api/v3/
+  upload: https://git.company.com/api/uploads/
+  download: https://git.company.com/</code></pre></div>
+<p>如果没有设置,则默认为GitHub的公共URL.</p>
+
+<p><strong>重要</strong>:小心URL,它们可能会从一个安装更改为另一个安装。如果他们错了,goreleaser会在某些时候失败，所以，在开启Issue之前，确保他们是对的。例如,参见<a href="https://github.com/goreleaser/goreleaser/issues/472">#472</a>.</p>
+
+<h2 id="dist文件夹">dist文件夹</h2>
+
+<p>默认情况下,GoReleaser将在<code>./dist</code>中创建其二进制存档。如有必须,可以通过在<code>.goreleaser.yml</code>文件的设置，更改它:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#6272a4"># .goreleaser.yml</span>
+dist: another-folder-that-is-not-dist</code></pre></div>
+<h2 id="使用-main-version">使用<code>main.version</code></h2>
+
+<p>默认的GoReleaser设置三个<em>ldflags</em>:</p>
+
+<ul>
+<li><code>main.version</code>: 当前的Git标签(<code>v</code>前缀被剥离)或snapshot的名称，若正在使用<code>--snapshot</code>参数</li>
+<li><code>main.commit</code>: 当前git commit 的 SHA码</li>
+<li><code>main.date</code>: <a href="https://golang.org/pkg/time/#pkg-constants">RFC3339</a>规范日期</li>
+</ul>
+
+<p>这样，在你的<code>main.go</code>文件，就能被使用:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#ff79c6">package</span> main
+
+<span style="color:#ff79c6">import</span> <span style="color:#f1fa8c">&#34;fmt&#34;</span>
+
+<span style="color:#8be9fd;font-style:italic">var</span> (
+	version = <span style="color:#f1fa8c">&#34;dev&#34;</span>
+	commit  = <span style="color:#f1fa8c">&#34;none&#34;</span>
+	date    = <span style="color:#f1fa8c">&#34;unknown&#34;</span>
+)
+
+<span style="color:#8be9fd;font-style:italic">func</span> main() {
+  fmt.Printf(<span style="color:#f1fa8c">&#34;%v, commit %v, built at %v&#34;</span>, version, commit, date)
+}</code></pre></div>
+<p>您可以通过更改<code>build</code>部分的<code>ldflags</code>选项，来覆盖它.</p>
+
+		</div>
+		
+	
+		
+	
+		
+	
+		
+			<div class="Page" id="自定义">
+				<h1><a href="https://goreleaser.com/customization/">自定义</a></h1>
+				<p>GoReleaser通过提供多种自定义的<code>.goreleaser.yml</code>文件.</p>
+
+<p>您可以通过运行<code>goreleaser init</code>生成它，或者从头开始。默认值都是合理的,适合大多数项目.</p>
+
+		</div>
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+			<div class="Page" id="持续集成">
+				<h1><a href="https://goreleaser.com/ci/">持续集成</a></h1>
+				
+
+<p>GoReleaser的第一次commit的构建思想，是作为CI集成的一部分运行.</p>
+
+<p>让我们看看如何让它在流行的CI软件上运行.</p>
+
+<h2 id="travis-ci">Travis CI</h2>
+
+<p>您可能希望将项目设置为新tag，就自动<a href="https://travis-ci.org">Travis</a>部署, 例如:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#6272a4"># .travis.yml</span>
+language: go
+
+addons:
+  apt:
+    packages:
+    <span style="color:#6272a4"># needed for the nfpm pipe:</span>
+    - rpm
+    <span style="color:#6272a4"># needed for the snap pipe:</span>
+    - snapcraft
+
+env:
+<span style="color:#6272a4"># needed for the snap pipe:</span>
+- PATH=/snap/bin:$PATH
+
+install:
+<span style="color:#6272a4"># needed for the snap pipe:</span>
+- sudo snap install snapcraft --classic
+
+<span style="color:#6272a4"># needed for the docker pipe</span>
+services:
+- docker
+
+after_success:
+<span style="color:#6272a4"># docker login is required if you want to push docker images.</span>
+<span style="color:#6272a4"># DOCKER_PASSWORD should be a secret in your .travis.yml configuration.</span>
+- test -n <span style="color:#f1fa8c">&#34;$TRAVIS_TAG&#34;</span> <span style="color:#ff79c6">&amp;&amp;</span> docker login -u=myuser -p=<span style="color:#f1fa8c">&#34;$DOCKER_PASSWORD&#34;</span>
+<span style="color:#6272a4"># snapcraft login is required if you want to push snapcraft packages to the</span>
+<span style="color:#6272a4"># store.</span>
+<span style="color:#6272a4"># You&#39;ll need to run `snapcraft export-login snap.login` and</span>
+<span style="color:#6272a4"># `travis encrypt-file snap.login --add` to add the key to the travis</span>
+<span style="color:#6272a4"># environment.</span>
+- test -n <span style="color:#f1fa8c">&#34;$TRAVIS_TAG&#34;</span> <span style="color:#ff79c6">&amp;&amp;</span> snapcraft login --with snap.login
+
+<span style="color:#6272a4"># calls goreleaser</span>
+deploy:
+- provider: script
+  skip_cleanup: <span style="color:#ff79c6">true</span>
+  script: curl -sL https://git.io/goreleaser <span style="color:#f1fa8c">| bash
+</span><span style="color:#f1fa8c">  on:
+</span><span style="color:#f1fa8c">    tags: true
+</span><span style="color:#f1fa8c">    condition: $TRAVIS_OS_NAME = linux</span></code></pre></div>
+<p>注意最后一行(<code>condition: $TRAVIS_OS_NAME = linux</code>): 如果您运行具有多个Go版本和/或多个操作系统的构建矩阵，这一点很重要。如果是这种情况,您将需要确保GoReleaser只运行一次。</p>
+
+<h2 id="circleci">CircleCI</h2>
+
+<p>这是如何与<a href="https://circleci.com">CircleCI 2.0</a>协作:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#6272a4"># .circleci/config.yml</span>
+version: <span style="color:#bd93f9">2</span>
+jobs:
+  release:
+    docker:
+      - image: circleci/golang:<span style="color:#bd93f9">1.10</span>
+    steps:
+      - checkout
+      - run: curl -sL https://git.io/goreleaser <span style="color:#f1fa8c">| bash</span>
+workflows:
+  version: <span style="color:#bd93f9">2</span>
+  release:
+    jobs:
+      - release:
+          filters:
+            branches:
+              ignore: /.<span style="color:#ff79c6">*/</span>
+            tags:
+              only: /v[<span style="color:#bd93f9">0</span>-<span style="color:#bd93f9">9</span>]+(\.[<span style="color:#bd93f9">0</span>-<span style="color:#bd93f9">9</span>]+)<span style="color:#ff79c6">*(-.*)*/</span></code></pre></div>
+<h2 id="drone">Drone</h2>
+
+<p>默认情况下,Drone不会获取标签。<code>plugins/git</code>与默认值一起使用,在大多数情况下，我们需要覆盖<code>clone</code>步骤，启用标签，以使<code>goreleaser</code>工作正常.</p>
+
+<p>在这个例子中，我们每次推送新标签时，都会创建一个新版本.请注意,您需在<strong>repo settings</strong>中启用<code>tags</code>和添加<code>github_token</code>密钥.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">pipeline:
+  clone:
+    image: plugins/git
+    tags: <span style="color:#ff79c6">true</span>
+
+  test:
+    image: golang:<span style="color:#bd93f9">1.10</span>
+    commands:
+      - go test ./... -race
+
+  release:
+    image: golang:<span style="color:#bd93f9">1.10</span>
+    secrets: [github_token]
+    commands:
+      curl -sL https://git.io/goreleaser <span style="color:#f1fa8c">| bash
+</span><span style="color:#f1fa8c">    when:
+</span><span style="color:#f1fa8c">      event: tag</span></code></pre></div>
+<h2 id="google-cloudbuild">Google CloudBuild</h2>
+
+<p>CloudBuild使用的克隆与你github repo不同: 似乎你的更改被拉取到了像下面<code>source.developers.google.com/p/YourProjectId/r/github-YourGithubUser-YourGithubRepo</code>类似的repo，和这就是你正在建设的东西.</p>
+
+<p>这个repo具有糟糕的名称，所以为了防止Goreleaser发布到错误的github repo。请输入你的信息，到<code>.goreleaser.yml</code>文件的release部分:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">release:
+  github:
+    owner: YourGithubUser
+    name: YourGithubRepo</code></pre></div>
+<p>创建两个构建触发器:</p>
+
+<ul>
+<li>常规CI的&rdquo;推送到任何分支&rdquo;触发器(不调用goreleaser)</li>
+<li>一个&rdquo;push to tag&rdquo;触发器，它调用goreleaser</li>
+</ul>
+
+<p>推送到任何分支触发器可以使用<code>Dockerfile</code>或<code>cloudbuild.yaml</code>,您喜欢就好.</p>
+
+<p>你应该有一个专用的cloudbuild.release.yaml,它只能被&rdquo;push to tag&rdquo;触发器使用.</p>
+
+<p>在这个例子中,我们每次推送新标签时，都会创建一个新版本.看看<a href="https://cloud.google.com/cloud-build/docs/securing-builds/use-encrypted-secrets-credentials">使用加密资源</a>文档，其中有如何加密和base64编码你的github令牌.</p>
+
+<p>构建使用的克隆<a href="https://issuetracker.google.com/u/1/issues/113668706">时没有标签</a>，这就是为什么，我们必须明确运行<code>git tag $TAG_NAME</code>的原因( 请注意,只有当你的构建由&rdquo;push to tag&rdquo;触发时,才设置$TAG_NAME。) 这将允许goreleaser使用该版本创建一个版本，但它并<strong>不会</strong>构建一个适当只包含自先前标记以来提交的消息的<strong>changelog</strong>,.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">steps:
+~ <span style="color:#6272a4"># Setup the workspace so we have a viable place to point GOPATH at.</span>
+~ - name: gcr.io/cloud-builders/go
+~   env: [<span style="color:#f1fa8c">&#39;PROJECT_ROOT=github.com/YourGithubUser/YourGithubRepo&#39;</span>]
+~_  args: [<span style="color:#f1fa8c">&#39;env&#39;</span>]
+
+~ <span style="color:#6272a4"># Create github release.</span>
+~ - name: goreleaser/goreleaser
+~   entrypoint: /bin/sh
+~   dir: gopath/src/github.com
+~   env: [<span style="color:#f1fa8c">&#39;GOPATH=/workspace/gopath&#39;</span>]
+~   args: [<span style="color:#f1fa8c">&#39;-c&#39;</span>, <span style="color:#f1fa8c">&#39;cd YourGithubUser/YourGithubRepo &amp;&amp; git tag $TAG_NAME &amp;&amp; /goreleaser&#39;</span> ]
+~_  secretEnv: [<span style="color:#f1fa8c">&#39;GITHUB_TOKEN&#39;</span>]
+
+  secrets:
+~ - kmsKeyName: projects/YourProjectId/locations/global/keyRings/YourKeyRing/cryptoKeys/YourKey
+~   secretEnv:
+~     GITHUB_TOKEN: <span style="color:#f1fa8c">|
+</span><span style="color:#f1fa8c">~       ICAgICAgICBDaVFBZUhVdUVoRUtBdmZJSGxVWnJDZ0hOU2NtMG1ES0k4WjF3L04zT3pEazhRbDZr
+</span><span style="color:#f1fa8c">~       QVVTVVFEM3dVYXU3cVJjK0g3T25UVW82YjJaCiAgICAgICAgREtBMWVNS0hOZzcyOUtmSGoyWk1x
+</span><span style="color:#f1fa8c">~_      ICAgICAgIEgwYndIaGUxR1E9PQo=</span></code></pre></div>
+<h2 id="semaphore">Semaphore</h2>
+
+<p>在<a href="https://semaphoreci.com">Sempahore 2.0</a>的每个项目，都在<code>.semaphore/semaphore.yml</code>指定默认管道的开头.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#6272a4"># .semaphore/semaphore.yml.</span>
+version: v1.<span style="color:#bd93f9">0</span>
+name: Build
+agent:
+  machine:
+    type: e1-standard-<span style="color:#bd93f9">2</span>
+    os_image: ubuntu1804
+
+blocks:
+  - name: <span style="color:#f1fa8c">&#34;Test&#34;</span>
+    task:
+      prologue:
+        commands:
+          <span style="color:#6272a4"># set go version</span>
+          - sem-version go <span style="color:#bd93f9">1.11</span>
+          - <span style="color:#f1fa8c">&#34;export GOPATH=~/go&#34;</span>
+          - <span style="color:#f1fa8c">&#34;export PATH=/home/semaphore/go/bin:$PATH&#34;</span>
+          - checkout
+
+      jobs:
+        - name: <span style="color:#f1fa8c">&#34;Lint&#34;</span>
+          commands:
+            - go get ./...
+            - go test ./...
+
+<span style="color:#6272a4"># On Semaphore 2.0 deployment and delivery is managed with promotions,</span>
+<span style="color:#6272a4"># which may be automatic or manual and optionally depend on conditions.</span>
+promotions:
+    - name: Release
+       pipeline_file: goreleaser.yml
+       auto_promote_on:
+         - result: passed
+           branch:
+             - <span style="color:#f1fa8c">&#34;^refs/tags/v*&#34;</span></code></pre></div>
+<p><code>.semaphore/goreleaser.yml</code>中的管道文件:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">version: <span style="color:#f1fa8c">&#34;v1.0&#34;</span>
+name: GoReleaser
+agent:
+  machine:
+    type: e1-standard-<span style="color:#bd93f9">2</span>
+    os_image: ubuntu1804
+blocks:
+  - name: <span style="color:#f1fa8c">&#34;Release&#34;</span>
+    task:
+      secrets:
+        - name: goreleaser
+      prologue:
+        commands:
+          - sem-version go <span style="color:#bd93f9">1.11</span>
+          - <span style="color:#f1fa8c">&#34;export GOPATH=~/go&#34;</span>
+          - <span style="color:#f1fa8c">&#34;export PATH=/home/semaphore/go/bin:$PATH&#34;</span>
+          - checkout
+      jobs:
+      - name: goreleaser
+        commands:
+          - curl -sL https://git.io/goreleaser <span style="color:#f1fa8c">| bash</span></code></pre></div>
+<p>下面的YAML文件,<code>createSecret.yml</code>创建一个名为goreleaser的密钥项，其包含一个名为<strong>GITHUB_TOKEN</strong>的环境变量:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">apiVersion: v1alpha
+kind: Secret
+metadata:
+  name: goreleaser
+data:
+  env_vars:
+    - name: GITHUB_TOKEN
+      value: <span style="color:#f1fa8c">&#34;4afk4388304hfhei34950dg43245&#34;</span></code></pre></div>
+<p>查看<a href="https://docs.semaphoreci.com/article/15-secrets">管理密钥</a>的更详细文档.</p>
+
+		</div>
+		
+	
+		
+	
+		
+			<div class="Page" id="赞助商">
+				<h1><a href="https://goreleaser.com/sponsors/">赞助商</a></h1>
+				
+
+<p>贵公司是否使用goreleaser?帮助保持项目无错误，和功能丰富 ！<a href="https://opencollective.com/goreleaser#sponsor">赞助该项目吧</a>.</p>
+
+<p><a href="https://opencollective.com/goreleaser/sponsors/0/website" target="_blank"><img src="https://opencollective.com/goreleaser/sponsors/0/avatar"></a>
+<a href="https://opencollective.com/goreleaser/sponsors/1/website" target="_blank"><img src="https://opencollective.com/goreleaser/sponsors/1/avatar"></a>
+<a href="https://opencollective.com/goreleaser/sponsors/2/website" target="_blank"><img src="https://opencollective.com/goreleaser/sponsors/2/avatar"></a>
+<a href="https://opencollective.com/goreleaser/sponsors/3/website" target="_blank"><img src="https://opencollective.com/goreleaser/sponsors/3/avatar"></a>
+<a href="https://opencollective.com/goreleaser/sponsors/4/website" target="_blank"><img src="https://opencollective.com/goreleaser/sponsors/4/avatar"></a></p>
+
+<h2 id="支持者">支持者</h2>
+
+<p>热爱我们的工作和社区?<a href="https://opencollective.com/goreleaser">成为支持者</a>.</p>
+
+<p><a href="https://opencollective.com/goreleaser/backers/0/website" target="_blank"><img src="https://opencollective.com/goreleaser/backers/0/avatar"></a>
+<a href="https://opencollective.com/goreleaser/backers/1/website" target="_blank"><img src="https://opencollective.com/goreleaser/backers/1/avatar"></a>
+<a href="https://opencollective.com/goreleaser/backers/2/website" target="_blank"><img src="https://opencollective.com/goreleaser/backers/2/avatar"></a>
+<a href="https://opencollective.com/goreleaser/backers/3/website" target="_blank"><img src="https://opencollective.com/goreleaser/backers/3/avatar"></a>
+<a href="https://opencollective.com/goreleaser/backers/4/website" target="_blank"><img src="https://opencollective.com/goreleaser/backers/4/avatar"></a>
+<a href="https://opencollective.com/goreleaser/backers/5/website" target="_blank"><img src="https://opencollective.com/goreleaser/backers/5/avatar"></a>
+<a href="https://opencollective.com/goreleaser/backers/6/website" target="_blank"><img src="https://opencollective.com/goreleaser/backers/6/avatar"></a>
+<a href="https://opencollective.com/goreleaser/backers/7/website" target="_blank"><img src="https://opencollective.com/goreleaser/backers/7/avatar"></a>
+<a href="https://opencollective.com/goreleaser/backers/8/website" target="_blank"><img src="https://opencollective.com/goreleaser/backers/8/avatar"></a>
+<a href="https://opencollective.com/goreleaser/backers/9/website" target="_blank"><img src="https://opencollective.com/goreleaser/backers/9/avatar"></a>
+<a href="https://opencollective.com/goreleaser/backers/10/website" target="_blank"><img src="https://opencollective.com/goreleaser/backers/10/avatar"></a>
+<a href="https://opencollective.com/goreleaser/backers/11/website" target="_blank"><img src="https://opencollective.com/goreleaser/backers/11/avatar"></a>
+<a href="https://opencollective.com/goreleaser/backers/12/website" target="_blank"><img src="https://opencollective.com/goreleaser/backers/12/avatar"></a>
+<a href="https://opencollective.com/goreleaser/backers/13/website" target="_blank"><img src="https://opencollective.com/goreleaser/backers/13/avatar"></a>
+<a href="https://opencollective.com/goreleaser/backers/14/website" target="_blank"><img src="https://opencollective.com/goreleaser/backers/14/avatar"></a>
+<a href="https://opencollective.com/goreleaser/backers/15/website" target="_blank"><img src="https://opencollective.com/goreleaser/backers/15/avatar"></a>
+<a href="https://opencollective.com/goreleaser/backers/16/website" target="_blank"><img src="https://opencollective.com/goreleaser/backers/16/avatar"></a>
+<a href="https://opencollective.com/goreleaser/backers/17/website" target="_blank"><img src="https://opencollective.com/goreleaser/backers/17/avatar"></a>
+<a href="https://opencollective.com/goreleaser/backers/18/website" target="_blank"><img src="https://opencollective.com/goreleaser/backers/18/avatar"></a>
+<a href="https://opencollective.com/goreleaser/backers/19/website" target="_blank"><img src="https://opencollective.com/goreleaser/backers/19/avatar"></a>
+<a href="https://opencollective.com/goreleaser/backers/20/website" target="_blank"><img src="https://opencollective.com/goreleaser/backers/20/avatar"></a>
+<a href="https://opencollective.com/goreleaser/backers/21/website" target="_blank"><img src="https://opencollective.com/goreleaser/backers/21/avatar"></a>
+<a href="https://opencollective.com/goreleaser/backers/22/website" target="_blank"><img src="https://opencollective.com/goreleaser/backers/22/avatar"></a>
+<a href="https://opencollective.com/goreleaser/backers/23/website" target="_blank"><img src="https://opencollective.com/goreleaser/backers/23/avatar"></a>
+<a href="https://opencollective.com/goreleaser/backers/24/website" target="_blank"><img src="https://opencollective.com/goreleaser/backers/24/avatar"></a>
+<a href="https://opencollective.com/goreleaser/backers/25/website" target="_blank"><img src="https://opencollective.com/goreleaser/backers/25/avatar"></a>
+<a href="https://opencollective.com/goreleaser/backers/26/website" target="_blank"><img src="https://opencollective.com/goreleaser/backers/26/avatar"></a>
+<a href="https://opencollective.com/goreleaser/backers/27/website" target="_blank"><img src="https://opencollective.com/goreleaser/backers/27/avatar"></a>
+<a href="https://opencollective.com/goreleaser/backers/28/website" target="_blank"><img src="https://opencollective.com/goreleaser/backers/28/avatar"></a>
+<a href="https://opencollective.com/goreleaser/backers/29/website" target="_blank"><img src="https://opencollective.com/goreleaser/backers/29/avatar"></a></p>
+
+		</div>
+		
+	
+		
+			<div class="Page" id="教程">
+				<h1><a href="https://goreleaser.com/tutorials/">教程</a></h1>
+				<p>社区制作的教程.</p>
+
+<!-- please, keep A-Z sorting -->
+
+<ul>
+<li><a href="https://carlosbecker.com/posts/goreleaser-snap-travis/">GoReleaser:从TravisCI构建，并推送Snapcraft软件包</a></li>
+</ul>
+
+<p>想在这里添加你的教程吗? 去做吧! 编辑<a href="https://github.com/goreleaser/goreleaser/blob/master/www/content/tutorials.md">这个文件</a>并打开拉动请求! 谢谢 !</p>
+
+		</div>
+		
+	
+		
+			<div class="Page" id="贡献">
+				<h1><a href="https://goreleaser.com/contrib/">贡献</a></h1>
+				<p>此页面最终，将为那些想要为项目做出贡献的人提供信息.</p>
+
+<p>还请看看我们的存储库根目录下的<a href="https://github.com/goreleaser/goreleaser/blob/master/CONTRIBUTING.md">CONTRIBUTING.md</a>文件.</p>
+
+		</div>
+		
+	
+		
+			<div class="Page" id="关联">
+				<h1><a href="https://goreleaser.com/links/">关联</a></h1>
+				<ul>
+<li>跟上<a href="https://github.com/goreleaser/goreleaser">GitHub存储库</a>的进度</li>
+<li>跟随<a href="https://twitter.com/goreleaser">@goreleaser</a>在Twitter上进行更新</li>
+<li><a href="https://gophers.slack.com/messages/goreleaser/">Slack</a>上聊聊GoReleaser,问题等。加入请使用<a href="https://invite.slack.golangbridge.org/">这个链接</a></li>
+<li><a href="https://github.com/goreleaser/goreleaser/blob/master/CONTRIBUTING.md">贡献指南</a></li>
+</ul>
+
+<p>该项目遵守贡献者公约<a href="https://github.com/goreleaser/goreleaser/blob/master/CODE_OF_CONDUCT.md">行为守则</a>。通过参与,您应该支持此代码.</p>
+
+		</div>
+		
+	
+
+						<div class="Footer">
+	<p>Made with ❤️ by GoReleaser contributors.</p>
+</div>
+<script src="https://goreleaser.com/js/index.js"></script>
+
+					</div>
+				</div>
+		</div>
+	</body>
+</html>

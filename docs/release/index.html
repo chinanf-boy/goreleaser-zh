@@ -1,0 +1,118 @@
+
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>Release-版告 &middot; GoReleaser</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		
+		
+		<meta http-equiv="content-language" content="en-us" />
+		<meta name="generator" content="Hugo 0.49.2" />
+		<link rel="stylesheet" href="https://goreleaser.com/css/index.css">
+		<link rel="apple-touch-icon" href="https://goreleaser.com/apple-touch-icon.png">
+		<link rel="shortcut icon" href="https://goreleaser.com/favicon.ico" type="image/x-icon">
+	</head>
+
+	<body>
+		<div class="Wrapper">
+			<div class="Container">
+				<div class="Header">
+  <a href="https://goreleaser.com/">
+	<div class="Title center">
+		
+			<img alt="GoReleaser Logo" src="https://avatars2.githubusercontent.com/u/24697112?v=3&amp;s=140" height="140" />
+		
+		<span class="text">GoReleaser</span>
+		<span class="subtext"></span>
+	</div>
+  </a>
+</div>
+
+				<div class="Content-wrapper">
+					<div class="Sidebar">
+	<div class="Menu">
+		<div class="item">
+			<a href="https://goreleaser.com/">Home</a>
+		</div>
+		
+
+		
+	</div>
+</div>
+
+					<div class="Content">
+						
+	<div class="Page" id="">
+		<h1>Release-版告</h1>
+		
+
+<p>GoReleaser 根据当前标记,创建 GitHub 版本,上传所有存档，并根据自上一个标记以来的新提交生成更改日志-changelog.</p>
+
+<p>让我们来看看可以定制的<code>release</code>部分内容:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#6272a4"># .goreleaser.yml</span>
+release:
+  <span style="color:#6272a4"># 要release的存储库。</span>
+  <span style="color:#6272a4"># 默认值从原始远程URL中提取。</span>
+  github:
+    owner: user
+    name: repo
+
+  <span style="color:#6272a4"># 如果设置为true，则不会自动发布该版本。</span>
+  <span style="color:#6272a4"># 默认值为false。</span>
+  draft: <span style="color:#ff79c6">true</span>
+
+  <span style="color:#6272a4"># 如果设置为true，则将发布tag为 预发布版本。</span>
+  <span style="color:#6272a4"># 默认值为false。</span>
+  prerelease: <span style="color:#ff79c6">true</span>
+
+  <span style="color:#6272a4"># 您可以更改GitHub版本的名称。</span>
+  <span style="color:#6272a4"># 默认是``</span>
+  name_template: <span style="color:#f1fa8c">&#39;{{.ProjectName}}-v{{.Version}} {{.Env.USER}}&#39;</span>
+
+  <span style="color:#6272a4"># 您可以禁用此管道，将不上传到GitHub</span>
+  <span style="color:#6272a4"># 默认为false。</span>
+  disable: <span style="color:#ff79c6">true</span></code></pre></div>
+<blockquote>
+<p>了解有关<a href="/templates">命名模板引擎</a>的更多信息.</p>
+</blockquote>
+
+<h2 id="自定义更改日志">自定义更改日志</h2>
+
+<p>您可以使用自定义配置文件中<code>changelog</code>的部分，来修改生成changelog的方式:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#6272a4"># .goreleaser.yml</span>
+changelog:
+  <span style="color:#6272a4"># 可以是asc，desc或empty</span>
+  <span style="color:#6272a4"># 默认为空</span>
+  sort: asc
+  filters:
+    <span style="color:#6272a4"># 删除与下方列表匹配的commit信息，将不在changelog显示</span>
+    <span style="color:#6272a4"># 默认为空</span>
+    exclude:
+      - <span style="color:#f1fa8c">&#39;^docs:&#39;</span>
+      - typo
+      - (?i)foo</code></pre></div>
+<h2 id="自定义发行说明">自定义发行说明</h2>
+
+<p>您可以自定义一个包含发行说明的<strong>文件</strong>,并将其传递给<code>--release-notes=FILE</code>参数。然后,GoReleaser 将使用您文件的内容，而跳过自己的发行说明生成。您可以使用 Markdown 格式化文件的内容.</p>
+
+<p>在 Unix 系统上,您还可以使用<a href="https://en.wikipedia.org/wiki/Process_substitution">process substitution</a>命令，生成发行说明。即列出自上一个标记以来的所有提交,但跳过以<code>Merge</code>要么<code>docs</code>开头的提交,你可以运行这个命令:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-console" data-lang="console">$ goreleaser --release-notes &lt;(some_changelog_generator)</code></pre></div>
+<p>您可以使用的,一些更改日志生成器-<code>some_changelog_generator</code>:</p>
+
+<ul>
+<li><a href="https://github.com/buchanae/github-release-notes">buchanae/github-release-notes</a></li>
+</ul>
+</div>
+
+						<div class="Footer">
+	<p>Made with ❤️ by GoReleaser contributors.</p>
+</div>
+<script src="https://goreleaser.com/js/index.js"></script>
+
+					</div>
+				</div>
+		</div>
+	</body>
+</html>

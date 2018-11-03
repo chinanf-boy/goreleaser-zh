@@ -52,7 +52,7 @@ snapcraft:
   # store.
   description: |
     This is the best drum roll application out there.
-    Install it and awe!
+Install it and awe!
 
   # A guardrail to prevent you from releasing a snap to all your users before
   # it is ready.
