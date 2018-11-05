@@ -1,4 +1,4 @@
-baseURL = "/"
+baseURL = "http://llever.com/goreleaser-zh/"
 languageCode = "zh-CN"
 title = "GoReleaser & yobrave"
 copyright = "Made with ❤️ by GoReleaser contributors."

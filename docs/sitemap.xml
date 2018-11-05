@@ -3,137 +3,137 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>/introduction/</loc>
+    <loc>http://llever.com/goreleaser-zh/introduction/</loc>
   </url>
   
   <url>
-    <loc>/quick-start/</loc>
+    <loc>http://llever.com/goreleaser-zh/quick-start/</loc>
   </url>
   
   <url>
-    <loc>/project/</loc>
+    <loc>http://llever.com/goreleaser-zh/project/</loc>
   </url>
   
   <url>
-    <loc>/semver/</loc>
+    <loc>http://llever.com/goreleaser-zh/semver/</loc>
   </url>
   
   <url>
-    <loc>/cgo/</loc>
+    <loc>http://llever.com/goreleaser-zh/cgo/</loc>
   </url>
   
   <url>
-    <loc>/hooks/</loc>
+    <loc>http://llever.com/goreleaser-zh/hooks/</loc>
   </url>
   
   <url>
-    <loc>/environment/</loc>
+    <loc>http://llever.com/goreleaser-zh/environment/</loc>
   </url>
   
   <url>
-    <loc>/templates/</loc>
+    <loc>http://llever.com/goreleaser-zh/templates/</loc>
   </url>
   
   <url>
-    <loc>/build/</loc>
+    <loc>http://llever.com/goreleaser-zh/build/</loc>
   </url>
   
   <url>
-    <loc>/customization/</loc>
+    <loc>http://llever.com/goreleaser-zh/customization/</loc>
   </url>
   
   <url>
-    <loc>/archive/</loc>
+    <loc>http://llever.com/goreleaser-zh/archive/</loc>
   </url>
   
   <url>
-    <loc>/checksum/</loc>
+    <loc>http://llever.com/goreleaser-zh/checksum/</loc>
   </url>
   
   <url>
-    <loc>/sign/</loc>
+    <loc>http://llever.com/goreleaser-zh/sign/</loc>
   </url>
   
   <url>
-    <loc>/snapshots/</loc>
+    <loc>http://llever.com/goreleaser-zh/snapshots/</loc>
   </url>
   
   <url>
-    <loc>/nfpm/</loc>
+    <loc>http://llever.com/goreleaser-zh/nfpm/</loc>
   </url>
   
   <url>
-    <loc>/snapcraft/</loc>
+    <loc>http://llever.com/goreleaser-zh/snapcraft/</loc>
   </url>
   
   <url>
-    <loc>/homebrew/</loc>
+    <loc>http://llever.com/goreleaser-zh/homebrew/</loc>
   </url>
   
   <url>
-    <loc>/scoop/</loc>
+    <loc>http://llever.com/goreleaser-zh/scoop/</loc>
   </url>
   
   <url>
-    <loc>/release/</loc>
+    <loc>http://llever.com/goreleaser-zh/release/</loc>
   </url>
   
   <url>
-    <loc>/s3/</loc>
+    <loc>http://llever.com/goreleaser-zh/s3/</loc>
   </url>
   
   <url>
-    <loc>/artifactory/</loc>
+    <loc>http://llever.com/goreleaser-zh/artifactory/</loc>
   </url>
   
   <url>
-    <loc>/bintray/</loc>
+    <loc>http://llever.com/goreleaser-zh/bintray/</loc>
   </url>
   
   <url>
-    <loc>/put/</loc>
+    <loc>http://llever.com/goreleaser-zh/put/</loc>
   </url>
   
   <url>
-    <loc>/docker/</loc>
+    <loc>http://llever.com/goreleaser-zh/docker/</loc>
   </url>
   
   <url>
-    <loc>/ci/</loc>
+    <loc>http://llever.com/goreleaser-zh/ci/</loc>
   </url>
   
   <url>
-    <loc>/deprecations/</loc>
+    <loc>http://llever.com/goreleaser-zh/deprecations/</loc>
   </url>
   
   <url>
-    <loc>/sponsors/</loc>
+    <loc>http://llever.com/goreleaser-zh/sponsors/</loc>
   </url>
   
   <url>
-    <loc>/tutorials/</loc>
+    <loc>http://llever.com/goreleaser-zh/tutorials/</loc>
   </url>
   
   <url>
-    <loc>/contrib/</loc>
+    <loc>http://llever.com/goreleaser-zh/contrib/</loc>
   </url>
   
   <url>
-    <loc>/links/</loc>
+    <loc>http://llever.com/goreleaser-zh/links/</loc>
   </url>
   
   <url>
-    <loc>/categories/</loc>
+    <loc>http://llever.com/goreleaser-zh/categories/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/</loc>
+    <loc>http://llever.com/goreleaser-zh/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/</loc>
+    <loc>http://llever.com/goreleaser-zh/tags/</loc>
     <priority>0</priority>
   </url>
   
