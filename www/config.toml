@@ -1,4 +1,4 @@
-baseURL = "http://chinanf-boy.github.io/goreleaser-zh/"
+baseURL = "/"
 languageCode = "zh-CN"
 title = "GoReleaser & yobrave"
 copyright = "Made with ❤️ by GoReleaser contributors."

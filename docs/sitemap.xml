@@ -3,137 +3,137 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>http://chinanf-boy.github.io/goreleaser-zh/introduction/</loc>
+    <loc>/introduction/</loc>
   </url>
   
   <url>
-    <loc>http://chinanf-boy.github.io/goreleaser-zh/quick-start/</loc>
+    <loc>/quick-start/</loc>
   </url>
   
   <url>
-    <loc>http://chinanf-boy.github.io/goreleaser-zh/project/</loc>
+    <loc>/project/</loc>
   </url>
   
   <url>
-    <loc>http://chinanf-boy.github.io/goreleaser-zh/semver/</loc>
+    <loc>/semver/</loc>
   </url>
   
   <url>
-    <loc>http://chinanf-boy.github.io/goreleaser-zh/cgo/</loc>
+    <loc>/cgo/</loc>
   </url>
   
   <url>
-    <loc>http://chinanf-boy.github.io/goreleaser-zh/hooks/</loc>
+    <loc>/hooks/</loc>
   </url>
   
   <url>
-    <loc>http://chinanf-boy.github.io/goreleaser-zh/environment/</loc>
+    <loc>/environment/</loc>
   </url>
   
   <url>
-    <loc>http://chinanf-boy.github.io/goreleaser-zh/templates/</loc>
+    <loc>/templates/</loc>
   </url>
   
   <url>
-    <loc>http://chinanf-boy.github.io/goreleaser-zh/build/</loc>
+    <loc>/build/</loc>
   </url>
   
   <url>
-    <loc>http://chinanf-boy.github.io/goreleaser-zh/customization/</loc>
+    <loc>/customization/</loc>
   </url>
   
   <url>
-    <loc>http://chinanf-boy.github.io/goreleaser-zh/archive/</loc>
+    <loc>/archive/</loc>
   </url>
   
   <url>
-    <loc>http://chinanf-boy.github.io/goreleaser-zh/checksum/</loc>
+    <loc>/checksum/</loc>
   </url>
   
   <url>
-    <loc>http://chinanf-boy.github.io/goreleaser-zh/sign/</loc>
+    <loc>/sign/</loc>
   </url>
   
   <url>
-    <loc>http://chinanf-boy.github.io/goreleaser-zh/snapshots/</loc>
+    <loc>/snapshots/</loc>
   </url>
   
   <url>
-    <loc>http://chinanf-boy.github.io/goreleaser-zh/nfpm/</loc>
+    <loc>/nfpm/</loc>
   </url>
   
   <url>
-    <loc>http://chinanf-boy.github.io/goreleaser-zh/snapcraft/</loc>
+    <loc>/snapcraft/</loc>
   </url>
   
   <url>
-    <loc>http://chinanf-boy.github.io/goreleaser-zh/homebrew/</loc>
+    <loc>/homebrew/</loc>
   </url>
   
   <url>
-    <loc>http://chinanf-boy.github.io/goreleaser-zh/scoop/</loc>
+    <loc>/scoop/</loc>
   </url>
   
   <url>
-    <loc>http://chinanf-boy.github.io/goreleaser-zh/release/</loc>
+    <loc>/release/</loc>
   </url>
   
   <url>
-    <loc>http://chinanf-boy.github.io/goreleaser-zh/s3/</loc>
+    <loc>/s3/</loc>
   </url>
   
   <url>
-    <loc>http://chinanf-boy.github.io/goreleaser-zh/artifactory/</loc>
+    <loc>/artifactory/</loc>
   </url>
   
   <url>
-    <loc>http://chinanf-boy.github.io/goreleaser-zh/bintray/</loc>
+    <loc>/bintray/</loc>
   </url>
   
   <url>
-    <loc>http://chinanf-boy.github.io/goreleaser-zh/put/</loc>
+    <loc>/put/</loc>
   </url>
   
   <url>
-    <loc>http://chinanf-boy.github.io/goreleaser-zh/docker/</loc>
+    <loc>/docker/</loc>
   </url>
   
   <url>
-    <loc>http://chinanf-boy.github.io/goreleaser-zh/ci/</loc>
+    <loc>/ci/</loc>
   </url>
   
   <url>
-    <loc>http://chinanf-boy.github.io/goreleaser-zh/deprecations/</loc>
+    <loc>/deprecations/</loc>
   </url>
   
   <url>
-    <loc>http://chinanf-boy.github.io/goreleaser-zh/sponsors/</loc>
+    <loc>/sponsors/</loc>
   </url>
   
   <url>
-    <loc>http://chinanf-boy.github.io/goreleaser-zh/tutorials/</loc>
+    <loc>/tutorials/</loc>
   </url>
   
   <url>
-    <loc>http://chinanf-boy.github.io/goreleaser-zh/contrib/</loc>
+    <loc>/contrib/</loc>
   </url>
   
   <url>
-    <loc>http://chinanf-boy.github.io/goreleaser-zh/links/</loc>
+    <loc>/links/</loc>
   </url>
   
   <url>
-    <loc>http://chinanf-boy.github.io/goreleaser-zh/categories/</loc>
+    <loc>/categories/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://chinanf-boy.github.io/goreleaser-zh/</loc>
+    <loc>/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://chinanf-boy.github.io/goreleaser-zh/tags/</loc>
+    <loc>/tags/</loc>
     <priority>0</priority>
   </url>
   

@@ -2,13 +2,13 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on GoReleaser &amp; yobrave</title>
-    <link>http://chinanf-boy.github.io/goreleaser-zh/tags/</link>
+    <link>/tags/</link>
     <description>Recent content in Tags on GoReleaser &amp; yobrave</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
     <copyright>Made with ❤️ by GoReleaser contributors.</copyright>
     
-	<atom:link href="http://chinanf-boy.github.io/goreleaser-zh/tags/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
   </channel>
