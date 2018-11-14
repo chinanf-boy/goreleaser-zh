@@ -21,10 +21,9 @@
 <!-- repo = 'goreleaser/goreleaser' -->
 <!-- commit = 'cafe168d23f917094ee000868c298ce6518c71ec' -->
 <!-- time = '2018-10-31' -->
-
-| 翻译的原文 | 与日期        | 最新更新 | 更多                       |
-| ---------- | ------------- | -------- | -------------------------- |
-| [commit]   | ⏰ 2018-10-31 | ![last]  | [中文翻译][translate-list] |
+翻译的原文 | 与日期 | 最新更新 | 更多
+---|---|---|---
+[commit] | ⏰ 2018-10-31 | ![last] | [中文翻译][translate-list]
 
 [last]: https://img.shields.io/github/last-commit/goreleaser/goreleaser.svg
 [commit]: https://github.com/goreleaser/goreleaser/tree/cafe168d23f917094ee000868c298ce6518c71ec
@@ -32,6 +31,8 @@
 <!-- doc-templite END generated -->
 
 - [x] [goreleaser 网站中文翻译](http://chinanf-boy.github.io/goreleaser-zh) | [源](./www)
+
+> **Tip** 如果仅需要，自动上传(.travis.yml)二进制文件到git 的 releases 页面，这里有个关于[.travis.yml](https://github.com/chinanf-boy/howdoi/blob/master/.travis.yml)，与[.goreleaser.yml的用例](https://github.com/chinanf-boy/howdoi/blob/master/.goreleaser.yml)
 
 ### 贡献
 
